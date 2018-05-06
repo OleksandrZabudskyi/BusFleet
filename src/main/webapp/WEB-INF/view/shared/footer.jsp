@@ -1,5 +1,5 @@
-<%@ include file="tags.jsp" %>
-<footer class="text-center footer ">
+<%--<%@ include file="tags.jsp" %>--%>
+<footer class="container-fluid text-center footer ">
     <p class="col-md-12">
     <hr class="divider">
     Copyright &COPY; 2018 <a href="#"></a>
