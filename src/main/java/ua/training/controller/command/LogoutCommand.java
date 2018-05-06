@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.constant.Attributes;
 import ua.training.constant.NameCommands;
 
 import javax.servlet.ServletException;
@@ -14,9 +15,8 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (Objects.nonNull(session)) {
-            session.invalidate();
-            System.out.println(request.getSession().getId());
-            System.out.println();
+            session.removeAttribute(Attributes.USER);
+            session.removeAttribute(Attributes.ACTIVE_USER);
         }
         return NameCommands.REDIRECT.concat(NameCommands.INDEX_PAGE);
     }
