@@ -33,7 +33,6 @@ public class ActiveUser implements HttpSessionBindingListener {
         removeLoginUser(httpSessionBindingEvent);
     }
 
-
     private void removeLoginUser(HttpSessionBindingEvent event) {
         ServletContext context = event.getSession().getServletContext();
         HashSet<ActiveUser> activeUsers = (HashSet<ActiveUser>) context.getAttribute(Attributes.LOGGED_USERS);

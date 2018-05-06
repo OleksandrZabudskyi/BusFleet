@@ -12,5 +12,8 @@ public interface Attributes {
     String USER_ID = "userId";
     String LANGUAGE = "language";
     String ERROR_MESSAGE = "errorMessage";
+    String LOGGED_USERS = "loggedUsers";
 
+    String INFO_MESSAGE = "infoMessage";
+    String ACTIVE_USER = "activeUser";
 }
