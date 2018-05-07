@@ -10,12 +10,16 @@
                 <li><a href="${contextPath}/bus-fleet?act=index_page">Home</a></li>
                 <li><a href="${contextPath}/bus-fleet?act=contacts_page">Contacts</a></li>
             </ul>
-            <%--<c:if test="${sessionScope.role == User.ROLE.ADMIN}">--%>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${pageContext.request.contextPath}/bus-fleet?act=reg_page"><span class="glyphicon glyphicon-employee"></span> Sign Up</a></li>
-                <li><a href="${pageContext.request.contextPath}/bus-fleet?act=login_page"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.role eq 'ADMIN' or sessionScope.role eq 'DRIVER'}">
+                        <li><a href="${pageContext.request.contextPath}/bus-fleet?act=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${pageContext.request.contextPath}/bus-fleet?act=login_page"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
-            <%--</c:if>--%>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
                     <form>
