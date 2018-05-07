@@ -2,6 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.NameCommands;
+import ua.training.model.entity.Employee;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ public class LogoutCommand implements Command {
         if (Objects.nonNull(session)) {
             session.removeAttribute(Attributes.USER);
             session.removeAttribute(Attributes.ACTIVE_USER);
+            session.setAttribute(Attributes.ROLE, Employee.ROLE.GUEST);
         }
         return NameCommands.REDIRECT.concat(NameCommands.INDEX_PAGE);
     }

@@ -1,6 +1,7 @@
 package ua.training.controller.command;
 
 import ua.training.constant.Attributes;
+import ua.training.constant.Messages;
 import ua.training.constant.Pages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.entity.Driver;
@@ -29,6 +30,7 @@ public class DriverRegistrationCommand implements Command {
                 page = Pages.LOGIN_PAGE;
         } catch (Exception e) {
             e.printStackTrace();
+            request.setAttribute(Attributes.INFO_MESSAGE, Messages.USER_ALREADY_EXIST);
             page = Pages.REGISTRATION_PAGE;
         }
         return page;
