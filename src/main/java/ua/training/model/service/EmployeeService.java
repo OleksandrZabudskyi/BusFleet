@@ -1,6 +1,5 @@
 package ua.training.model.service;
 
-import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
 
