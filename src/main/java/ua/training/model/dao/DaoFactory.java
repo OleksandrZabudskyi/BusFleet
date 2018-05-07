@@ -2,10 +2,12 @@ package ua.training.model.dao;
 
 import ua.training.model.dao.impl.JDBCDaoFactory;
 
+import java.sql.Connection;
+
 public abstract class DaoFactory {
     private static DaoFactory daoFactory;
 
-    public abstract UserDao createUserDao();
+    public abstract EmployeeDao createUserDao(Connection connection);
 
     public static DaoFactory getInstance() {
         if (daoFactory == null) {
