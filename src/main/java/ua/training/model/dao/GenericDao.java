@@ -4,8 +4,8 @@ import ua.training.exeptions.EntityAlreadyExistException;
 
 import java.util.List;
 
-public interface GenericDao<T> extends AutoCloseable {
-    T findById(int id);
+public interface GenericDao<T, ID> extends AutoCloseable {
+    T findById(ID id);
 
     List<T> findAll();
 
@@ -13,5 +13,5 @@ public interface GenericDao<T> extends AutoCloseable {
 
     void update(T entity);
 
-    void delete(int id);
+    void delete(ID id);
 }

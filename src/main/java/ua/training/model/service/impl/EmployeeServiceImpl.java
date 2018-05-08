@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<Employee> findEmployeeByEmail(String email) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
-            return Optional.ofNullable(employeeDao.findByEmail(email));
+            return employeeDao.findByEmail(email);
         } catch (Exception e) {
             logger.error(LogMessage.NO_RESULT_FROM_DB);
         }

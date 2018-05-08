@@ -11,7 +11,6 @@
             <span class="text-danger">${emailError}</span>
             <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number"/>
             <input type="text" class="form-control" name="drivingLicenceNumber" placeholder="Driving Licence Number"/>
-            <input type="text" class="form-control" name="expiryDate" placeholder="Expiry Date"/>
             <input type="text" class="form-control" name="drivingExperience" placeholder="Driving Experience"/>
             <input type="password" class="form-control" name="password" placeholder="Password"/>
             <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm your password"/>
@@ -19,7 +18,10 @@
             <span class="text-danger">${errorMessage}</span>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+
+        <c:if test="${sessionScope.role eq 'GUEST'}">
         <h4 class="text-center"><a href="${pageContext.request.contextPath}/bus-fleet/login_page">Login</a></h4>
+        </c:if>
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

@@ -19,7 +19,9 @@ public interface Attributes {
     String ROLE = "role";
     String PASSWORD = "password";
     String DRIVER_LICENCE_NUMBER = "drivingLicenceNumber";
-    String EXPIRY_DATE = "expiryDate";
     String DRIVING_EXPERIENCE = "drivingExperience";
+    String PASSPORT_NUMBER = "passportNumber";
+    String PASSPORT_REGISTRATION = "passportRegistration";
+    String ASSIGNED = "assigned";
 
 }

@@ -1,6 +1,6 @@
 package ua.training.model.entity;
 
-public class Employee {
+public abstract class Employee {
     public enum ROLE {
         ADMIN, DRIVER, GUEST
     }
@@ -109,62 +109,5 @@ public class Employee {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';
-    }
-
-    public static final class EmployeeBuilder {
-        private int id;
-        private String firstName;
-        private String lastName;
-        private String phoneNumber;
-        private String email;
-        private String password;
-        private ROLE role;
-
-        public EmployeeBuilder setId(int id) {
-            this.id = id;
-            return this;
-        }
-
-        public EmployeeBuilder setFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public EmployeeBuilder setLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public EmployeeBuilder setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public EmployeeBuilder setEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public EmployeeBuilder setPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public EmployeeBuilder setRole(ROLE role) {
-            this.role = role;
-            return this;
-        }
-
-        public Employee createEmployee() {
-            Employee employee = new Employee();
-            employee.setId(id);
-            employee.setFirstName(firstName);
-            employee.setLastName(lastName);
-            employee.setPhoneNumber(phoneNumber);
-            employee.setEmail(email);
-            employee.setPassword(password);
-            employee.setRole(role);
-            return employee;
-        }
     }
 }

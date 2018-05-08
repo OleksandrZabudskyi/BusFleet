@@ -41,7 +41,6 @@ public class DriverRegistrationCommand implements Command {
         String lastName = request.getParameter(Attributes.LAST_NAME);
         String phoneNumber = request.getParameter(Attributes.PHONE_NUMBER);
         String drivingLicenceNumber = request.getParameter(Attributes.DRIVER_LICENCE_NUMBER);
-        int expiryDate = Integer.parseInt(request.getParameter(Attributes.EXPIRY_DATE));
         int drivingExperience = Integer.parseInt(request.getParameter(Attributes.DRIVING_EXPERIENCE));
         String email = request.getParameter(Attributes.EMAIL);
         String password = request.getParameter(Attributes.PASSWORD);
@@ -53,7 +52,6 @@ public class DriverRegistrationCommand implements Command {
                 .setEmail(email)
                 .setPassword(password)
                 .setDrivingLicenceNumber(drivingLicenceNumber)
-                .setExpiryDate(expiryDate)
                 .setDrivingExperience(drivingExperience)
                 .createDriver();
     }

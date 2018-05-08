@@ -2,9 +2,9 @@ package ua.training.model.entity;
 
 public class Driver extends Employee {
     private String drivingLicenceNumber;
-    private int expiryDate;
     private int drivingExperience;
     private boolean assigned;
+    private boolean registered;
 
     public String getDrivingLicenceNumber() {
         return drivingLicenceNumber;
@@ -12,14 +12,6 @@ public class Driver extends Employee {
 
     public void setDrivingLicenceNumber(String drivingLicenceNumber) {
         this.drivingLicenceNumber = drivingLicenceNumber;
-    }
-
-    public int getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(int expiryDate) {
-        this.expiryDate = expiryDate;
     }
 
     public int getDrivingExperience() {
@@ -38,14 +30,22 @@ public class Driver extends Employee {
         this.assigned = assigned;
     }
 
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
     @Override
     public String toString() {
         return "Driver{" +
                 super.toString() +
                 "drivingLicenceNumber='" + drivingLicenceNumber + '\'' +
-                ", expiryDate=" + expiryDate +
                 ", drivingExperience=" + drivingExperience +
                 ", assigned=" + assigned +
+                ", registered=" + registered +
                 '}';
     }
 
@@ -58,9 +58,9 @@ public class Driver extends Employee {
         private String password;
         private ROLE role;
         private String drivingLicenceNumber;
-        private int expiryDate;
         private int drivingExperience;
         private boolean assigned;
+        private boolean registered;
 
         public DriverBuilder setId(int id) {
             this.id = id;
@@ -102,11 +102,6 @@ public class Driver extends Employee {
             return this;
         }
 
-        public DriverBuilder setExpiryDate(int expiryDate) {
-            this.expiryDate = expiryDate;
-            return this;
-        }
-
         public DriverBuilder setDrivingExperience(int drivingExperience) {
             this.drivingExperience = drivingExperience;
             return this;
@@ -114,6 +109,11 @@ public class Driver extends Employee {
 
         public DriverBuilder setAssigned(boolean assigned) {
             this.assigned = assigned;
+            return this;
+        }
+
+        public DriverBuilder setRegistered(boolean registered) {
+            this.registered = registered;
             return this;
         }
 
@@ -127,9 +127,9 @@ public class Driver extends Employee {
             driver.setPassword(password);
             driver.setRole(role);
             driver.setDrivingLicenceNumber(drivingLicenceNumber);
-            driver.setExpiryDate(expiryDate);
             driver.setDrivingExperience(drivingExperience);
             driver.setAssigned(assigned);
+            driver.setRegistered(registered);
             return driver;
         }
     }
