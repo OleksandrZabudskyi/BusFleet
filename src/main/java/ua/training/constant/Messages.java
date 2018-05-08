@@ -5,5 +5,5 @@ public interface Messages {
     String PARAMS_ERROR = "%sError";
     String PARAMS_BLANK_FIELD = "%s cannot be blank";
     String USER_ALREADY_LOGGED = "Such user already logged";
-    String USER_ALREADY_EXIST = "User already exist";
+    String USER_ALREADY_EXIST = "User with such email already exist";
 }

@@ -34,10 +34,8 @@ public class CommandExtractor {
     }
 
     public Command getCommand(HttpServletRequest request) {
-        /*String action = request.getParameter(Attributes.ACT);*/
         String path = request.getRequestURI();
-        path = path.replaceAll(Attributes.DOMAIN , Attributes.EMPTY_SIGN);
-        /*return commands.getOrDefault(action, new IndexPageCommand());*/
+        path = path.replaceAll(Attributes.DOMAIN, Attributes.EMPTY_SIGN);
         return commands.getOrDefault(path, new IndexPageCommand());
     }
 
