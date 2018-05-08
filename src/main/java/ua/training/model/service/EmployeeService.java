@@ -10,6 +10,4 @@ public interface EmployeeService {
 
     void registerDriver(Driver driver) throws Exception;
 
-    Driver getDriver(String email);
-
 }

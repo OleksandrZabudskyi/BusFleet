@@ -9,7 +9,7 @@
             <p>Comfort Busfleet comprehensive and well maintained fleet comprises more than 100 buses, providing you
                 with flexible, safe and reliable options for a range of trips in a lot of direction in city and suburb. There are several
                 types of vehicles available from our seven depots</p>
-            <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/bus-fleet?act=reg_page">Driver registration</a>
+            <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/bus-fleet/reg_page">Driver registration</a>
         </div>
     </div>
     <div class="row">

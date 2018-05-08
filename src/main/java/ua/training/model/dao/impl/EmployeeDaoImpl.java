@@ -1,7 +1,7 @@
 package ua.training.model.dao.impl;
 
 import org.apache.log4j.Logger;
-import ua.training.constant.ColumnName;
+import ua.training.constant.Attributes;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
@@ -26,10 +26,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
         try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.SELECT_BY_EMAIL_QUERY)) {
             stmt.setString(1, employee.getEmail());
-            try (ResultSet resultSet = stmt.executeQuery()) {
-                if (resultSet.next()) {
-                    employee = getUserFromResultSet(resultSet);
-                }
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                employee = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -76,7 +75,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
 
-
     @Override
     public void update(Employee entity) {
 
@@ -89,16 +87,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     private Employee getUserFromResultSet(ResultSet resultSet) throws SQLException {
         Employee employee = new Employee.EmployeeBuilder().createEmployee();
-        employee.setId(resultSet.getInt(ColumnName.USER_ID));
-        employee.setFirstName(resultSet.getString(ColumnName.FIRST_NAME));
-        employee.setLastName(resultSet.getString(ColumnName.LAST_NAME));
-        employee.setEmail(resultSet.getString(ColumnName.EMAIL));
-        employee.setPassword(resultSet.getString(ColumnName.PASSWORD));
-        employee.setPhoneNumber(resultSet.getString(ColumnName.PHONE_NUMBER));
-        employee.setRole(Employee.ROLE.valueOf(resultSet.getString(ColumnName.ROLE)));
+        employee.setId(resultSet.getInt(Attributes.USER_ID));
+        employee.setFirstName(resultSet.getString(Attributes.FIRST_NAME));
+        employee.setLastName(resultSet.getString(Attributes.LAST_NAME));
+        employee.setEmail(resultSet.getString(Attributes.EMAIL));
+        employee.setPassword(resultSet.getString(Attributes.PASSWORD));
+        employee.setPhoneNumber(resultSet.getString(Attributes.PHONE_NUMBER));
+        employee.setRole(Employee.ROLE.valueOf(resultSet.getString(Attributes.ROLE)));
         return employee;
     }
-
 
 
     @Override

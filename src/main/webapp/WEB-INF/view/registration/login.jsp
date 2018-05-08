@@ -2,7 +2,7 @@
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/navigation.jsp"/>
 <div class="container">
-    <form method="POST" action="${contextPath}/bus-fleet?act=login" class="form-signin">
+    <form method="POST" action="${contextPath}/bus-fleet/login" class="form-signin">
         <h2 class="form-heading">Log in</h2>
         <span class="text-danger">${infoMessage}</span>
         <div class="form-group">

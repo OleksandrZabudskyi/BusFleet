@@ -79,4 +79,62 @@ public class Trip {
                 ", driver=" + driver +
                 '}';
     }
+
+    public static final class TripBuilder {
+
+        private int id;
+        private String tripNumber;
+        private LocalDate tripStartTime;
+        private LocalDate tripEndTime;
+        private Route route;
+        private Bus bus;
+        private Driver driver;
+
+        public TripBuilder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public TripBuilder setTripNumber(String tripNumber) {
+            this.tripNumber = tripNumber;
+            return this;
+        }
+
+        public TripBuilder setTripStartTime(LocalDate tripStartTime) {
+            this.tripStartTime = tripStartTime;
+            return this;
+        }
+
+        public TripBuilder setTripEndTime(LocalDate tripEndTime) {
+            this.tripEndTime = tripEndTime;
+            return this;
+        }
+
+        public TripBuilder setRoute(Route route) {
+            this.route = route;
+            return this;
+        }
+
+        public TripBuilder setBus(Bus bus) {
+            this.bus = bus;
+            return this;
+        }
+
+        public TripBuilder setDriver(Driver driver) {
+            this.driver = driver;
+            return this;
+        }
+
+        public Trip createTrip() {
+            Trip trip = new Trip();
+            trip.setId(id);
+            trip.setTripNumber(tripNumber);
+            trip.setTripStartTime(tripStartTime);
+            trip.setTripEndTime(tripEndTime);
+            trip.setRoute(route);
+            trip.setBus(bus);
+            trip.setDriver(driver);
+            return trip;
+        }
+    }
 }

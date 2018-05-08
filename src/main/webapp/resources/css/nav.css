@@ -47,7 +47,7 @@ header, footer {
 .mega-nav.navbar-default .navbar-nav > li.menu-list .list-category a {
     color:#333;
 }
-.darkness {
+/*.darkness {
     background: rgba(0, 0, 0, 0.7);
     display: none;
     position: absolute;
@@ -56,7 +56,7 @@ header, footer {
     height: 100%;
     width: 100%;
     z-index: 5;
-}
+}*/
 
 /*Sidebar config*/
 
@@ -93,6 +93,6 @@ body {
     padding-left: 20px;
 }
 .nav-sidebar > .active > a {
-    color: #151515;
+    color: #90b1b3;
     background-color: #428bca;
 }

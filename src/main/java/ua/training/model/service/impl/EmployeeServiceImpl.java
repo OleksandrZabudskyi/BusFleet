@@ -69,9 +69,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return result;
     }
-
-    @Override
-    public Driver getDriver(String email) {
-        return null;
-    }
 }

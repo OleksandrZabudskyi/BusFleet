@@ -7,16 +7,16 @@
         </div>
         <div class="collapse navbar-collapse" id="MainMenu">
             <ul class="nav navbar-nav menu-list">
-                <li><a href="${contextPath}/bus-fleet?act=index_page">Home</a></li>
-                <li><a href="${contextPath}/bus-fleet?act=contacts_page">Contacts</a></li>
+                <li><a href="${contextPath}/bus-fleet/index_page">Home</a></li>
+                <li><a href="${contextPath}/bus-fleet/contacts_page">Contacts</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${sessionScope.role eq 'ADMIN' or sessionScope.role eq 'DRIVER'}">
-                        <li><a href="${pageContext.request.contextPath}/bus-fleet?act=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        <li><a href="${pageContext.request.contextPath}/bus-fleet/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/bus-fleet?act=login_page"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="${pageContext.request.contextPath}/bus-fleet/login_page"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

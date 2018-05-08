@@ -2,7 +2,7 @@
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/navigation.jsp"/>
 <div class="container">
-    <form method="POST" name="registrationForm" class="form-signin" action="${contextPath}/bus-fleet?act=registration">
+    <form method="POST" name="registrationForm" class="form-signin" action="${contextPath}/bus-fleet/registration">
         <h2 class="form-signin-heading">Driver Registration</h2>
         <div class="form-group">
             <input type="text" class="form-control" name="firstName" placeholder="First Name"/>
@@ -19,7 +19,7 @@
             <span class="text-danger">${errorMessage}</span>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-        <h4 class="text-center"><a href="${pageContext.request.contextPath}/bus-fleet?act=login_page">Login</a></h4>
+        <h4 class="text-center"><a href="${pageContext.request.contextPath}/bus-fleet/login_page">Login</a></h4>
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
