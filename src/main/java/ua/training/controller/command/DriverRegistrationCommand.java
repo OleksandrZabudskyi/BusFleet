@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
 import ua.training.constant.Messages;
 import ua.training.constant.Pages;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DriverRegistrationCommand implements Command {
+    private static Logger logger = Logger.getLogger(DriverRegistrationCommand.class);
     private EmployeeService employeeService;
 
     public DriverRegistrationCommand(EmployeeService employeeService) {
@@ -25,11 +27,9 @@ public class DriverRegistrationCommand implements Command {
         try {
             Driver driver = getDriverFromRequest(request);
                 employeeService.registerDriver(driver);
-                Driver savedDriver = employeeService.getDriver(driver.getEmail());
-                request.setAttribute(Attributes.DRIVER, savedDriver);
                 page = Pages.LOGIN_PAGE;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
             request.setAttribute(Attributes.INFO_MESSAGE, Messages.USER_ALREADY_EXIST);
             page = Pages.REGISTRATION_PAGE;
         }

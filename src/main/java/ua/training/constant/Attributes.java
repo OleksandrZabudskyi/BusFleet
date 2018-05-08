@@ -1,19 +1,25 @@
 package ua.training.constant;
 
 public interface Attributes {
-    String DOMAIN = ".*/app/";
-    String PATH_WITH_EMPTY_ACT = "bus-fleet?act=";
+    String DOMAIN = ".*/app/bus-fleet/";
     String EMPTY_SIGN = "";
-    String EMAIL = "email";
-    String PASSWORD = "password";
-    String USER = "user";
-    String ROLE = "role";
-    String ACT = "act";
-    String USER_ID = "userId";
     String LANGUAGE = "language";
     String ERROR_MESSAGE = "errorMessage";
     String LOGGED_USERS = "loggedUsers";
 
     String INFO_MESSAGE = "infoMessage";
     String ACTIVE_USER = "activeUser";
+
+    //Table column name
+    String USER_ID = "userId";
+    String FIRST_NAME = "firstName";
+    String LAST_NAME = "lastName";
+    String EMAIL = "email";
+    String PHONE_NUMBER = "phoneNumber";
+    String ROLE = "role";
+    String PASSWORD = "password";
+    String DRIVER_LICENCE_NUMBER = "drivingLicenceNumber";
+    String EXPIRY_DATE = "expiryDate";
+    String DRIVING_EXPERIENCE = "drivingExperience";
+
 }

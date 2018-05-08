@@ -5,7 +5,11 @@ import ua.training.constant.NameCommands;
 import ua.training.controller.command.*;
 import ua.training.controller.command.LoginCommand;
 import ua.training.controller.command.LogoutCommand;
-import ua.training.model.service.impl.UserServiceImpl;
+import ua.training.controller.command.redirect.AdminPageCommand;
+import ua.training.controller.command.redirect.DriverPageCommand;
+import ua.training.controller.command.redirect.LoginPageCommand;
+import ua.training.controller.command.redirect.RegistrationPageCommand;
+import ua.training.model.service.impl.EmployeeServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -21,8 +25,8 @@ public class CommandExtractor {
         commands.put(NameCommands.REGISTRATION_PAGE, new RegistrationPageCommand());
         commands.put(NameCommands.ADMIN_PAGE, new AdminPageCommand());
         commands.put(NameCommands.DRIVER_PAGE, new DriverPageCommand());
-        commands.put(NameCommands.LOGIN, new LoginCommand(new UserServiceImpl()));
-        commands.put(NameCommands.REGISTRATION, new RegistrationCommand());
+        commands.put(NameCommands.LOGIN, new LoginCommand(new EmployeeServiceImpl()));
+        commands.put(NameCommands.REGISTRATION, new DriverRegistrationCommand(new EmployeeServiceImpl()));
         commands.put(NameCommands.LOGOUT, new LogoutCommand());
         commands.put(NameCommands.LANGUAGE, new LanguageCommand());
 
@@ -30,17 +34,16 @@ public class CommandExtractor {
     }
 
     public Command getCommand(HttpServletRequest request) {
-        String action = request.getParameter(Attributes.ACT);
-        return commands.getOrDefault(action, new IndexPageCommand());
+        /*String action = request.getParameter(Attributes.ACT);*/
+        String path = request.getRequestURI();
+        path = path.replaceAll(Attributes.DOMAIN , Attributes.EMPTY_SIGN);
+        /*return commands.getOrDefault(action, new IndexPageCommand());*/
+        return commands.getOrDefault(path, new IndexPageCommand());
     }
 
     public static CommandExtractor getInstance() {
         if (instance == null) {
-            synchronized (CommandExtractor.class) {
-                if (instance == null) {
-                    instance = new CommandExtractor();
-                }
-            }
+            instance = new CommandExtractor();
         }
         return instance;
     }

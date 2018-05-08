@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URL;
 
-@WebServlet(urlPatterns = {"/bus-fleet"})
+@WebServlet(urlPatterns = {"/bus-fleet/*"})
 public class Servlet extends HttpServlet {
     private CommandExtractor commandExtractor;
 
@@ -27,7 +27,7 @@ public class Servlet extends HttpServlet {
         Command command = commandExtractor.getCommand(request);
         String page = command.execute(request, response);
         if (page.contains(NameCommands.REDIRECT)) {
-            response.sendRedirect(page.replace(NameCommands.REDIRECT, Attributes.PATH_WITH_EMPTY_ACT));
+            response.sendRedirect(page.replace(NameCommands.REDIRECT, Attributes.EMPTY_SIGN));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
         }

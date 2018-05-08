@@ -2,6 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.Messages;
+import ua.training.constant.NameCommands;
 import ua.training.constant.Pages;
 import ua.training.controller.listener.ActiveUser;
 import ua.training.controller.util.RequestParametersValidator;
@@ -50,10 +51,10 @@ public class LoginCommand implements Command {
 
     private String getUserPage(Employee.ROLE role) {
         if (role.equals(Employee.ROLE.ADMIN)) {
-            return Pages.ADMIN_PAGE;
+            return NameCommands.REDIRECT.concat(NameCommands.ADMIN_PAGE);
         }
         if (role.equals(Employee.ROLE.DRIVER)) {
-            return Pages.DRIVER_PAGE;
+            return NameCommands.REDIRECT.concat(NameCommands.DRIVER_PAGE);
         }
         return Pages.INDEX_PAGE;
     }
