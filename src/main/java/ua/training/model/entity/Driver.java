@@ -39,6 +39,31 @@ public class Driver extends Employee {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Driver driver = (Driver) o;
+
+        if (drivingExperience != driver.drivingExperience) return false;
+        if (assigned != driver.assigned) return false;
+        if (registered != driver.registered) return false;
+        return drivingLicenceNumber != null ? drivingLicenceNumber.equals(driver.drivingLicenceNumber)
+                : driver.drivingLicenceNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (drivingLicenceNumber != null ? drivingLicenceNumber.hashCode() : 0);
+        result = 31 * result + drivingExperience;
+        result = 31 * result + (assigned ? 1 : 0);
+        result = 31 * result + (registered ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Driver{" +
                 super.toString() +

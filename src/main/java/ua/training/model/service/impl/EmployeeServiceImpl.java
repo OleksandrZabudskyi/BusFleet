@@ -1,9 +1,9 @@
 package ua.training.model.service.impl;
 
 import org.apache.log4j.Logger;
-import sun.misc.BASE64Encoder;
+import ua.training.constant.Attributes;
 import ua.training.constant.LogMessage;
-import ua.training.exeptions.EntityAlreadyExistException;
+import ua.training.constant.Messages;
 import ua.training.model.dao.impl.ConnectionPoolHolder;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.Random;
 
@@ -28,15 +29,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         try (EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
             return employeeDao.findByEmail(email);
         } catch (Exception e) {
-            logger.error(LogMessage.NO_RESULT_FROM_DB);
+            logger.error(LogMessage.NO_RESULT_FROM_DB, e);
+            return Optional.empty();
         }
-        return Optional.empty();
+
     }
 
     @Override
     public void registerDriver(Driver driver) throws Exception {
         Connection connection = ConnectionPoolHolder.getConnection();
-        try (EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)){
+        try (EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
             driver.setRole(Employee.ROLE.DRIVER);
             driver.setPassword(makePasswordHash(driver.getPassword(), Integer.toString(getRandom().nextInt())));
             employeeDao.create(driver);
@@ -48,16 +50,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private String makePasswordHash(String password, String salt) {
         try {
-            String saltedAndHashed = password + "," + salt;
-            MessageDigest digest = MessageDigest.getInstance("MD5");
+            String saltedAndHashed = password.concat(Attributes.COMMA_SIGN).concat(salt);
+            MessageDigest digest = MessageDigest.getInstance(Attributes.MD5);
             digest.update(saltedAndHashed.getBytes());
-            BASE64Encoder encoder = new BASE64Encoder();
-            byte hashedBytes[] = (new String(digest.digest(), "UTF-8")).getBytes();
-            return encoder.encode(hashedBytes) + "," + salt;
+            byte hashedBytes[] = (new String(digest.digest(), Attributes.UTF8)).getBytes();
+            String encode = Base64.getEncoder().encodeToString(hashedBytes);
+            return encode.concat(Attributes.COMMA_SIGN).concat(salt);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("MD5 is not available", e);
+            throw new RuntimeException(Messages.MD5_IS_NOT_AVAILABLE, e);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("UTF-8 unavailable", e);
+            throw new RuntimeException(Messages.UTF8_IS_NOT_AVAILABLE, e);
         }
     }
 

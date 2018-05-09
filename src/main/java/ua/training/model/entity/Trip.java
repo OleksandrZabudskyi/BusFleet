@@ -1,12 +1,12 @@
 package ua.training.model.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Trip {
     private int id;
     private String tripNumber;
-    private LocalDate tripStartTime;
-    private LocalDate tripEndTime;
+    private LocalDateTime tripStartTime;
+    private LocalDateTime tripEndTime;
     private Route route;
     private Bus bus;
     private Driver driver;
@@ -27,19 +27,19 @@ public class Trip {
         this.tripNumber = tripNumber;
     }
 
-    public LocalDate getTripStartTime() {
+    public LocalDateTime getTripStartTime() {
         return tripStartTime;
     }
 
-    public void setTripStartTime(LocalDate tripStartTime) {
+    public void setTripStartTime(LocalDateTime tripStartTime) {
         this.tripStartTime = tripStartTime;
     }
 
-    public LocalDate getTripEndTime() {
+    public LocalDateTime getTripEndTime() {
         return tripEndTime;
     }
 
-    public void setTripEndTime(LocalDate tripEndTime) {
+    public void setTripEndTime(LocalDateTime tripEndTime) {
         this.tripEndTime = tripEndTime;
     }
 
@@ -84,8 +84,8 @@ public class Trip {
 
         private int id;
         private String tripNumber;
-        private LocalDate tripStartTime;
-        private LocalDate tripEndTime;
+        private LocalDateTime tripStartTime;
+        private LocalDateTime tripEndTime;
         private Route route;
         private Bus bus;
         private Driver driver;
@@ -100,12 +100,12 @@ public class Trip {
             return this;
         }
 
-        public TripBuilder setTripStartTime(LocalDate tripStartTime) {
+        public TripBuilder setTripStartTime(LocalDateTime tripStartTime) {
             this.tripStartTime = tripStartTime;
             return this;
         }
 
-        public TripBuilder setTripEndTime(LocalDate tripEndTime) {
+        public TripBuilder setTripEndTime(LocalDateTime tripEndTime) {
             this.tripEndTime = tripEndTime;
             return this;
         }

@@ -6,6 +6,4 @@ import java.util.Optional;
 
 public interface EmployeeDao extends GenericDao<Employee, Integer> {
     Optional<Employee> findByEmail(String email);
-
-    void deleteByName(String name);
 }

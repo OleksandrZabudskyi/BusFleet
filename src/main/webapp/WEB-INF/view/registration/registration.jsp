@@ -18,10 +18,6 @@
             <span class="text-danger">${errorMessage}</span>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-
-        <c:if test="${sessionScope.role eq 'GUEST'}">
-        <h4 class="text-center"><a href="${pageContext.request.contextPath}/bus-fleet/login_page">Login</a></h4>
-        </c:if>
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

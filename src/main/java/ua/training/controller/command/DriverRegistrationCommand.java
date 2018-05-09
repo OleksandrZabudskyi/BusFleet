@@ -26,8 +26,8 @@ public class DriverRegistrationCommand implements Command {
         String page;
         try {
             Driver driver = getDriverFromRequest(request);
-                employeeService.registerDriver(driver);
-                page = Pages.LOGIN_PAGE;
+            employeeService.registerDriver(driver);
+            page = Pages.LOGIN_PAGE;
         } catch (Exception e) {
             logger.error(e);
             request.setAttribute(Attributes.INFO_MESSAGE, Messages.USER_ALREADY_EXIST);

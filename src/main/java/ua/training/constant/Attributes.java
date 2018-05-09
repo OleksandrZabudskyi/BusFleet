@@ -3,6 +3,9 @@ package ua.training.constant;
 public interface Attributes {
     String DOMAIN = ".*/app/bus-fleet/";
     String EMPTY_SIGN = "";
+    String COMMA_SIGN = ",";
+    String UTF8 = "UTF-8";
+    String MD5 = "MD5";
     String LANGUAGE = "language";
     String ERROR_MESSAGE = "errorMessage";
     String LOGGED_USERS = "loggedUsers";
@@ -23,5 +26,5 @@ public interface Attributes {
     String PASSPORT_NUMBER = "passportNumber";
     String PASSPORT_REGISTRATION = "passportRegistration";
     String ASSIGNED = "assigned";
-
+    String REGISTERED = "registered";
 }
