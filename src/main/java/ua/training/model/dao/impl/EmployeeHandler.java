@@ -40,11 +40,15 @@ public class EmployeeHandler implements AbstractEmployeeHandler {
                 Admin admin = (Admin) employee;
                 statement.setString(7, admin.getPassportNumber());
                 statement.setString(8, admin.getPassportRegistration());
+                statement.setNull(9, java.sql.Types.NULL);
+                statement.setNull(10, java.sql.Types.NULL);
                 return;
             case DRIVER:
                 Driver driver = (Driver) employee;
                 statement.setString(7, driver.getDrivingLicenceNumber());
                 statement.setInt(8, driver.getDrivingExperience());
+                statement.setNull(9, java.sql.Types.NULL);
+                statement.setNull(10, java.sql.Types.NULL);
                 return;
             default:
                 throw new IllegalArgumentException(Messages.INVALID_ROLE + employee.getRole());
