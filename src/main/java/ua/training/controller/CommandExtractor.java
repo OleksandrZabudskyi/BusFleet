@@ -10,6 +10,7 @@ import ua.training.controller.command.redirect.DriverPageCommand;
 import ua.training.controller.command.redirect.LoginPageCommand;
 import ua.training.controller.command.redirect.RegistrationPageCommand;
 import ua.training.model.service.impl.EmployeeServiceImpl;
+import ua.training.model.service.impl.TripServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class CommandExtractor {
         commands.put(NameCommands.REGISTRATION, new DriverRegistrationCommand(new EmployeeServiceImpl()));
         commands.put(NameCommands.LOGOUT, new LogoutCommand());
         commands.put(NameCommands.LANGUAGE, new LanguageCommand());
+        commands.put(NameCommands.ALL_TRIPS, new TripsAndRoutesCommand(new TripServiceImpl()));
 
 
     }
