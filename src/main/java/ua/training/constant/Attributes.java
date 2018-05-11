@@ -44,4 +44,5 @@ public interface Attributes {
     String TRIP_END_TIME = "tripEndTime";
     String BUS_ID = "busId";
     String DRIVER_ID = "driverId";
+    String TRIPS = "trips";
 }
