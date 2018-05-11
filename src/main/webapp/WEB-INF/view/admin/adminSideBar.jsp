@@ -1,19 +1,22 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar ">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="">Admin page</a></li>
-                <li><a href="#">All Trips</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/routes">Route</a></li>
-                <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/free-buses">Free Buses</a></li>
-                <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/free-drivers">Free Drivers</a></li>
-                <li><a href="${pageContext.request.contextPath}/bus-fleet/drivers-with-buses">GetAvailableBusesWithDrivers</a></li>
-            </ul>
+<div class="container">
+    <div class="row row-offcanvas row-offcanvas-left">
+
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <p class="visible-xs">
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"><i class="glyphicon glyphicon-chevron-left"></i></button>
+            </p>
+            <div class="well sidebar-nav">
+                <ul class="nav">
+                    <li>Buses and Drivers</li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/bus-fleet/admin/free-buses">Free Buses</a></li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/free-drivers">Free Drivers</a></li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/drivers-with-buses">AvailableBusesWithDrivers</a></li>
+                    <li>Route</li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/routes">Get Routes</a></li>
+                    <li>Trips</li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/trips_and_routes">Get Trips</a></li>
+                    <li>Profile</li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/user_info">Info</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Welcome admin!!</h1>
-        </div>
-    </div>
-</div>

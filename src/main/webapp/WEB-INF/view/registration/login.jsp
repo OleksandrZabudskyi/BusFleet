@@ -3,15 +3,15 @@
 <jsp:include page="../shared/navigation.jsp"/>
 <div class="container">
     <form method="POST" action="${contextPath}/bus-fleet/login" class="form-signin">
-        <h2 class="form-heading">Log in</h2>
+        <h2 class="form-heading"><fmt:message key="label.login"/></h2>
         <span class="text-danger">${infoMessage}</span>
         <div class="form-group">
-            <input name="email" type="text" class="form-control" placeholder="Email or phone"/>
+            <input name="email" type="text" class="form-control" placeholder="<fmt:message key="email"/>"/>
             <span class="text-danger">${emailError}</span>
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <input name="password" type="password" class="form-control" placeholder="<fmt:message key="password"/>"/>
             <span class="text-danger">${passwordError}</span>
             <span class="text-danger">${errorMessage}</span>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="label.login"/></button>
         </div>
     </form>
 </div>

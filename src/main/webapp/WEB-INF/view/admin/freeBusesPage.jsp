@@ -2,7 +2,7 @@
 <jsp:include page="../shared/header.jsp"/>
 <jsp:include page="../shared/navigation.jsp"/>
 <jsp:include page="adminSideBar.jsp"/>
-<jsp:include page="tripTable.jsp"/>
+<jsp:include page="allBusesTable.jsp"/>
 </div>
 </div>
 </body>
