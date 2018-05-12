@@ -5,14 +5,15 @@ import ua.training.constant.Attributes;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.util.HashSet;
-import java.util.Set;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        Set<ActiveUser> loggedUsers = new HashSet<>();
+        Map<ActiveUser, HttpSession> loggedUsers = new ConcurrentHashMap<>();
         servletContextEvent.getServletContext().setAttribute(Attributes.LOGGED_USERS, loggedUsers);
     }
 

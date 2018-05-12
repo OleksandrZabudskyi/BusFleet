@@ -6,9 +6,11 @@ import ua.training.constant.LogMessage;
 import ua.training.model.entity.Employee;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 
 public class ActiveUser implements HttpSessionBindingListener {
     private static Logger logger = Logger.getLogger(ActiveUser.class);
@@ -24,27 +26,32 @@ public class ActiveUser implements HttpSessionBindingListener {
     }
 
     @Override
-    public void valueBound(HttpSessionBindingEvent httpSessionBindingEvent) {
-        addLoginUser(httpSessionBindingEvent);
+    public void valueBound(HttpSessionBindingEvent event) {
+        addLoggedUserIfNotPresent(event);
+    }
+
+    private void addLoggedUserIfNotPresent(HttpSessionBindingEvent event) {
+        ServletContext context = event.getSession().getServletContext();
+        Map<ActiveUser, HttpSession> activeUsers = (Map<ActiveUser, HttpSession>) context.getAttribute(Attributes.LOGGED_USERS);
+        Optional<HttpSession> oldSession = Optional.ofNullable(activeUsers.get(this));
+        if (oldSession.isPresent()) {
+            oldSession.get().invalidate();
+            alreadyLoggedIn = true;
+        }
+        activeUsers.put(this, event.getSession());
+        logger.debug(LogMessage.ADD_USER + employee.getEmail());
     }
 
     @Override
-    public void valueUnbound(HttpSessionBindingEvent httpSessionBindingEvent) {
-        removeLoginUser(httpSessionBindingEvent);
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        removeLoggedUser(event);
     }
 
-    private void removeLoginUser(HttpSessionBindingEvent event) {
+    private void removeLoggedUser(HttpSessionBindingEvent event) {
         ServletContext context = event.getSession().getServletContext();
-        HashSet<ActiveUser> activeUsers = (HashSet<ActiveUser>) context.getAttribute(Attributes.LOGGED_USERS);
+        Map<ActiveUser, HttpSession> activeUsers = (Map<ActiveUser, HttpSession>) context.getAttribute(Attributes.LOGGED_USERS);
         activeUsers.remove(this);
         logger.debug(LogMessage.REMOVE_USER + employee.getEmail());
-    }
-
-    private void addLoginUser(HttpSessionBindingEvent event) {
-        ServletContext context = event.getSession().getServletContext();
-        HashSet<ActiveUser> activeUsers = (HashSet<ActiveUser>) context.getAttribute(Attributes.LOGGED_USERS);
-        alreadyLoggedIn = !activeUsers.add(this);
-        logger.debug(LogMessage.ADD_USER + employee.getEmail());
     }
 
     @Override
