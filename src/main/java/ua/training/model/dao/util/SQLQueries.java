@@ -40,6 +40,7 @@ public interface SQLQueries {
     String FIND_FREE_BUSES = "SELECT *FROM bus WHERE used = 0";
 
     /*join requests*/
-    String FIND_TRIPS_WITH_ROUTES = "SELECT * FROM trip JOIN route ON trip.routeId = route.routeId";
+    String FIND_TRIPS_WITH_ROUTES = "SELECT * FROM trip JOIN route ON trip.routeId = route.routeId LIMIT ?, ?";
 
+    String FIND_ALL_TRIPS_COUNT = "SELECT COUNT(*) as rowsNumber FROM trip;";
 }

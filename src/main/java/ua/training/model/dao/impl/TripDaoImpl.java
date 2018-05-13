@@ -3,6 +3,7 @@ package ua.training.model.dao.impl;
 import ua.training.constant.Attributes;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.TripDao;
+import ua.training.model.dao.mapper.RouteMapper;
 import ua.training.model.dao.util.SQLQueries;
 import ua.training.model.entity.Bus;
 import ua.training.model.entity.Driver;
@@ -116,6 +117,37 @@ public class TripDaoImpl implements TripDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Optional<List<Trip>> findTripsWithRoutes(int offset, int limit) {
+        List<Trip> resultList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTES)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Trip trip = geTripFromResultSet(resultSet);
+                trip.setRoute(new RouteMapper().extractFromResultSet(resultSet));
+                resultList.add(trip);
+            }
+            return Optional.of(resultList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int getNumberOfRecords() {
+        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.FIND_ALL_TRIPS_COUNT)) {
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(Attributes.ROWS_NUMBER);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
     @Override

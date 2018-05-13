@@ -13,6 +13,9 @@ public interface Attributes {
     String INFO_MESSAGE = "infoMessage";
     String ACTIVE_USER = "activeUser";
 
+    String ROWS_NUMBER = "rowsNumber";
+    String PAGE = "page";
+
     /*Table column name*/
     //user
     String USER_ID = "userId";
@@ -45,4 +48,7 @@ public interface Attributes {
     String BUS_ID = "busId";
     String DRIVER_ID = "driverId";
     String TRIPS = "trips";
+    String NUMBER_OF_PAGES = "numberOfPages";
+    String CURRENT_PAGE = "currentPage";
+    String USER_NAME = "userName";
 }
