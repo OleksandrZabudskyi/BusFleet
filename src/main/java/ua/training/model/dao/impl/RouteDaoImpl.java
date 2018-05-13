@@ -1,10 +1,9 @@
 package ua.training.model.dao.impl;
 
-import ua.training.constant.Attributes;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.RouteDao;
+import ua.training.model.dao.mapper.RouteMapper;
 import ua.training.model.dao.util.SQLQueries;
-import ua.training.model.entity.Employee;
 import ua.training.model.entity.Route;
 
 import java.sql.*;
@@ -35,12 +34,7 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     private Route getRouteFromResultSet(ResultSet resultSet) throws SQLException {
-        Route route = new Route();
-        route.setId(resultSet.getInt(Attributes.ROUTE_ID));
-        route.setRouteName(resultSet.getString(Attributes.ROTE_NAME));
-        route.setDestinationFrom(resultSet.getString(Attributes.DESTINATION_FROM));
-        route.setDestinationTo(resultSet.getString(Attributes.DESTINATION_TO));
-        return route;
+        return new RouteMapper().extractFromResultSet(resultSet);
     }
 
     @Override
