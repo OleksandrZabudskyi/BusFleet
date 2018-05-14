@@ -2,9 +2,14 @@ package ua.training.controller;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.NameCommands;
+import ua.training.constant.Regex;
 import ua.training.controller.command.*;
 import ua.training.controller.command.LoginCommand;
 import ua.training.controller.command.LogoutCommand;
+import ua.training.controller.command.admin.FreeBusesCommand;
+import ua.training.controller.command.admin.SetBusCommand;
+import ua.training.controller.command.admin.TripsAndRoutesCommand;
+import ua.training.controller.command.driver.DriverRegistrationCommand;
 import ua.training.controller.command.redirect.AdminPageCommand;
 import ua.training.controller.command.redirect.DriverPageCommand;
 import ua.training.controller.command.redirect.LoginPageCommand;
@@ -31,13 +36,15 @@ public class CommandExtractor {
         commands.put(NameCommands.LOGOUT, new LogoutCommand());
         commands.put(NameCommands.LANGUAGE, new LanguageCommand());
         commands.put(NameCommands.ALL_TRIPS, new TripsAndRoutesCommand(new TripServiceImpl()));
+        commands.put(NameCommands.FREE_BUSES, new FreeBusesCommand(new TripServiceImpl()));
+        commands.put(NameCommands.SET_BUS, new SetBusCommand(new TripServiceImpl()));
 
 
     }
 
     public Command getCommand(HttpServletRequest request) {
         String path = request.getRequestURI();
-        path = path.replaceAll(Attributes.DOMAIN, Attributes.EMPTY_SIGN);
+        path = path.replaceAll(Regex.URL, Attributes.EMPTY_SIGN);
         return commands.getOrDefault(path, new IndexPageCommand());
     }
 

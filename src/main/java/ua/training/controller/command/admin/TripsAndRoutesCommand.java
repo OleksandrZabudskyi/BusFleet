@@ -1,8 +1,9 @@
-package ua.training.controller.command;
+package ua.training.controller.command.admin;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.GlobalConstants;
 import ua.training.constant.Pages;
+import ua.training.controller.command.Command;
 import ua.training.model.entity.Trip;
 import ua.training.model.service.TripService;
 

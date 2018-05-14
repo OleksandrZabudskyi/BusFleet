@@ -8,9 +8,9 @@
             <div class="well sidebar-nav">
                 <ul class="nav">
                     <li>Buses and Drivers</li>
-                    <li class="active"><a href="${pageContext.request.contextPath}/bus-fleet/admin/free-buses">Free Buses</a></li>
-                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/free-drivers">Free Drivers</a></li>
-                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/drivers-with-buses">Buses With Drivers</a></li>
+                    <li class="active"><a href="${pageContext.request.contextPath}/bus-fleet/admin/free_buses">Free Buses</a></li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/free_drivers">Free Drivers</a></li>
+                    <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/drivers_with_buses">Buses With Drivers</a></li>
                     <li>Route</li>
                     <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/routes">Get Routes</a></li>
                     <li>Trips</li>

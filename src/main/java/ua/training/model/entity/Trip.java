@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class Trip {
     private int id;
-    private String tripNumber;
-    private LocalDateTime tripStartTime;
-    private LocalDateTime tripEndTime;
+    private String number;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private Route route;
     private Bus bus;
     private Driver driver;
@@ -19,28 +19,28 @@ public class Trip {
         this.id = id;
     }
 
-    public String getTripNumber() {
-        return tripNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setTripNumber(String tripNumber) {
-        this.tripNumber = tripNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public LocalDateTime getTripStartTime() {
-        return tripStartTime;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setTripStartTime(LocalDateTime tripStartTime) {
-        this.tripStartTime = tripStartTime;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDateTime getTripEndTime() {
-        return tripEndTime;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setTripEndTime(LocalDateTime tripEndTime) {
-        this.tripEndTime = tripEndTime;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public Route getRoute() {
@@ -71,9 +71,9 @@ public class Trip {
     public String toString() {
         return "Trip{" +
                 "id=" + id +
-                ", tripNumber='" + tripNumber + '\'' +
-                ", tripStartTime=" + tripStartTime +
-                ", tripEndTime=" + tripEndTime +
+                ", number='" + number + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 ", route=" + route +
                 ", bus=" + bus +
                 ", driver=" + driver +
@@ -83,9 +83,9 @@ public class Trip {
     public static final class TripBuilder {
 
         private int id;
-        private String tripNumber;
-        private LocalDateTime tripStartTime;
-        private LocalDateTime tripEndTime;
+        private String number;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
         private Route route;
         private Bus bus;
         private Driver driver;
@@ -95,18 +95,18 @@ public class Trip {
             return this;
         }
 
-        public TripBuilder setTripNumber(String tripNumber) {
-            this.tripNumber = tripNumber;
+        public TripBuilder setNumber(String number) {
+            this.number = number;
             return this;
         }
 
-        public TripBuilder setTripStartTime(LocalDateTime tripStartTime) {
-            this.tripStartTime = tripStartTime;
+        public TripBuilder setStartTime(LocalDateTime startTime) {
+            this.startTime = startTime;
             return this;
         }
 
-        public TripBuilder setTripEndTime(LocalDateTime tripEndTime) {
-            this.tripEndTime = tripEndTime;
+        public TripBuilder setEndTime(LocalDateTime endTime) {
+            this.endTime = endTime;
             return this;
         }
 
@@ -128,9 +128,9 @@ public class Trip {
         public Trip createTrip() {
             Trip trip = new Trip();
             trip.setId(id);
-            trip.setTripNumber(tripNumber);
-            trip.setTripStartTime(tripStartTime);
-            trip.setTripEndTime(tripEndTime);
+            trip.setNumber(number);
+            trip.setStartTime(startTime);
+            trip.setEndTime(endTime);
             trip.setRoute(route);
             trip.setBus(bus);
             trip.setDriver(driver);

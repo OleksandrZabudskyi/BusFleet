@@ -5,8 +5,6 @@ import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.BusDao;
 import ua.training.model.dao.util.SQLQueries;
 import ua.training.model.entity.Bus;
-import ua.training.model.entity.Route;
-import ua.training.model.entity.Trip;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -37,7 +35,8 @@ public class BusDaoImpl implements BusDao {
 
     private Bus geBusFromResultSet(ResultSet resultSet) throws SQLException {
         Bus bus = new Bus();
-        bus.setBusModel(resultSet.getString(Attributes.BUS_MODEL));
+        bus.setId(resultSet.getInt(Attributes.BUS_ID));
+        bus.setModel(resultSet.getString(Attributes.BUS_MODEL));
         bus.setLicensePlate(resultSet.getString(Attributes.LICENCE_PLATE));
         bus.setManufactureYear(resultSet.getInt(Attributes.MANUFACTURE_YEAR));
         bus.setParkingSpot(resultSet.getString(Attributes.PARKING_SPOT));
@@ -71,10 +70,12 @@ public class BusDaoImpl implements BusDao {
     }
 
     private void setBusParameters(Bus entity, PreparedStatement statement) throws SQLException {
-        statement.setString(1, entity.getBusModel());
+        statement.setString(1, entity.getModel());
         statement.setString(2, entity.getLicensePlate());
         statement.setInt(3, entity.getManufactureYear());
         statement.setString(4, entity.getParkingSpot());
+        statement.setBoolean(5, entity.isUsed());
+        statement.setInt(6, entity.getId());
     }
 
     @Override

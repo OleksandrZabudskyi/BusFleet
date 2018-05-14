@@ -1,10 +1,10 @@
-package ua.training.controller.command;
+package ua.training.controller.command.driver;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
 import ua.training.constant.Messages;
 import ua.training.constant.Pages;
-import ua.training.exeptions.EntityAlreadyExistException;
+import ua.training.controller.command.Command;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
 

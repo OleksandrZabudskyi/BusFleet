@@ -10,16 +10,20 @@
                     <th>License Plate</th>
                     <th>Manufacture Year</th>
                     <th>Parking Spot</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
                 <c:forEach var="bus" items="${buses}">
                     <tr>
                         <td>${bus.id}</td>
-                        <td>${bus.busModel}</td>
+                        <td>${bus.model}</td>
                         <td>${bus.licensePlate}</td>
                         <td>${bus.manufactureYear}</td>
                         <td>${bus.parkingSpot}</td>
+                        <td><a class="btn btn-primary"
+                               href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?tripId=${tripId}&busId=${bus.id}"
+                               role="button">Add To Trip</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

@@ -41,15 +41,16 @@ public class TripDaoImpl implements TripDao {
 
     private Trip geTripFromResultSet(ResultSet resultSet) throws SQLException {
         Trip trip = new Trip();
-        trip.setTripNumber(resultSet.getString(Attributes.TRIP_NUMBER));
+        trip.setId(resultSet.getInt(Attributes.TRIP_ID));
+        trip.setNumber(resultSet.getString(Attributes.TRIP_NUMBER));
         java.sql.Timestamp startTimeStamp = resultSet.getTimestamp(Attributes.TRIP_START_TIME);
         LocalDateTime startDateTime = LocalDateTime
                 .ofInstant(startTimeStamp.toInstant(), ZoneOffset.ofHours(0));
-        trip.setTripStartTime(startDateTime);
+        trip.setStartTime(startDateTime);
         java.sql.Timestamp endTimeStamp = resultSet.getTimestamp(Attributes.TRIP_END_TIME);
         LocalDateTime endDateTime = LocalDateTime
                 .ofInstant(endTimeStamp.toInstant(), ZoneOffset.ofHours(0));
-        trip.setTripEndTime(endDateTime);
+        trip.setEndTime(endDateTime);
         Route route = new Route();
         route.setId(resultSet.getInt(Attributes.ROUTE_ID));
         trip.setRoute(route);
@@ -79,10 +80,10 @@ public class TripDaoImpl implements TripDao {
     @Override
     public void create(Trip entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_TRIP)) {
-            setRouteParameters(entity, statement);
+            setTripParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(entity.getTripNumber());
+            throw new EntityAlreadyExistException(entity.getNumber());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -91,22 +92,33 @@ public class TripDaoImpl implements TripDao {
     @Override
     public void update(Trip entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_TRIP_BY_ID)) {
-            setRouteParameters(entity, statement);
+            setTripParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void setRouteParameters(Trip entity, PreparedStatement statement) throws SQLException {
-        statement.setString(1, entity.getTripNumber());
-        java.sql.Timestamp startTimeStamp = Timestamp.from(entity.getTripStartTime().toInstant(ZoneOffset.ofHours(0)));
+    private void setTripParameters(Trip entity, PreparedStatement statement) throws SQLException {
+        statement.setString(1, entity.getNumber());
+        java.sql.Timestamp startTimeStamp = Timestamp.from(entity.getStartTime().toInstant(ZoneOffset.ofHours(0)));
         statement.setTimestamp(2, startTimeStamp);
-        java.sql.Timestamp endTimeStamp = Timestamp.from(entity.getTripEndTime().toInstant(ZoneOffset.ofHours(0)));
+        java.sql.Timestamp endTimeStamp = Timestamp.from(entity.getEndTime().toInstant(ZoneOffset.ofHours(0)));
         statement.setTimestamp(3, endTimeStamp);
         statement.setInt(4, entity.getRoute().getId());
-        statement.setInt(5, entity.getBus().getId());
-        statement.setInt(6, entity.getDriver().getId());
+        int busId = entity.getBus().getId();
+        if (busId == 0) {
+            statement.setNull(5, java.sql.Types.NULL);
+        } else {
+            statement.setInt(5, busId);
+        }
+        int driverId = entity.getDriver().getId();
+        if (driverId == 0) {
+            statement.setNull(6, java.sql.Types.NULL);
+        } else {
+            statement.setInt(6, driverId);
+        }
+        statement.setInt(7, entity.getId());
     }
 
     @Override

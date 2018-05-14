@@ -38,7 +38,7 @@ public interface Attributes {
     String DESTINATION_TO = "destinationTo";
     //bus
     String BUS_MODEL = "busModel";
-    String LICENCE_PLATE = "licencePlate";
+    String LICENCE_PLATE = "licensePlate";
     String MANUFACTURE_YEAR = "manufactureYear";
     String PARKING_SPOT = "parkingSpot";
     //trip
@@ -51,4 +51,6 @@ public interface Attributes {
     String NUMBER_OF_PAGES = "numberOfPages";
     String CURRENT_PAGE = "currentPage";
     String USER_NAME = "userName";
+    String TRIP_ID = "tripId";
+    String BUSES = "buses";
 }

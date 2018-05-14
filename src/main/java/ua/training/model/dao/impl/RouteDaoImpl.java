@@ -57,7 +57,7 @@ public class RouteDaoImpl implements RouteDao {
             setRouteParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(entity.getRouteName());
+            throw new EntityAlreadyExistException(entity.getName());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +74,7 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     private void setRouteParameters(Route route, PreparedStatement statement) throws SQLException {
-        statement.setString(1, route.getRouteName());
+        statement.setString(1, route.getName());
         statement.setString(2, route.getDestinationFrom());
         statement.setString(3, route.getDestinationTo());
     }
