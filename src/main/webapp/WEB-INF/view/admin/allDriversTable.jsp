@@ -21,9 +21,16 @@
                         <td>${driver.lastName}</td>
                         <td>${driver.drivingLicenceNumber}</td>
                         <td>${driver.drivingExperience}</td>
-                        <td><a class="btn btn-primary"
-                               href="${pageContext.request.contextPath}/bus-fleet/admin/set_driver?tripId=${tripId}&driverId=${driver.id}&page=${page}"
-                               role="button">Add To Trip</a></td>
+                        <c:choose>
+                            <c:when test="${driver.assigned == false}">
+                                <td><a class="btn btn-primary"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/set_driver?tripId=${tripId}&driverId=${driver.id}&page=${page}"
+                                       role="button">Add To Trip</a></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td></td>
+                            </c:otherwise>
+                        </c:choose>
                     </tr>
                 </c:forEach>
                 </tbody>

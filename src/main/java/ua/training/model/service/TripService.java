@@ -20,4 +20,6 @@ public interface TripService {
     List<Driver> getAllDrivers();
 
     void setDriver(int tripId, int driverId);
+
+    void deleteDriver(int tripId);
 }

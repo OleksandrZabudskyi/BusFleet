@@ -17,4 +17,5 @@ public interface NameCommands {
     String DELETE_BUS = "delete_bus";
     String ALL_DRIVERS = "all_drivers";
     String SET_DRIVER = "set_driver";
+    String DELETE_DRIVER = "delete_driver";
 }

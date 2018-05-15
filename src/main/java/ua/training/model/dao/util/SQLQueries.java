@@ -7,10 +7,10 @@ public interface SQLQueries {
     String FIND_USER_BY_ID = "SELECT * FROM user WHERE userId = ?";
     String INSERT_USER = "INSERT INTO user (firstName, lastName, " +
             "email, password, phoneNumber, role, drivingLicenceNumber, drivingExperience, passportNumber," +
-            " passportRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            " passportRegistration, assigned, registered, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String UPDATE_USER_BY_ID = "UPDATE user SET firstName = ? , lastName = ?, email = ?, password = ?," +
-            " phoneNumber = ?, role = ?, drivingLicenceNumber = ?, drivingExperience = ?, passportNumber = ?," +
-            " passportRegistration = ? WHERE userId = ?";
+            " phoneNumber = ?, role = ?, drivingLicenceNumber = ?, drivingExperience = ?," +
+            "  passportNumber = ?, passportRegistration = ?, assigned = ?, registered = ? WHERE userId = ?";
     String DELETE_USER_BY_ID = "DELETE FROM user WHERE userId = ?";
 
     /*route table*/

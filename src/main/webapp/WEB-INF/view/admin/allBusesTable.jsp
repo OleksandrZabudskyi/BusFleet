@@ -22,14 +22,14 @@
                         <td>${bus.manufactureYear}</td>
                         <td>${bus.parkingSpot}</td>
                         <c:choose>
-                        <c:when test="${bus.used == false}">
-                        <td><a class="btn btn-primary"
-                               href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?tripId=${tripId}&busId=${bus.id}&page=${page}"
-                               role="button">Add To Trip</a></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td></td>
-                        </c:otherwise>
+                            <c:when test="${bus.used == false}">
+                                <td><a class="btn btn-primary"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?tripId=${tripId}&busId=${bus.id}&page=${page}"
+                                       role="button">Add To Trip</a></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td></td>
+                            </c:otherwise>
                         </c:choose>
                     </tr>
                 </c:forEach>

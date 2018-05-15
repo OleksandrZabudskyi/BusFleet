@@ -38,10 +38,13 @@ public class EmployeeHandler implements AbstractEmployeeHandler {
         switch (employee.getRole()) {
             case ADMIN:
                 Admin admin = (Admin) employee;
-                statement.setString(7, admin.getPassportNumber());
-                statement.setString(8, admin.getPassportRegistration());
-                statement.setNull(9, java.sql.Types.NULL);
-                statement.setNull(10, java.sql.Types.NULL);
+                statement.setNull(7, java.sql.Types.NULL);
+                statement.setNull(8, java.sql.Types.NULL);
+                statement.setString(9, admin.getPassportNumber());
+                statement.setString(10, admin.getPassportRegistration());
+                statement.setNull(11, java.sql.Types.NULL);
+                statement.setNull(12, java.sql.Types.NULL);
+                statement.setInt(13, admin.getId());
                 return;
             case DRIVER:
                 Driver driver = (Driver) employee;
@@ -49,6 +52,9 @@ public class EmployeeHandler implements AbstractEmployeeHandler {
                 statement.setInt(8, driver.getDrivingExperience());
                 statement.setNull(9, java.sql.Types.NULL);
                 statement.setNull(10, java.sql.Types.NULL);
+                statement.setBoolean(11, driver.isAssigned());
+                statement.setBoolean(12, driver.isRegistered());
+                statement.setInt(13, driver.getId());
                 return;
             default:
                 throw new IllegalArgumentException(Messages.INVALID_ROLE + employee.getRole());

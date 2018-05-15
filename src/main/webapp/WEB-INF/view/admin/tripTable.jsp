@@ -46,7 +46,11 @@
                                        role="button">Add Driver</a></td>
                             </c:when>
                             <c:otherwise>
-                                <td>${trip.driver.lastName}</td>
+                                <td>${trip.driver.id}
+                                    <a class="btn btn-primary btn-sm"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/delete_driver?tripId=${trip.id}&page=${currentPage}"
+                                       role="button">Delete</a></td>
+                                </td>
                             </c:otherwise>
                         </c:choose>
                     </tr>

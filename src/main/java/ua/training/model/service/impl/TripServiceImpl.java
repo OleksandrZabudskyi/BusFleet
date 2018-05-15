@@ -96,11 +96,13 @@ public class TripServiceImpl implements TripService {
              BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
             Optional<Trip> tripOptional = tripDao.findById(tripId);
             connection.setAutoCommit(false);
+
             if (tripOptional.isPresent()) {
                 Trip trip = tripOptional.get();
                 int busId = trip.getBus().getId();
                 trip.getBus().setId(0);
                 tripDao.update(trip);
+
                 Optional<Bus> busOptional = busDao.findById(busId);
                 if (busOptional.isPresent()) {
                     Bus bus = busOptional.get();
@@ -124,10 +126,9 @@ public class TripServiceImpl implements TripService {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
             List<Employee> employees = employeeDao.findAll();
-           List<Driver> drivers = employees.stream()
+            return employees.stream()
                     .filter(employee -> employee instanceof Driver)
                     .map(employee -> (Driver) employee).collect(Collectors.toList());
-            return drivers;
         } catch (Exception e) {
             logger.error(LogMessage.NO_RESULT_FROM_DB, e);
             return new ArrayList<>();
@@ -153,6 +154,39 @@ public class TripServiceImpl implements TripService {
                 trip.setDriver(driver);
                 tripDao.update(trip);
                 employeeDao.update(driver);
+            }
+            connection.commit();
+        } catch (Exception e) {
+            logger.error(LogMessage.TRANSACTION_ERROR, e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                logger.error(LogMessage.ROLLBACK_ERROR, e);
+            }
+        }
+    }
+
+    @Override
+    public void deleteDriver(int tripId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
+             EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
+            Optional<Trip> tripOptional = tripDao.findById(tripId);
+            connection.setAutoCommit(false);
+
+            if (tripOptional.isPresent()) {
+                Trip trip = tripOptional.get();
+                int driverId = trip.getDriver().getId();
+                trip.getDriver().setId(0);
+                tripDao.update(trip);
+
+                Optional<Employee> employeeOptional = employeeDao.findById(driverId);
+                Optional<Driver> driverOptional = employeeOptional.map(employee -> (Driver) employee);
+                if (driverOptional.isPresent()) {
+                    Driver driver = driverOptional.get();
+                    driver.setAssigned(false);
+                    employeeDao.update(driver);
+                }
             }
             connection.commit();
         } catch (Exception e) {

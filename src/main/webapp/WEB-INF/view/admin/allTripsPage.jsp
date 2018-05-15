@@ -3,6 +3,4 @@
 <jsp:include page="../shared/navigation.jsp"/>
 <jsp:include page="adminSideBar.jsp"/>
 <jsp:include page="tripTable.jsp"/>
-</div>
-</div>
 </body>
