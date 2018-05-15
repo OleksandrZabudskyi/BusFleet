@@ -53,4 +53,5 @@ public interface Attributes {
     String USER_NAME = "userName";
     String TRIP_ID = "tripId";
     String BUSES = "buses";
+    String USED = "used";
 }

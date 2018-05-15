@@ -41,10 +41,10 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public Optional<List<Bus>> getFreeBuses(int offset, int limit) {
+    public Optional<List<Bus>> getAllBuses() {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
-            return busDao.findFreeBuses();
+            return busDao.findAll();
         } catch (Exception e) {
             logger.error(LogMessage.NO_RESULT_FROM_DB, e);
             return Optional.empty();
@@ -59,13 +59,49 @@ public class TripServiceImpl implements TripService {
             connection.setAutoCommit(false);
             Optional<Bus> busOptional = busDao.findById(busId);
             Optional<Trip> tripOptional = tripDao.findById(tripId);
-            if (busOptional.isPresent() && tripOptional.isPresent()) {
+
+            if (busOptional.isPresent() && tripOptional.isPresent()
+                    && isUpdateAllowed(tripOptional.get(), busOptional.get())) {
                 Trip trip = tripOptional.get();
                 Bus bus = busOptional.get();
                 bus.setUsed(true);
                 trip.setBus(bus);
                 tripDao.update(trip);
                 busDao.update(bus);
+            }
+            connection.commit();
+        } catch (Exception e) {
+            logger.error(LogMessage.TRANSACTION_ERROR, e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                logger.error(LogMessage.ROLLBACK_ERROR, e);
+            }
+        }
+    }
+
+    private boolean isUpdateAllowed(Trip trip, Bus bus) {
+        return (trip.getBus().getId() == 0) && !bus.isUsed();
+    }
+
+    @Override
+    public void deleteBus(int tripId) {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
+             BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
+            Optional<Trip> tripOptional = tripDao.findById(tripId);
+            connection.setAutoCommit(false);
+            if (tripOptional.isPresent()) {
+                Trip trip = tripOptional.get();
+                int busId = trip.getBus().getId();
+                trip.getBus().setId(0);
+                tripDao.update(trip);
+                Optional<Bus> busOptional = busDao.findById(busId);
+                if (busOptional.isPresent()) {
+                    Bus bus = busOptional.get();
+                    bus.setUsed(false);
+                    busDao.update(bus);
+                }
             }
             connection.commit();
         } catch (Exception e) {

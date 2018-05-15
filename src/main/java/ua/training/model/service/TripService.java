@@ -11,7 +11,9 @@ public interface TripService {
 
     int getNumberOfRecords();
 
-    Optional<List<Bus>> getFreeBuses(int offset, int limit);
+    Optional<List<Bus>> getAllBuses();
 
     void setBus(int tripId, int busId);
+
+    void deleteBus(int tripId);
 }

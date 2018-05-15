@@ -12,8 +12,8 @@
                     <th>Trip number</th>
                     <th>Trip Start Time</th>
                     <th>Trip End Time</th>
-                    <th>Bus License Plate</th>
-                    <th>Driver Last Name</th>
+                    <th>Bus Id</th>
+                    <th>Driver Id</th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
@@ -27,18 +27,22 @@
                         <td>${trip.endTime}</td>
                         <c:choose>
                             <c:when test="${trip.bus.id  == 0}">
-                                <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/admin/free_buses?tripId=${trip.id}"
+                                <td><a class="btn btn-primary btn-sm"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/all_buses?tripId=${trip.id}&page=${currentPage}"
                                        role="button">Add Bus</a></td>
                             </c:when>
                             <c:otherwise>
-                                <td>${trip.bus.id}</td>
+                                <td>${trip.bus.id}
+                                    <a class="btn btn-primary btn-sm"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/delete_bus?tripId=${trip.id}&page=${currentPage}"
+                                       role="button">Delete</a></td>
+                                </td>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
                             <c:when test="${trip.driver.id  == 0}">
                                 <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/admin/free_drivers"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/free_drivers?tripId=${trip.id}&page=${currentPage}"
                                        role="button">Add Driver</a></td>
                             </c:when>
                             <c:otherwise>

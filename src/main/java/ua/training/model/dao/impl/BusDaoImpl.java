@@ -40,6 +40,7 @@ public class BusDaoImpl implements BusDao {
         bus.setLicensePlate(resultSet.getString(Attributes.LICENCE_PLATE));
         bus.setManufactureYear(resultSet.getInt(Attributes.MANUFACTURE_YEAR));
         bus.setParkingSpot(resultSet.getString(Attributes.PARKING_SPOT));
+        bus.setUsed(resultSet.getBoolean(Attributes.USED));
         return bus;
     }
 
