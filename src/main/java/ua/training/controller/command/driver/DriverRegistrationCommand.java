@@ -7,6 +7,7 @@ import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
+import ua.training.model.service.SecurityService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,11 @@ import java.io.IOException;
 public class DriverRegistrationCommand implements Command {
     private static Logger logger = Logger.getLogger(DriverRegistrationCommand.class);
     private EmployeeService employeeService;
+    private SecurityService securityService;
 
-    public DriverRegistrationCommand(EmployeeService employeeService) {
+    public DriverRegistrationCommand(EmployeeService employeeService, SecurityService securityService) {
         this.employeeService = employeeService;
+        this.securityService = securityService;
     }
 
     @Override
@@ -26,6 +29,7 @@ public class DriverRegistrationCommand implements Command {
         String page;
         try {
             Driver driver = getDriverFromRequest(request);
+            driver.setPassword(securityService.makePasswordHash(driver.getPassword()));
             employeeService.registerDriver(driver);
             page = Pages.LOGIN_PAGE;
         } catch (Exception e) {

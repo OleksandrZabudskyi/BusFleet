@@ -13,6 +13,7 @@ import ua.training.controller.command.redirect.DriverPageCommand;
 import ua.training.controller.command.redirect.LoginPageCommand;
 import ua.training.controller.command.redirect.RegistrationPageCommand;
 import ua.training.model.service.impl.EmployeeServiceImpl;
+import ua.training.model.service.impl.SecurityServiceImpl;
 import ua.training.model.service.impl.TripServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,8 @@ public class CommandExtractor {
         commands.put(NameCommands.REGISTRATION_PAGE, new RegistrationPageCommand());
         commands.put(NameCommands.ADMIN_PAGE, new AdminPageCommand());
         commands.put(NameCommands.DRIVER_PAGE, new DriverPageCommand());
-        commands.put(NameCommands.LOGIN, new LoginCommand(new EmployeeServiceImpl()));
-        commands.put(NameCommands.REGISTRATION, new DriverRegistrationCommand(new EmployeeServiceImpl()));
+        commands.put(NameCommands.LOGIN, new LoginCommand(new EmployeeServiceImpl(), new SecurityServiceImpl()));
+        commands.put(NameCommands.REGISTRATION, new DriverRegistrationCommand(new EmployeeServiceImpl(), new SecurityServiceImpl()));
         commands.put(NameCommands.LOGOUT, new LogoutCommand());
         commands.put(NameCommands.LANGUAGE, new LanguageCommand());
         commands.put(NameCommands.ALL_TRIPS, new TripsAndRoutesCommand(new TripServiceImpl()));
@@ -38,6 +39,7 @@ public class CommandExtractor {
         commands.put(NameCommands.SET_BUS, new SetBusCommand(new TripServiceImpl()));
         commands.put(NameCommands.SET_DRIVER, new SetDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_BUS, new DeleteBusCommand(new TripServiceImpl()));
+        commands.put(NameCommands.DELETE_DRIVER, new DeleteDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new TripServiceImpl()));
 
 
