@@ -6,10 +6,7 @@ import ua.training.constant.Regex;
 import ua.training.controller.command.*;
 import ua.training.controller.command.LoginCommand;
 import ua.training.controller.command.LogoutCommand;
-import ua.training.controller.command.admin.DeleteBusCommand;
-import ua.training.controller.command.admin.AllBusesCommand;
-import ua.training.controller.command.admin.SetBusCommand;
-import ua.training.controller.command.admin.TripsAndRoutesCommand;
+import ua.training.controller.command.admin.*;
 import ua.training.controller.command.driver.DriverRegistrationCommand;
 import ua.training.controller.command.redirect.AdminPageCommand;
 import ua.training.controller.command.redirect.DriverPageCommand;
@@ -39,7 +36,9 @@ public class CommandExtractor {
         commands.put(NameCommands.ALL_TRIPS, new TripsAndRoutesCommand(new TripServiceImpl()));
         commands.put(NameCommands.ALL_BUSES, new AllBusesCommand(new TripServiceImpl()));
         commands.put(NameCommands.SET_BUS, new SetBusCommand(new TripServiceImpl()));
+        commands.put(NameCommands.SET_DRIVER, new SetDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_BUS, new DeleteBusCommand(new TripServiceImpl()));
+        commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new TripServiceImpl()));
 
 
     }

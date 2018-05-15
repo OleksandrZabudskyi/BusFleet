@@ -22,7 +22,7 @@
                         <td>${driver.drivingLicenceNumber}</td>
                         <td>${driver.drivingExperience}</td>
                         <td><a class="btn btn-primary"
-                               href="${pageContext.request.contextPath}/bus-fleet/admin/set_driver?tripId=${tripId}&driverId=${bus.id}&page=${page}"
+                               href="${pageContext.request.contextPath}/bus-fleet/admin/set_driver?tripId=${tripId}&driverId=${driver.id}&page=${page}"
                                role="button">Add To Trip</a></td>
                     </tr>
                 </c:forEach>

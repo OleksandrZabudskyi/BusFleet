@@ -64,14 +64,14 @@ public class TripDaoImpl implements TripDao {
     }
 
     @Override
-    public Optional<List<Trip>> findAll() {
+    public List<Trip> findAll() {
         List<Trip> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_TRIPS);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(geTripFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -132,7 +132,7 @@ public class TripDaoImpl implements TripDao {
     }
 
     @Override
-    public Optional<List<Trip>> findTripsWithRoutes(int offset, int limit) {
+    public List<Trip> findTripsWithRoutes(int offset, int limit) {
         List<Trip> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTES)) {
             ps.setInt(1, offset);
@@ -143,7 +143,7 @@ public class TripDaoImpl implements TripDao {
                 trip.setRoute(new RouteMapper().extractFromResultSet(resultSet));
                 resultList.add(trip);
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

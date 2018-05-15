@@ -38,14 +38,14 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public Optional<List<Route>> findAll() {
+    public List<Route> findAll() {
         List<Route> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_ROUTES);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(getRouteFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

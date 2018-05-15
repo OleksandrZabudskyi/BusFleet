@@ -42,7 +42,7 @@
                         <c:choose>
                             <c:when test="${trip.driver.id  == 0}">
                                 <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/admin/free_drivers?tripId=${trip.id}&page=${currentPage}"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/all_drivers?tripId=${trip.id}&page=${currentPage}"
                                        role="button">Add Driver</a></td>
                             </c:when>
                             <c:otherwise>

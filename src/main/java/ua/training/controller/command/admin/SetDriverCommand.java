@@ -1,36 +1,33 @@
 package ua.training.controller.command.admin;
 
 import ua.training.constant.Attributes;
-import ua.training.constant.Pages;
+import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
-import ua.training.model.entity.Bus;
-import ua.training.model.service.TripService;
+import ua.training.controller.util.RequestParametersValidator;
 import ua.training.model.service.impl.TripServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
-public class AllBusesCommand implements Command {
-    private TripService tripService;
+public class SetDriverCommand implements Command {
+    private TripServiceImpl tripService;
 
-    public AllBusesCommand(TripServiceImpl tripService) {
+    public SetDriverCommand(TripServiceImpl tripService) {
         this.tripService = tripService;
     }
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tripId = request.getParameter(Attributes.TRIP_ID);
+        String driverId = request.getParameter(Attributes.DRIVER_ID);
         String currentPage = request.getParameter(Attributes.PAGE);
-        if(Objects.nonNull(tripId) && Integer.parseInt(tripId) != 0) {
-            request.setAttribute(Attributes.TRIP_ID, tripId);
+        RequestParametersValidator parametersValidator = new RequestParametersValidator(request);
+        if (parametersValidator.validateIfNullOrEmpty(Attributes.TRIP_ID, Attributes.DRIVER_ID)) {
+            return NameCommands.ALL_TRIPS;
         }
-        request.setAttribute(Attributes.BUSES, tripService.getAllBuses());
+        tripService.setDriver(Integer.parseInt(tripId), Integer.parseInt(driverId));
         request.setAttribute(Attributes.PAGE, currentPage);
-        return Pages.BUSES_PAGE;
+        return NameCommands.ALL_TRIPS;
     }
 }

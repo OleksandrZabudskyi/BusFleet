@@ -45,14 +45,14 @@ public class BusDaoImpl implements BusDao {
     }
 
     @Override
-    public Optional<List<Bus>> findAll() {
+    public List<Bus> findAll() {
         List<Bus> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_BUSES);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(geBusFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -109,14 +109,14 @@ public class BusDaoImpl implements BusDao {
     }
 
     @Override
-    public Optional<List<Bus>> findFreeBuses() {
+    public List<Bus> findFreeBuses() {
         List<Bus> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_FREE_BUSES);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(geBusFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -38,10 +38,10 @@ public class TripsAndRoutesCommand implements Command {
            currentPage = numberOfPages;
         }
 
-        Optional<List<Trip>> trips = tripService.getTripsAndRoutes((currentPage - 1)
+        List<Trip> trips = tripService.getTripsAndRoutes((currentPage - 1)
                 * GlobalConstants.RECORDS_PER_PAGE, GlobalConstants.RECORDS_PER_PAGE);
 
-        request.setAttribute(Attributes.TRIPS, trips.get());
+        request.setAttribute(Attributes.TRIPS, trips);
         request.setAttribute(Attributes.NUMBER_OF_PAGES, numberOfPages);
         request.setAttribute(Attributes.CURRENT_PAGE, currentPage);
 

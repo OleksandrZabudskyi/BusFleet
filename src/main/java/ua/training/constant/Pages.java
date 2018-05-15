@@ -8,4 +8,5 @@ public interface Pages {
     String REGISTRATION_PAGE = "/WEB-INF/view/registration/registration.jsp";
     String ALL_TRIPS_PAGE = "/WEB-INF/view/admin/allTripsPage.jsp";
     String BUSES_PAGE = "/WEB-INF/view/admin/busesPage.jsp";
+    String DRIVERS_PAGE = "/WEB-INF/view/admin/driversPage.jsp";
 }
