@@ -11,7 +11,7 @@ public class RouteMapper implements EntityMapper<Route> {
     public Route extractFromResultSet(ResultSet resultSet) throws SQLException {
         Route route = new Route();
         route.setId(resultSet.getInt(Attributes.ROUTE_ID));
-        route.setRouteName(resultSet.getString(Attributes.ROTE_NAME));
+        route.setName(resultSet.getString(Attributes.ROTE_NAME));
         route.setDestinationFrom(resultSet.getString(Attributes.DESTINATION_FROM));
         route.setDestinationTo(resultSet.getString(Attributes.DESTINATION_TO));
         return route;

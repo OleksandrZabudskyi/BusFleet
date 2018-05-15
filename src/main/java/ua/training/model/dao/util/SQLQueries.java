@@ -7,17 +7,17 @@ public interface SQLQueries {
     String FIND_USER_BY_ID = "SELECT * FROM user WHERE userId = ?";
     String INSERT_USER = "INSERT INTO user (firstName, lastName, " +
             "email, password, phoneNumber, role, drivingLicenceNumber, drivingExperience, passportNumber," +
-            " passportRegistration) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            " passportRegistration, assigned, registered, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String UPDATE_USER_BY_ID = "UPDATE user SET firstName = ? , lastName = ?, email = ?, password = ?," +
-            " phoneNumber = ?, role = ?, drivingLicenceNumber = ?, drivingExperience = ?, passportNumber = ?," +
-            " passportRegistration = ? WHERE userId = ?";
+            " phoneNumber = ?, role = ?, drivingLicenceNumber = ?, drivingExperience = ?," +
+            "  passportNumber = ?, passportRegistration = ?, assigned = ?, registered = ? WHERE userId = ?";
     String DELETE_USER_BY_ID = "DELETE FROM user WHERE userId = ?";
 
     /*route table*/
     String FIND_ALL_ROUTES = "SELECT * FROM route";
     String FIND_ROUTE_BY_ID = "SELECT * FROM route  WHERE routeId = ?";
     String INSERT_ROUTE = "INSERT INTO route (routeName, destinationFrom, destinationTo) VALUES (?, ?, ?)";
-    String UPDATE_ROUTE_BY_ID = "UPDATE user SET routeName = ? , destinationFrom = ?, " +
+    String UPDATE_ROUTE_BY_ID = "UPDATE route SET routeName = ? , destinationFrom = ?, " +
             "destinationTo = ? WHERE routeId = ?";
     String DELETE_ROUTE_BY_ID = "DELETE FROM route WHERE routeId = ?";
 
@@ -26,8 +26,8 @@ public interface SQLQueries {
     String FIND_TRIP_BY_ID = "SELECT * FROM trip  WHERE tripId = ?";
     String INSERT_TRIP = "INSERT INTO trip (tripNumber, tripStartTime, tripEndTime, routeId, busId, driverId)" +
             " VALUES (?, ?, ?, ?, ?, ?)";
-    String UPDATE_TRIP_BY_ID = "UPDATE user SET tripNumber = ? , tripStartTime = ?, " +
-            "tripEndTime = ? routeId = ? busId = ? driverId = ? WHERE tripId = ?";
+    String UPDATE_TRIP_BY_ID = "UPDATE trip SET tripNumber = ?, tripStartTime = ?, " +
+            "tripEndTime = ?, routeId = ?, busId = ?, driverId = ? WHERE tripId = ?";
     String DELETE_TRIP_BY_ID =  "DELETE FROM trip WHERE tripId = ?";
 
     /*bus table*/
@@ -35,9 +35,9 @@ public interface SQLQueries {
     String FIND_BUS_BY_ID = "SELECT * FROM bus  WHERE busId = ?";
     String INSERT_BUS = "INSERT INTO bus (busModel, licensePlate, manufactureYear, parkingSpot) VALUES (?, ?, ?, ?)";
     String UPDATE_BUS_BY_ID = "UPDATE bus SET busModel = ? , licensePlate = ?, manufactureYear = ?, " +
-            "parkingSpot = ? WHERE busId = ?";
+            "parkingSpot = ?, used = ? WHERE busId = ?";
     String DELETE_BUS_BY_ID = "DELETE FROM bus WHERE busId = ?";
-    String FIND_FREE_BUSES = "SELECT *FROM bus WHERE used = 0";
+    String FIND_FREE_BUSES = "SELECT * FROM bus WHERE used = 0";
 
     /*join requests*/
     String FIND_TRIPS_WITH_ROUTES = "SELECT * FROM trip JOIN route ON trip.routeId = route.routeId LIMIT ?, ?";

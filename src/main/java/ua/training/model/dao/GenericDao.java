@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface GenericDao<T, ID> extends AutoCloseable {
     Optional<T> findById(ID id);
 
-    Optional<List<T>> findAll();
+    List<T> findAll();
 
     void create(T entity) throws EntityAlreadyExistException;
 

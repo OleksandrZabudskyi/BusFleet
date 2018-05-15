@@ -6,25 +6,25 @@
                 <thead>
                 <tr>
                     <th>id</th>
-                    <th>Bus Model</th>
-                    <th>License Plate</th>
-                    <th>Manufacture Year</th>
-                    <th>Parking Spot</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Driving Licence Number</th>
+                    <th>Driving Experience</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
-                <c:forEach var="bus" items="${buses}">
+                <c:forEach var="driver" items="${drivers}">
                     <tr>
-                        <td>${bus.id}</td>
-                        <td>${bus.model}</td>
-                        <td>${bus.licensePlate}</td>
-                        <td>${bus.manufactureYear}</td>
-                        <td>${bus.parkingSpot}</td>
+                        <td>${driver.id}</td>
+                        <td>${driver.firstName}</td>
+                        <td>${driver.lastName}</td>
+                        <td>${driver.drivingLicenceNumber}</td>
+                        <td>${driver.drivingExperience}</td>
                         <c:choose>
-                            <c:when test="${bus.used == false}">
+                            <c:when test="${driver.assigned == false}">
                                 <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?tripId=${tripId}&busId=${bus.id}&page=${page}"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/set_driver?tripId=${tripId}&driverId=${driver.id}&page=${page}"
                                        role="button">Add To Trip</a></td>
                             </c:when>
                             <c:otherwise>

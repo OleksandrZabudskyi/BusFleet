@@ -13,7 +13,6 @@
             <input type="text" class="form-control" name="drivingLicenceNumber" placeholder="Driving Licence Number"/>
             <input type="text" class="form-control" name="drivingExperience" placeholder="Driving Experience"/>
             <input type="password" class="form-control" name="password" placeholder="Password"/>
-            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm your password"/>
             <span class="text-danger">${passwordError}</span>
             <span class="text-danger">${errorMessage}</span>
         </div>

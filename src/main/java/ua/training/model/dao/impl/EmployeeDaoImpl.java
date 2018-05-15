@@ -50,14 +50,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 
     @Override
-    public Optional<List<Employee>> findAll() {
+    public List<Employee> findAll() {
         List<Employee> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_USERS);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(getUserFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -38,14 +38,14 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public Optional<List<Route>> findAll() {
+    public List<Route> findAll() {
         List<Route> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_ROUTES);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(getRouteFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +57,7 @@ public class RouteDaoImpl implements RouteDao {
             setRouteParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(entity.getRouteName());
+            throw new EntityAlreadyExistException(entity.getName());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +74,7 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     private void setRouteParameters(Route route, PreparedStatement statement) throws SQLException {
-        statement.setString(1, route.getRouteName());
+        statement.setString(1, route.getName());
         statement.setString(2, route.getDestinationFrom());
         statement.setString(3, route.getDestinationTo());
     }

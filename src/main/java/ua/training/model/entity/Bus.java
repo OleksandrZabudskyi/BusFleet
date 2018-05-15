@@ -2,7 +2,7 @@ package ua.training.model.entity;
 
 public class Bus {
     private int id;
-    private String busModel;
+    private String model;
     private String licensePlate;
     private int manufactureYear;
     private String parkingSpot;
@@ -16,12 +16,12 @@ public class Bus {
         this.id = id;
     }
 
-    public String getBusModel() {
-        return busModel;
+    public String getModel() {
+        return model;
     }
 
-    public void setBusModel(String busModel) {
-        this.busModel = busModel;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getLicensePlate() {
@@ -60,7 +60,7 @@ public class Bus {
     public String toString() {
         return "Bus{" +
                 "id=" + id +
-                ", busModel='" + busModel + '\'' +
+                ", model='" + model + '\'' +
                 ", licensePlate='" + licensePlate + '\'' +
                 ", manufactureYear=" + manufactureYear +
                 ", parkingSpot='" + parkingSpot + '\'' +

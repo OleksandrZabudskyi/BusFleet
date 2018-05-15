@@ -11,5 +11,11 @@ public interface NameCommands {
     String ADMIN_PAGE = "admin";
     String DRIVER_PAGE = "driver";
     String LANGUAGE = "language";
-    String ALL_TRIPS = "admin/trips_and_routes";
+    String ALL_TRIPS = "trips_and_routes";
+    String ALL_BUSES = "all_buses";
+    String SET_BUS = "set_bus";
+    String DELETE_BUS = "delete_bus";
+    String ALL_DRIVERS = "all_drivers";
+    String SET_DRIVER = "set_driver";
+    String DELETE_DRIVER = "delete_driver";
 }

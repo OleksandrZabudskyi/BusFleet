@@ -2,7 +2,7 @@ package ua.training.model.entity;
 
 public class Route {
     private int id;
-    private String routeName;
+    private String name;
     private String destinationFrom;
     private String destinationTo;
 
@@ -14,12 +14,12 @@ public class Route {
         this.id = id;
     }
 
-    public String getRouteName() {
-        return routeName;
+    public String getName() {
+        return name;
     }
 
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDestinationFrom() {
@@ -42,7 +42,7 @@ public class Route {
     public String toString() {
         return "Route{" +
                 "id=" + id +
-                ", routeName='" + routeName + '\'' +
+                ", name='" + name + '\'' +
                 ", destinationFrom='" + destinationFrom + '\'' +
                 ", destinationTo='" + destinationTo + '\'' +
                 '}';
