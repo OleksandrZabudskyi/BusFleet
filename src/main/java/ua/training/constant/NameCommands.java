@@ -20,4 +20,5 @@ public interface NameCommands {
     String DELETE_DRIVER = "delete_driver";
     String APPOINTMENT = "get_appointment";
     String USER_INFO = "user_info";
+    String CONFIRM_APPOINTMENT = "confirm_appointment";
 }

@@ -1,6 +1,6 @@
 package ua.training.controller;
 
-import ua.training.constant.Attributes;
+import ua.training.constant.GlobalConstants;
 import ua.training.constant.NameCommands;
 import ua.training.constant.Regex;
 import ua.training.controller.command.*;
@@ -8,6 +8,7 @@ import ua.training.controller.command.LoginCommand;
 import ua.training.controller.command.LogoutCommand;
 import ua.training.controller.command.admin.*;
 import ua.training.controller.command.driver.AppointmentCommand;
+import ua.training.controller.command.driver.ConfirmTripCommand;
 import ua.training.controller.command.driver.DriverRegistrationCommand;
 import ua.training.controller.command.redirect.AdminPageCommand;
 import ua.training.controller.command.redirect.DriverPageCommand;
@@ -41,8 +42,9 @@ public class CommandExtractor {
         commands.put(NameCommands.SET_DRIVER, new SetDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_BUS, new DeleteBusCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_DRIVER, new DeleteDriverCommand(new TripServiceImpl()));
-        commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new TripServiceImpl()));
+        commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new EmployeeServiceImpl()));
         commands.put(NameCommands.APPOINTMENT, new AppointmentCommand(new TripServiceImpl()));
+        commands.put(NameCommands.CONFIRM_APPOINTMENT, new ConfirmTripCommand(new TripServiceImpl()));
         commands.put(NameCommands.USER_INFO, new ProfileCommand());
 
 
@@ -50,7 +52,7 @@ public class CommandExtractor {
 
     public Command getCommand(HttpServletRequest request) {
         String path = request.getRequestURI();
-        path = path.replaceAll(Regex.URL, Attributes.EMPTY_SIGN);
+        path = path.replaceAll(Regex.URL, GlobalConstants.EMPTY_SIGN);
         return commands.getOrDefault(path, new IndexPageCommand());
     }
 

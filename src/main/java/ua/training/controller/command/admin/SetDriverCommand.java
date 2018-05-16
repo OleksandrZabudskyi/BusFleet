@@ -22,12 +22,13 @@ public class SetDriverCommand implements Command {
         String tripId = request.getParameter(Attributes.TRIP_ID);
         String driverId = request.getParameter(Attributes.DRIVER_ID);
         String currentPage = request.getParameter(Attributes.PAGE);
+
         RequestParametersValidator parametersValidator = new RequestParametersValidator(request);
         if (parametersValidator.validateIfNullOrEmpty(Attributes.TRIP_ID, Attributes.DRIVER_ID)) {
-            return NameCommands.ALL_TRIPS;
+            return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
         }
         tripService.setDriver(Integer.parseInt(tripId), Integer.parseInt(driverId));
         request.setAttribute(Attributes.PAGE, currentPage);
-        return NameCommands.ALL_TRIPS;
+        return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
     }
 }

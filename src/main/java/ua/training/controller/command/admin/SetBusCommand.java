@@ -25,12 +25,13 @@ public class SetBusCommand implements Command {
         String tripId = request.getParameter(Attributes.TRIP_ID);
         String busId = request.getParameter(Attributes.BUS_ID);
         String currentPage = request.getParameter(Attributes.PAGE);
+
         RequestParametersValidator parametersValidator = new RequestParametersValidator(request);
         if (parametersValidator.validateIfNullOrEmpty(Attributes.TRIP_ID, Attributes.BUS_ID)) {
-            return NameCommands.ALL_TRIPS;
+            return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
         }
         tripService.setBus(Integer.parseInt(tripId), Integer.parseInt(busId));
         request.setAttribute(Attributes.PAGE, currentPage);
-        return NameCommands.ALL_TRIPS;
+        return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
     }
 }

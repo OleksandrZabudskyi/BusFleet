@@ -12,6 +12,7 @@
                     <th>Trip number</th>
                     <th>Trip Start Time</th>
                     <th>Trip End Time</th>
+                    <th>Confirmation</th>
                     <th>Bus Id</th>
                     <th>Driver Id</th>
                 </tr>
@@ -25,6 +26,7 @@
                         <td>${trip.number}</td>
                         <td>${trip.startTime}</td>
                         <td>${trip.endTime}</td>
+                        <td>${trip.confirmation}</td>
                         <c:choose>
                             <c:when test="${trip.bus.id  == 0}">
                                 <td><a class="btn btn-primary btn-sm"

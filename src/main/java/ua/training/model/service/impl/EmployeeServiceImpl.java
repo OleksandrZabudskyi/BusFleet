@@ -10,7 +10,10 @@ import ua.training.model.dao.EmployeeDao;
 import ua.training.model.service.EmployeeService;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EmployeeServiceImpl implements EmployeeService {
     private static Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
@@ -36,6 +39,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         } catch (Exception e) {
             logger.error(LogMessage.DRIVER_REGISTRATION_ERROR, e);
             throw new Exception(e);
+        }
+    }
+
+    @Override
+    public List<Driver> getAllDrivers() {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        try (EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
+            List<Employee> employees = employeeDao.findAll();
+            return employees.stream()
+                    .filter(employee -> employee instanceof Driver)
+                    .map(employee -> (Driver) employee).collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error(LogMessage.NO_RESULT_FROM_DB, e);
+            return new ArrayList<>();
         }
     }
 }

@@ -10,4 +10,5 @@ public interface Messages {
     String INVALID_ROLE = "Invalid role: ";
     String MD5_IS_NOT_AVAILABLE = "MD5 is not available";
     String UTF8_IS_NOT_AVAILABLE = "UTF-8 is not available";
+
 }

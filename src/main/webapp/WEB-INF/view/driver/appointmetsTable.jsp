@@ -31,7 +31,7 @@
                         <c:choose>
                             <c:when test="${trip.confirmation == false}">
                                 <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/admin/confirm_trip?tripId=${tripId}"
+                                       href="${pageContext.request.contextPath}/bus-fleet/driver/confirm_appointment?tripId=${trip.id}"
                                        role="button">Confirm</a></td>
                             </c:when>
                             <c:otherwise>

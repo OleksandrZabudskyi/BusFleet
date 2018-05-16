@@ -18,11 +18,11 @@ public interface TripService {
 
     void deleteBus(int tripId);
 
-    List<Driver> getAllDrivers();
-
     void setDriver(int tripId, int driverId);
 
     void deleteDriver(int tripId);
 
     List<Trip> getAppointmentTripsToDriver(Employee employee);
+
+    void setConfirmation(int tripId);
 }

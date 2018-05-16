@@ -2,6 +2,7 @@ package ua.training.controller.util;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.GlobalConstants;
 import ua.training.constant.Messages;
 import ua.training.constant.Regex;
 
@@ -35,7 +36,7 @@ public class RequestParametersValidator {
         String errorName = String.format(Messages.PARAMS_ERROR, parameterName);
         String paramMessage = String.format(Messages.PARAMS_BLANK_FIELD, parameterValue);
         request.setAttribute(errorName, paramMessage);
-        logger.debug(errorName.concat(Attributes.COLLON_SIGN).concat(paramMessage));
+        logger.debug(errorName.concat(GlobalConstants.COLON_SIGN).concat(paramMessage));
     }
 
     public boolean isInvalidDriverData() {
@@ -65,7 +66,7 @@ public class RequestParametersValidator {
         String errorName = String.format(Messages.PARAMS_ERROR, parameterName);
         String paramMessage = String.format(Messages.WRONG_PARAMS, parameterValue);
         request.setAttribute(errorName, paramMessage);
-        logger.warn(errorName.concat(Attributes.COLLON_SIGN).concat(paramMessage));
+        logger.warn(errorName.concat(GlobalConstants.COLON_SIGN).concat(paramMessage));
     }
 
 

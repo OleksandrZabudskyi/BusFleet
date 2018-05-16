@@ -1,6 +1,6 @@
 package ua.training.model.service.impl;
 
-import ua.training.constant.Attributes;
+import ua.training.constant.GlobalConstants;
 import ua.training.constant.Messages;
 import ua.training.model.service.SecurityService;
 
@@ -20,19 +20,18 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public boolean comparePasswords(String password, String hashedAndSaltedPassword) {
-        String salt = hashedAndSaltedPassword.split(Attributes.COMMA_SIGN)[1];
+        String salt = hashedAndSaltedPassword.split(GlobalConstants.COMMA_SIGN)[1];
         return hashedAndSaltedPassword.equals(makePasswordHash(password, salt));
     }
 
-
     private String makePasswordHash(String password, String salt) {
         try {
-            String saltedAndHashed = password.concat(Attributes.COMMA_SIGN).concat(salt);
-            MessageDigest digest = MessageDigest.getInstance(Attributes.MD5);
+            String saltedAndHashed = password.concat(GlobalConstants.COMMA_SIGN).concat(salt);
+            MessageDigest digest = MessageDigest.getInstance(GlobalConstants.MD5);
             digest.update(saltedAndHashed.getBytes());
-            byte hashedBytes[] = (new String(digest.digest(), Attributes.UTF8)).getBytes();
+            byte hashedBytes[] = (new String(digest.digest(), GlobalConstants.UTF8)).getBytes();
             String encode = Base64.getEncoder().encodeToString(hashedBytes);
-            return encode.concat(Attributes.COMMA_SIGN).concat(salt);
+            return encode.concat(GlobalConstants.COMMA_SIGN).concat(salt);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(Messages.MD5_IS_NOT_AVAILABLE, e);
         } catch (UnsupportedEncodingException e) {

@@ -54,6 +54,7 @@ public class TripDaoImpl implements TripDao {
         Driver driver = new Driver();
         driver.setId(resultSet.getInt(Attributes.DRIVER_ID));
         trip.setDriver(driver);
+        trip.setConfirmation(resultSet.getBoolean(Attributes.CONFIRMATION));
         return trip;
     }
 
@@ -95,10 +96,8 @@ public class TripDaoImpl implements TripDao {
 
     private void setTripParameters(Trip entity, PreparedStatement statement) throws SQLException {
         statement.setString(1, entity.getNumber());
-        java.sql.Time startTime = Time.valueOf(entity.getStartTime());
-        statement.setTime(2, startTime);
-        java.sql.Time endTime = Time.valueOf(entity.getEndTime());
-        statement.setTime(3, endTime);
+        statement.setTime(2, Time.valueOf(entity.getStartTime()));
+        statement.setTime(3, Time.valueOf(entity.getEndTime()));
         statement.setInt(4, entity.getRoute().getId());
         int busId = entity.getBus().getId();
         if (busId == 0) {
