@@ -43,14 +43,8 @@ public class TripDaoImpl implements TripDao {
         Trip trip = new Trip();
         trip.setId(resultSet.getInt(Attributes.TRIP_ID));
         trip.setNumber(resultSet.getString(Attributes.TRIP_NUMBER));
-        java.sql.Timestamp startTimeStamp = resultSet.getTimestamp(Attributes.TRIP_START_TIME);
-        LocalDateTime startDateTime = LocalDateTime
-                .ofInstant(startTimeStamp.toInstant(), ZoneOffset.ofHours(0));
-        trip.setStartTime(startDateTime);
-        java.sql.Timestamp endTimeStamp = resultSet.getTimestamp(Attributes.TRIP_END_TIME);
-        LocalDateTime endDateTime = LocalDateTime
-                .ofInstant(endTimeStamp.toInstant(), ZoneOffset.ofHours(0));
-        trip.setEndTime(endDateTime);
+        trip.setStartTime(resultSet.getTime(Attributes.TRIP_START_TIME).toLocalTime());
+        trip.setEndTime(resultSet.getTime(Attributes.TRIP_END_TIME).toLocalTime());
         Route route = new Route();
         route.setId(resultSet.getInt(Attributes.ROUTE_ID));
         trip.setRoute(route);
@@ -101,10 +95,10 @@ public class TripDaoImpl implements TripDao {
 
     private void setTripParameters(Trip entity, PreparedStatement statement) throws SQLException {
         statement.setString(1, entity.getNumber());
-        java.sql.Timestamp startTimeStamp = Timestamp.from(entity.getStartTime().toInstant(ZoneOffset.ofHours(0)));
-        statement.setTimestamp(2, startTimeStamp);
-        java.sql.Timestamp endTimeStamp = Timestamp.from(entity.getEndTime().toInstant(ZoneOffset.ofHours(0)));
-        statement.setTimestamp(3, endTimeStamp);
+        java.sql.Time startTime = Time.valueOf(entity.getStartTime());
+        statement.setTime(2, startTime);
+        java.sql.Time endTime = Time.valueOf(entity.getEndTime());
+        statement.setTime(3, endTime);
         statement.setInt(4, entity.getRoute().getId());
         int busId = entity.getBus().getId();
         if (busId == 0) {
@@ -118,7 +112,8 @@ public class TripDaoImpl implements TripDao {
         } else {
             statement.setInt(6, driverId);
         }
-        statement.setInt(7, entity.getId());
+        statement.setBoolean(7, entity.isConfirmation());
+        statement.setInt(8, entity.getId());
     }
 
     @Override
@@ -160,6 +155,22 @@ public class TripDaoImpl implements TripDao {
             throw new RuntimeException(e);
         }
         return 0;
+    }
+
+    @Override
+    public List<Trip> findTripsWithRouteAndBus() {
+        List<Trip> resultList = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTES)) {
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Trip trip = geTripFromResultSet(resultSet);
+                trip.setRoute(new RouteMapper().extractFromResultSet(resultSet));
+                resultList.add(trip);
+            }
+            return resultList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

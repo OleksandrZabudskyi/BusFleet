@@ -11,7 +11,7 @@
             <span class="text-danger">${lastNameError}</span>
             <input type="text" class="form-control" name="email" placeholder="Email"/>
             <span class="text-danger">${emailError}</span>
-            <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number ex. +38(044)234-44-33"/>
+            <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number ex. +38044234-44-33"/>
             <span class="text-danger">${phoneNumberError}</span>
             <input type="text" class="form-control" name="drivingLicenceNumber" placeholder="Driving Licence Number"/>
             <span class="text-danger">${drivingLicenceNumberError}</span>

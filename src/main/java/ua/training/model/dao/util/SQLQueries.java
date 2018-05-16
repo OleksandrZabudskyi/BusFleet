@@ -24,10 +24,10 @@ public interface SQLQueries {
     /*trip table*/
     String FIND_ALL_TRIPS = "SELECT * FROM trip";
     String FIND_TRIP_BY_ID = "SELECT * FROM trip  WHERE tripId = ?";
-    String INSERT_TRIP = "INSERT INTO trip (tripNumber, tripStartTime, tripEndTime, routeId, busId, driverId)" +
-            " VALUES (?, ?, ?, ?, ?, ?)";
+    String INSERT_TRIP = "INSERT INTO trip (tripNumber, tripStartTime, tripEndTime, routeId, busId, driverId, confirmation)" +
+            " VALUES (?, ?, ?, ?, ?, ?, ?)";
     String UPDATE_TRIP_BY_ID = "UPDATE trip SET tripNumber = ?, tripStartTime = ?, " +
-            "tripEndTime = ?, routeId = ?, busId = ?, driverId = ? WHERE tripId = ?";
+            "tripEndTime = ?, routeId = ?, busId = ?, driverId = ?, confirmation = ? WHERE tripId = ?";
     String DELETE_TRIP_BY_ID =  "DELETE FROM trip WHERE tripId = ?";
 
     /*bus table*/
@@ -41,6 +41,10 @@ public interface SQLQueries {
 
     /*join requests*/
     String FIND_TRIPS_WITH_ROUTES = "SELECT * FROM trip JOIN route ON trip.routeId = route.routeId LIMIT ?, ?";
+    String FIND_TRIPS_WITH_ROUTES_BUSES_DRIVERS = "SELECT * FROM trip INNER JOIN bus" +
+            " on trip.busId = bus.busId INNER JOIN route on trip.routeId = route.routeId" +
+            " INNER JOIN user on trip.driverId=user.userId";
 
     String FIND_ALL_TRIPS_COUNT = "SELECT COUNT(*) as rowsNumber FROM trip;";
+
 }

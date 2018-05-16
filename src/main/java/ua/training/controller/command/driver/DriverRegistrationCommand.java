@@ -28,7 +28,7 @@ public class DriverRegistrationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestParametersValidator requestParametersValidator = new RequestParametersValidator(request);
-        if (!requestParametersValidator.validateDriverData()) {
+        if (requestParametersValidator.isInvalidDriverData()) {
             return Pages.REGISTRATION_PAGE;
         }
 

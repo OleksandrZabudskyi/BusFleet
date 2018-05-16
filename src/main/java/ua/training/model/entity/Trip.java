@@ -1,15 +1,16 @@
 package ua.training.model.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Trip {
     private int id;
     private String number;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private Route route;
     private Bus bus;
     private Driver driver;
+    private boolean confirmation;
 
     public int getId() {
         return id;
@@ -27,19 +28,19 @@ public class Trip {
         this.number = number;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -67,6 +68,14 @@ public class Trip {
         this.driver = driver;
     }
 
+    public boolean isConfirmation() {
+        return confirmation;
+    }
+
+    public void setConfirmation(boolean confirmation) {
+        this.confirmation = confirmation;
+    }
+
     @Override
     public String toString() {
         return "Trip{" +
@@ -77,6 +86,7 @@ public class Trip {
                 ", route=" + route +
                 ", bus=" + bus +
                 ", driver=" + driver +
+                ", confirmation=" + confirmation +
                 '}';
     }
 
@@ -84,11 +94,12 @@ public class Trip {
 
         private int id;
         private String number;
-        private LocalDateTime startTime;
-        private LocalDateTime endTime;
+        private LocalTime startTime;
+        private LocalTime endTime;
         private Route route;
         private Bus bus;
         private Driver driver;
+        private boolean confirmation;
 
         public TripBuilder setId(int id) {
             this.id = id;
@@ -100,12 +111,12 @@ public class Trip {
             return this;
         }
 
-        public TripBuilder setStartTime(LocalDateTime startTime) {
+        public TripBuilder setStartTime(LocalTime startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public TripBuilder setEndTime(LocalDateTime endTime) {
+        public TripBuilder setEndTime(LocalTime endTime) {
             this.endTime = endTime;
             return this;
         }
@@ -125,6 +136,11 @@ public class Trip {
             return this;
         }
 
+        public TripBuilder setConfirmation(boolean confirmation) {
+            this.confirmation = confirmation;
+            return this;
+        }
+
         public Trip createTrip() {
             Trip trip = new Trip();
             trip.setId(id);
@@ -134,6 +150,7 @@ public class Trip {
             trip.setRoute(route);
             trip.setBus(bus);
             trip.setDriver(driver);
+            trip.setConfirmation(confirmation);
             return trip;
         }
     }

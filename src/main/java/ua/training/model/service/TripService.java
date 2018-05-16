@@ -22,4 +22,6 @@ public interface TripService {
     void setDriver(int tripId, int driverId);
 
     void deleteDriver(int tripId);
+
+    List<Trip> getAppointmentTripsToDriver();
 }
