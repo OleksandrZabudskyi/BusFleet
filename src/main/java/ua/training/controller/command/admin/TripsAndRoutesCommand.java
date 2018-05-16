@@ -28,8 +28,9 @@ public class TripsAndRoutesCommand implements Command {
         int currentPage = 1;
         String page = request.getParameter(Attributes.PAGE);
 
-        if (Objects.nonNull(page) && Pattern.matches(Regex.POSITIVE_NUMBER, page))
+        if (Objects.nonNull(page) && Pattern.matches(Regex.POSITIVE_NUMBER, page)) {
             currentPage = Integer.parseInt(request.getParameter(Attributes.PAGE));
+        }
 
         int numberOfRecords = tripService.getNumberOfRecords();
         int numberOfPages = (int) Math.ceil(numberOfRecords * 1.0 / GlobalConstants.RECORDS_PER_PAGE);

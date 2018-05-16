@@ -4,6 +4,7 @@ public interface Messages {
     String WRONG_LOGIN_OR_PASSWORD = "Wrong login or password";
     String PARAMS_ERROR = "%sError";
     String PARAMS_BLANK_FIELD = "%s cannot be blank";
+    String WRONG_PARAMS = "%s is not correct";
     String USER_ALREADY_LOGGED = "Such user already logged";
     String USER_ALREADY_EXIST = "User with such email already exist";
     String INVALID_ROLE = "Invalid role: ";

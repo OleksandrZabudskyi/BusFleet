@@ -5,6 +5,7 @@ import ua.training.constant.Attributes;
 import ua.training.constant.Messages;
 import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
+import ua.training.controller.util.RequestParametersValidator;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
@@ -26,18 +27,21 @@ public class DriverRegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page;
+        RequestParametersValidator requestParametersValidator = new RequestParametersValidator(request);
+        if (!requestParametersValidator.validateDriverData()) {
+            return Pages.REGISTRATION_PAGE;
+        }
+
         try {
             Driver driver = getDriverFromRequest(request);
             driver.setPassword(securityService.makePasswordHash(driver.getPassword()));
             employeeService.registerDriver(driver);
-            page = Pages.LOGIN_PAGE;
+            return Pages.LOGIN_PAGE;
         } catch (Exception e) {
-            logger.error(e);
+            logger.error(e.getMessage());
             request.setAttribute(Attributes.INFO_MESSAGE, Messages.USER_ALREADY_EXIST);
-            page = Pages.REGISTRATION_PAGE;
+            return Pages.REGISTRATION_PAGE;
         }
-        return page;
     }
 
     private Driver getDriverFromRequest(HttpServletRequest request) {
