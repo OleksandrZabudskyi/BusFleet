@@ -7,6 +7,7 @@ import ua.training.controller.command.*;
 import ua.training.controller.command.LoginCommand;
 import ua.training.controller.command.LogoutCommand;
 import ua.training.controller.command.admin.*;
+import ua.training.controller.command.driver.AppointmentCommand;
 import ua.training.controller.command.driver.DriverRegistrationCommand;
 import ua.training.controller.command.redirect.AdminPageCommand;
 import ua.training.controller.command.redirect.DriverPageCommand;
@@ -41,6 +42,8 @@ public class CommandExtractor {
         commands.put(NameCommands.DELETE_BUS, new DeleteBusCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_DRIVER, new DeleteDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new TripServiceImpl()));
+        commands.put(NameCommands.APPOINTMENT, new AppointmentCommand(new TripServiceImpl()));
+        commands.put(NameCommands.USER_INFO, new ProfileCommand());
 
 
     }

@@ -35,7 +35,7 @@ public class RequestParametersValidator {
         String errorName = String.format(Messages.PARAMS_ERROR, parameterName);
         String paramMessage = String.format(Messages.PARAMS_BLANK_FIELD, parameterValue);
         request.setAttribute(errorName, paramMessage);
-        logger.warn(errorName.concat(Attributes.COLLON_SIGN).concat(paramMessage));
+        logger.debug(errorName.concat(Attributes.COLLON_SIGN).concat(paramMessage));
     }
 
     public boolean isInvalidDriverData() {

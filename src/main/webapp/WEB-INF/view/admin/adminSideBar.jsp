@@ -5,6 +5,7 @@
     </p>
     <div class="well sidebar-nav">
         <ul class="nav">
+            <li>ADMIN PAGE</li>
             <li>Route</li>
             <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/routes">Get Routes</a></li>
             <li>Trips</li>

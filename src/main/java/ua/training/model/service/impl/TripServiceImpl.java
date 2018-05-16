@@ -200,10 +200,10 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> getAppointmentTripsToDriver() {
+    public List<Trip> getAppointmentTripsToDriver(Employee employee) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection)) {
-            return tripDao.findTripsWithRouteAndBus();
+            return tripDao.findTripsWithDetailsByDriverId(employee.getId());
         } catch (Exception e) {
             logger.error(LogMessage.NO_RESULT_FROM_DB, e);
             return new ArrayList<>();

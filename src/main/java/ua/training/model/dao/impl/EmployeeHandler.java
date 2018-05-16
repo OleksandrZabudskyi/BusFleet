@@ -3,6 +3,8 @@ package ua.training.model.dao.impl;
 import ua.training.constant.Attributes;
 import ua.training.constant.Messages;
 import ua.training.model.dao.AbstractEmployeeHandler;
+import ua.training.model.dao.mapper.AdminMapper;
+import ua.training.model.dao.mapper.DriverMapper;
 import ua.training.model.entity.Admin;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
@@ -17,17 +19,9 @@ public class EmployeeHandler implements AbstractEmployeeHandler {
     public Employee extractFromResultSet(Employee.ROLE role, ResultSet resultSet) throws SQLException {
         switch (role) {
             case ADMIN:
-                Admin admin = new Admin();
-                admin.setPassportNumber(resultSet.getString(Attributes.PASSPORT_NUMBER));
-                admin.setPassportRegistration(resultSet.getString(Attributes.PASSPORT_REGISTRATION));
-                return admin;
+                return new AdminMapper().extractFromResultSet(resultSet);
             case DRIVER:
-                Driver driver = new Driver();
-                driver.setDrivingLicenceNumber(resultSet.getString(Attributes.DRIVER_LICENCE_NUMBER));
-                driver.setDrivingExperience(resultSet.getInt(Attributes.DRIVING_EXPERIENCE));
-                driver.setAssigned(resultSet.getBoolean(Attributes.ASSIGNED));
-                driver.setRegistered(resultSet.getBoolean(Attributes.REGISTERED));
-                return driver;
+                return new DriverMapper().extractFromResultSet(resultSet);
             default:
                 throw new IllegalArgumentException(Messages.INVALID_ROLE + role);
         }

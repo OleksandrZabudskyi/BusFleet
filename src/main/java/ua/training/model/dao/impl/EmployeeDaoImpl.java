@@ -109,16 +109,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     private Employee getUserFromResultSet(ResultSet resultSet) throws SQLException {
         Employee.ROLE role = Employee.ROLE.valueOf(resultSet.getString(Attributes.ROLE));
-
-        Employee employee = new EmployeeHandler().extractFromResultSet(role, resultSet);
-        employee.setId(resultSet.getInt(Attributes.USER_ID));
-        employee.setFirstName(resultSet.getString(Attributes.FIRST_NAME));
-        employee.setLastName(resultSet.getString(Attributes.LAST_NAME));
-        employee.setEmail(resultSet.getString(Attributes.EMAIL));
-        employee.setPassword(resultSet.getString(Attributes.PASSWORD));
-        employee.setPhoneNumber(resultSet.getString(Attributes.PHONE_NUMBER));
-        employee.setRole(role);
-        return employee;
+        return new EmployeeHandler().extractFromResultSet(role, resultSet);
     }
 
 

@@ -41,9 +41,9 @@ public interface SQLQueries {
 
     /*join requests*/
     String FIND_TRIPS_WITH_ROUTES = "SELECT * FROM trip JOIN route ON trip.routeId = route.routeId LIMIT ?, ?";
-    String FIND_TRIPS_WITH_ROUTES_BUSES_DRIVERS = "SELECT * FROM trip INNER JOIN bus" +
+    String FIND_TRIPS_WITH_ROUTE_BUSE_DRIVER = "SELECT * FROM trip INNER JOIN bus" +
             " on trip.busId = bus.busId INNER JOIN route on trip.routeId = route.routeId" +
-            " INNER JOIN user on trip.driverId=user.userId";
+            " INNER JOIN user ON trip.driverId = user.userId WHERE trip.driverId = ?";
 
     String FIND_ALL_TRIPS_COUNT = "SELECT COUNT(*) as rowsNumber FROM trip;";
 

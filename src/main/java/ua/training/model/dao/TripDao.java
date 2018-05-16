@@ -9,5 +9,5 @@ public interface TripDao extends GenericDao<Trip, Integer> {
 
     int getNumberOfRecords();
 
-    List<Trip> findTripsWithRouteAndBus();
+    List<Trip> findTripsWithDetailsByDriverId(int driverId);
 }

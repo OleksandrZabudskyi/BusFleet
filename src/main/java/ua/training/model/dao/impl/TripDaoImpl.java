@@ -3,6 +3,8 @@ package ua.training.model.dao.impl;
 import ua.training.constant.Attributes;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.TripDao;
+import ua.training.model.dao.mapper.BusMapper;
+import ua.training.model.dao.mapper.DriverMapper;
 import ua.training.model.dao.mapper.RouteMapper;
 import ua.training.model.dao.util.SQLQueries;
 import ua.training.model.entity.Bus;
@@ -11,8 +13,6 @@ import ua.training.model.entity.Route;
 import ua.training.model.entity.Trip;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -158,13 +158,16 @@ public class TripDaoImpl implements TripDao {
     }
 
     @Override
-    public List<Trip> findTripsWithRouteAndBus() {
+    public List<Trip> findTripsWithDetailsByDriverId(int driverId) {
         List<Trip> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTES)) {
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTE_BUSE_DRIVER)) {
+            ps.setInt(1, driverId);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 Trip trip = geTripFromResultSet(resultSet);
                 trip.setRoute(new RouteMapper().extractFromResultSet(resultSet));
+                trip.setBus(new BusMapper().extractFromResultSet(resultSet));
+                trip.setDriver(new DriverMapper().extractFromResultSet(resultSet));
                 resultList.add(trip);
             }
             return resultList;
