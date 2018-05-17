@@ -23,5 +23,6 @@ public class RouteMapper implements EntityMapper<Route> {
         statement.setString(1, entity.getName());
         statement.setString(2, entity.getDestinationFrom());
         statement.setString(3, entity.getDestinationTo());
+        statement.setInt(4, entity.getId());
     }
 }

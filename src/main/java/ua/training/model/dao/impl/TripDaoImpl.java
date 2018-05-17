@@ -8,9 +8,6 @@ import ua.training.model.dao.mapper.DriverMapper;
 import ua.training.model.dao.mapper.RouteMapper;
 import ua.training.model.dao.mapper.TripMapper;
 import ua.training.model.dao.util.SQLQueries;
-import ua.training.model.entity.Bus;
-import ua.training.model.entity.Driver;
-import ua.training.model.entity.Route;
 import ua.training.model.entity.Trip;
 
 import java.sql.*;
@@ -124,7 +121,7 @@ public class TripDaoImpl implements TripDao {
     @Override
     public List<Trip> findTripsWithDetailsByDriverId(int driverId) {
         List<Trip> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTE_BUSE_DRIVER)) {
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTE_BUS_DRIVER)) {
             ps.setInt(1, driverId);
             ResultSet resultSet = ps.executeQuery();
 

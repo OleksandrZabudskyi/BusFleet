@@ -15,6 +15,7 @@
                     <th>Confirmation</th>
                     <th>Bus Id</th>
                     <th>Driver Id</th>
+                    <th>Bus With Driver</th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
@@ -53,6 +54,16 @@
                                        href="${pageContext.request.contextPath}/bus-fleet/admin/delete_driver?tripId=${trip.id}&page=${currentPage}"
                                        role="button">Delete</a></td>
                                 </td>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${trip.driver.id  == 0 and trip.bus.id  == 0}">
+                                <td><a class="btn btn-primary btn-sm"
+                                       href="${pageContext.request.contextPath}/bus-fleet/admin/buses_with_drivers?tripId=${trip.id}&page=${currentPage}"
+                                       role="button">Add Bus&Driver</a></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td></td>
                             </c:otherwise>
                         </c:choose>
                     </tr>

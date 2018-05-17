@@ -4,8 +4,10 @@ import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.BusDao;
 import ua.training.model.dao.mapper.BusMapper;
 import ua.training.model.dao.mapper.DriverMapper;
+import ua.training.model.dao.mapper.RouteMapper;
 import ua.training.model.dao.util.SQLQueries;
 import ua.training.model.entity.Bus;
+import ua.training.model.entity.Route;
 
 import java.sql.*;
 import java.util.*;
@@ -80,15 +82,6 @@ public class BusDaoImpl implements BusDao {
     }
 
     @Override
-    public void close() throws Exception {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public List<Bus> findAllBusesWithDrivers() {
         Map<Integer, Bus> buses = new HashMap<>();
         Map<Integer, ua.training.model.entity.Driver> drivers = new HashMap<>();
@@ -109,4 +102,33 @@ public class BusDaoImpl implements BusDao {
             throw new RuntimeException(e);
         }
     }
+
+    public Map<Bus, Route> findAllBusesWithRoutes() {
+        Map<Bus, Route> resultMap = new HashMap<>();
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_BUSES_WITH_ROUTES);
+             ResultSet resultSet = ps.executeQuery()) {
+
+            BusMapper busMapper = new BusMapper();
+            RouteMapper routeMapper = new RouteMapper();
+            while (resultSet.next()) {
+                Bus bus = busMapper.extractFromResultSet(resultSet);
+                Route route = routeMapper.extractFromResultSet(resultSet);
+                resultMap.put(bus, route);
+            }
+            return resultMap;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

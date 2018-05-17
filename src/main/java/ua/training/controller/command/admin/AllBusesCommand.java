@@ -26,7 +26,7 @@ public class AllBusesCommand implements Command {
         if(Objects.nonNull(tripId) && Integer.parseInt(tripId) != 0) {
             request.setAttribute(Attributes.TRIP_ID, tripId);
         }
-        request.setAttribute(Attributes.BUSES, busService.getAllBuses());
+        request.setAttribute(Attributes.BUSES, busService.getAllBusesWithRoutes());
         request.setAttribute(Attributes.PAGE, currentPage);
         return Pages.BUSES_PAGE;
     }
