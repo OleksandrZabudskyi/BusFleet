@@ -29,7 +29,7 @@ public class AppointmentCommand implements Command {
         if(Objects.isNull(activeUser)) {
             return NameCommands.LOGOUT;
         }
-        List<Trip> tripList = tripService.getAppointmentTripsToDriver(activeUser.getEmployee());
+        List<Trip> tripList = tripService.getAppointmentTripsToDrivers(activeUser.getEmployee());
         request.setAttribute(Attributes.TRIPS, tripList);
         return Pages.APPOINTMENT_PAGE;
     }

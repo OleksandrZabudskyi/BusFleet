@@ -26,7 +26,7 @@ public class DeleteDriverCommand implements Command {
         if (Objects.isNull(tripId) || tripId.isEmpty()) {
             return NameCommands.ALL_TRIPS;
         }
-        tripService.deleteDriver(Integer.parseInt(tripId));
+        tripService.deleteDriverFromTrip(Integer.parseInt(tripId));
         request.setAttribute(Attributes.PAGE, currentPage);
         return NameCommands.ALL_TRIPS;
     }

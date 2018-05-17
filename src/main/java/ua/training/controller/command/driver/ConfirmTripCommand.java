@@ -24,7 +24,7 @@ public class ConfirmTripCommand implements Command {
         if (Objects.nonNull(tripId) && tripId.trim().isEmpty()) {
             return NameCommands.APPOINTMENT;
         }
-        tripService.setConfirmation(Integer.parseInt(tripId));
+        tripService.setTripConfirmation(Integer.parseInt(tripId));
         return NameCommands.APPOINTMENT;
     }
 }

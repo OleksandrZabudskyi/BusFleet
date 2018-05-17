@@ -4,6 +4,7 @@ import ua.training.constant.Attributes;
 import ua.training.model.entity.Admin;
 import ua.training.model.entity.Employee;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,5 +22,22 @@ public class AdminMapper implements EntityMapper<Admin>{
         admin.setPassportNumber(resultSet.getString(Attributes.PASSPORT_NUMBER));
         admin.setPassportRegistration(resultSet.getString(Attributes.PASSPORT_REGISTRATION));
         return admin;
+    }
+
+    @Override
+    public void setParameters(Admin entity, PreparedStatement statement) throws SQLException {
+        statement.setString(1, entity.getFirstName());
+        statement.setString(2, entity.getLastName());
+        statement.setString(3, entity.getEmail());
+        statement.setString(4, entity.getPassword());
+        statement.setString(5, entity.getPhoneNumber());
+        statement.setString(6, entity.getRole().name());
+        statement.setNull(7, java.sql.Types.NULL);
+        statement.setNull(8, java.sql.Types.NULL);
+        statement.setString(9, entity.getPassportNumber());
+        statement.setString(10, entity.getPassportRegistration());
+        statement.setNull(11, java.sql.Types.NULL);
+        statement.setNull(12, java.sql.Types.NULL);
+        statement.setInt(13, entity.getId());
     }
 }

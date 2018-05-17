@@ -3,23 +3,20 @@ package ua.training.controller.command.admin;
 import ua.training.constant.Attributes;
 import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
-import ua.training.model.entity.Bus;
-import ua.training.model.service.TripService;
-import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.model.service.BusService;
+import ua.training.model.service.impl.BusServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class AllBusesCommand implements Command {
-    private TripService tripService;
+    private BusService busService;
 
-    public AllBusesCommand(TripServiceImpl tripService) {
-        this.tripService = tripService;
+    public AllBusesCommand(BusServiceImpl busService) {
+        this.busService = busService;
     }
 
     @Override
@@ -29,7 +26,7 @@ public class AllBusesCommand implements Command {
         if(Objects.nonNull(tripId) && Integer.parseInt(tripId) != 0) {
             request.setAttribute(Attributes.TRIP_ID, tripId);
         }
-        request.setAttribute(Attributes.BUSES, tripService.getAllBuses());
+        request.setAttribute(Attributes.BUSES, busService.getAllBuses());
         request.setAttribute(Attributes.PAGE, currentPage);
         return Pages.BUSES_PAGE;
     }

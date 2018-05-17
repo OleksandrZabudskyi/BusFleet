@@ -21,4 +21,6 @@ public interface NameCommands {
     String APPOINTMENT = "get_appointment";
     String USER_INFO = "user_info";
     String CONFIRM_APPOINTMENT = "confirm_appointment";
+    String BUSES_WITH_DRIVERS = "buses_with_drivers";
+    String SET_BUS_WITH_DRIVER = "set_bus_driver";
 }

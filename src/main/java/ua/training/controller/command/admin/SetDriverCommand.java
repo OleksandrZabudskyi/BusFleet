@@ -17,6 +17,7 @@ public class SetDriverCommand implements Command {
     public SetDriverCommand(TripServiceImpl tripService) {
         this.tripService = tripService;
     }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tripId = request.getParameter(Attributes.TRIP_ID);
@@ -25,10 +26,10 @@ public class SetDriverCommand implements Command {
 
         RequestParametersValidator parametersValidator = new RequestParametersValidator(request);
         if (parametersValidator.validateIfNullOrEmpty(Attributes.TRIP_ID, Attributes.DRIVER_ID)) {
-            return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
+            return NameCommands.ALL_TRIPS;
         }
-        tripService.setDriver(Integer.parseInt(tripId), Integer.parseInt(driverId));
+        tripService.setDriverOnTrip(Integer.parseInt(tripId), Integer.parseInt(driverId));
         request.setAttribute(Attributes.PAGE, currentPage);
-        return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
+        return NameCommands.ALL_TRIPS;
     }
 }

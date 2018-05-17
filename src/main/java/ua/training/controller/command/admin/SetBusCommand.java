@@ -2,7 +2,6 @@ package ua.training.controller.command.admin;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.NameCommands;
-import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
 import ua.training.controller.util.RequestParametersValidator;
 import ua.training.model.service.impl.TripServiceImpl;
@@ -11,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Objects;
 
 public class SetBusCommand implements Command {
     private TripServiceImpl tripService;
@@ -28,10 +26,10 @@ public class SetBusCommand implements Command {
 
         RequestParametersValidator parametersValidator = new RequestParametersValidator(request);
         if (parametersValidator.validateIfNullOrEmpty(Attributes.TRIP_ID, Attributes.BUS_ID)) {
-            return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
+            return NameCommands.ALL_TRIPS;
         }
-        tripService.setBus(Integer.parseInt(tripId), Integer.parseInt(busId));
+        tripService.setBusOnTrip(Integer.parseInt(tripId), Integer.parseInt(busId));
         request.setAttribute(Attributes.PAGE, currentPage);
-        return NameCommands.REDIRECT.concat(NameCommands.ALL_TRIPS);
+        return NameCommands.ALL_TRIPS;
     }
 }

@@ -8,8 +8,11 @@ public abstract class DaoFactory {
     private static DaoFactory daoFactory;
 
     public abstract EmployeeDao createUserDao(Connection connection);
+
     public abstract RouteDao createRouteDao(Connection connection);
+
     public abstract TripDao createTripDao(Connection connection);
+
     public abstract BusDao createBusDao(Connection connection);
 
     public static DaoFactory getInstance() {

@@ -1,16 +1,14 @@
 package ua.training.model.dao.impl;
 
-import ua.training.constant.Attributes;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.BusDao;
 import ua.training.model.dao.mapper.BusMapper;
+import ua.training.model.dao.mapper.DriverMapper;
 import ua.training.model.dao.util.SQLQueries;
 import ua.training.model.entity.Bus;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class BusDaoImpl implements BusDao {
     private Connection connection;
@@ -26,7 +24,7 @@ public class BusDaoImpl implements BusDao {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                bus = Optional.ofNullable(geBusFromResultSet(resultSet));
+                bus = Optional.ofNullable(new BusMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,17 +32,14 @@ public class BusDaoImpl implements BusDao {
         return bus;
     }
 
-    private Bus geBusFromResultSet(ResultSet resultSet) throws SQLException {
-        return new BusMapper().extractFromResultSet(resultSet);
-    }
-
     @Override
     public List<Bus> findAll() {
         List<Bus> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_BUSES);
              ResultSet resultSet = ps.executeQuery()) {
+            BusMapper busMapper = new BusMapper();
             while (resultSet.next()) {
-                resultList.add(geBusFromResultSet(resultSet));
+                resultList.add(busMapper.extractFromResultSet(resultSet));
             }
             return resultList;
         } catch (SQLException e) {
@@ -55,7 +50,7 @@ public class BusDaoImpl implements BusDao {
     @Override
     public void create(Bus entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_BUS)) {
-            setBusParameters(entity, statement);
+            new BusMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(String.valueOf(entity.getId()));
@@ -64,19 +59,10 @@ public class BusDaoImpl implements BusDao {
         }
     }
 
-    private void setBusParameters(Bus entity, PreparedStatement statement) throws SQLException {
-        statement.setString(1, entity.getModel());
-        statement.setString(2, entity.getLicensePlate());
-        statement.setInt(3, entity.getManufactureYear());
-        statement.setString(4, entity.getParkingSpot());
-        statement.setBoolean(5, entity.isUsed());
-        statement.setInt(6, entity.getId());
-    }
-
     @Override
     public void update(Bus entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_BUS_BY_ID)) {
-            setBusParameters(entity, statement);
+            new BusMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -103,14 +89,22 @@ public class BusDaoImpl implements BusDao {
     }
 
     @Override
-    public List<Bus> findFreeBuses() {
-        List<Bus> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_FREE_BUSES);
+    public List<Bus> findAllBusesWithDrivers() {
+        Map<Integer, Bus> buses = new HashMap<>();
+        Map<Integer, ua.training.model.entity.Driver> drivers = new HashMap<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_BUSES_WITH_DRIVERS);
              ResultSet resultSet = ps.executeQuery()) {
+            BusMapper busMapper = new BusMapper();
+            DriverMapper driverMapper = new DriverMapper();
             while (resultSet.next()) {
-                resultList.add(geBusFromResultSet(resultSet));
+                Bus bus = busMapper.extractFromResultSet(resultSet);
+                ua.training.model.entity.Driver driver = driverMapper.extractFromResultSet(resultSet);
+                bus = busMapper.makeUnique(buses, bus);
+                driver = driverMapper.makeUnique(drivers, driver);
+                bus.getDrivers().add(driver);
             }
-            return resultList;
+            return new ArrayList<>(buses.values());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -37,13 +37,14 @@ public interface SQLQueries {
     String UPDATE_BUS_BY_ID = "UPDATE bus SET busModel = ? , licensePlate = ?, manufactureYear = ?, " +
             "parkingSpot = ?, used = ? WHERE busId = ?";
     String DELETE_BUS_BY_ID = "DELETE FROM bus WHERE busId = ?";
-    String FIND_FREE_BUSES = "SELECT * FROM bus WHERE used = 0";
 
     /*join requests*/
     String FIND_TRIPS_WITH_ROUTES = "SELECT * FROM trip JOIN route ON trip.routeId = route.routeId LIMIT ?, ?";
     String FIND_TRIPS_WITH_ROUTE_BUSE_DRIVER = "SELECT * FROM trip INNER JOIN bus" +
             " on trip.busId = bus.busId INNER JOIN route on trip.routeId = route.routeId" +
             " INNER JOIN user ON trip.driverId = user.userId WHERE trip.driverId = ?";
+    String FIND_ALL_BUSES_WITH_DRIVERS = "SELECT * FROM bus LEFT JOIN bus_has_driver ON" +
+            " bus.busId = bus_has_driver.bus_busId LEFT JOIN user ON bus_has_driver.user_userId = user.userId";
 
     String FIND_ALL_TRIPS_COUNT = "SELECT COUNT(*) as rowsNumber FROM trip;";
 

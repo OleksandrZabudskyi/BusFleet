@@ -45,18 +45,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Bus> getAllBuses() {
-        Connection connection = ConnectionPoolHolder.getConnection();
-        try (BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
-            return busDao.findAll();
-        } catch (Exception e) {
-            logger.error(LogMessage.NO_RESULT_FROM_DB, e);
-            return new ArrayList<>();
-        }
-    }
-
-    @Override
-    public void setBus(int tripId, int busId) {
+    public void setBusOnTrip(int tripId, int busId) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
              BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
@@ -89,7 +78,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void deleteBus(int tripId) {
+    public void deleteBusFromTrip(int tripId) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
              BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
@@ -123,7 +112,7 @@ public class TripServiceImpl implements TripService {
 
 
     @Override
-    public void setDriver(int tripId, int driverId) {
+    public void setDriverOnTrip(int tripId, int driverId) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
              EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
@@ -158,7 +147,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void deleteDriver(int tripId) {
+    public void deleteDriverFromTrip(int tripId) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
              EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
@@ -192,7 +181,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public List<Trip> getAppointmentTripsToDriver(Employee employee) {
+    public List<Trip> getAppointmentTripsToDrivers(Employee employee) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection)) {
             return tripDao.findTripsWithDetailsByDriverId(employee.getId());
@@ -203,7 +192,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void setConfirmation(int tripId) {
+    public void setTripConfirmation(int tripId) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection)) {
             connection.setAutoCommit(false);
