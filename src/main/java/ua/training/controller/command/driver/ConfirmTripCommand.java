@@ -1,9 +1,9 @@
-package ua.training.controller.command.admin;
+package ua.training.controller.command.driver;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
-import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.model.service.TripService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,23 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteBusCommand implements Command {
-    private TripServiceImpl tripService;
+public class ConfirmTripCommand implements Command {
+    private TripService tripService;
 
-    public DeleteBusCommand(TripServiceImpl tripService) {
+    public ConfirmTripCommand(TripService tripService) {
         this.tripService = tripService;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tripId = request.getParameter(Attributes.TRIP_ID);
-        String currentPage = request.getParameter(Attributes.PAGE);
-
-        if(Objects.isNull(tripId) || tripId.isEmpty()) {
-            return NameCommands.ALL_TRIPS;
+        if (Objects.nonNull(tripId) && tripId.trim().isEmpty()) {
+            return NameCommands.APPOINTMENT;
         }
-        tripService.deleteBusFromTrip(Integer.parseInt(tripId));
-        request.setAttribute(Attributes.PAGE, currentPage);
-        return NameCommands.ALL_TRIPS;
+        tripService.setTripConfirmation(Integer.parseInt(tripId));
+        return NameCommands.APPOINTMENT;
     }
 }

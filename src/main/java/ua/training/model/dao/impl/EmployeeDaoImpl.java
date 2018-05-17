@@ -66,7 +66,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void create(Employee entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_USER)) {
-            setUserParameters(entity, statement);
+            new EmployeeHandler().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getEmail());
@@ -79,7 +79,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void update(Employee entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_USER_BY_ID)) {
-            setUserParameters(entity, statement);
+            new EmployeeHandler().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -96,29 +96,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
     }
 
-    protected void setUserParameters(Employee employee, PreparedStatement statement) throws SQLException {
-        statement.setString(1, employee.getFirstName());
-        statement.setString(2, employee.getLastName());
-        statement.setString(3, employee.getEmail());
-        statement.setString(4, employee.getPassword());
-        statement.setString(5, employee.getPhoneNumber());
-        statement.setString(6, employee.getRole().name());
-
-        new EmployeeHandler().setSuccessorParameters(employee, statement);
-    }
-
     private Employee getUserFromResultSet(ResultSet resultSet) throws SQLException {
         Employee.ROLE role = Employee.ROLE.valueOf(resultSet.getString(Attributes.ROLE));
-
-        Employee employee = new EmployeeHandler().extractFromResultSet(role, resultSet);
-        employee.setId(resultSet.getInt(Attributes.USER_ID));
-        employee.setFirstName(resultSet.getString(Attributes.FIRST_NAME));
-        employee.setLastName(resultSet.getString(Attributes.LAST_NAME));
-        employee.setEmail(resultSet.getString(Attributes.EMAIL));
-        employee.setPassword(resultSet.getString(Attributes.PASSWORD));
-        employee.setPhoneNumber(resultSet.getString(Attributes.PHONE_NUMBER));
-        employee.setRole(role);
-        return employee;
+        return new EmployeeHandler().extractFromResultSet(role, resultSet);
     }
 
 

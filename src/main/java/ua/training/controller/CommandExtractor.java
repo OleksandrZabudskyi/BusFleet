@@ -1,17 +1,20 @@
 package ua.training.controller;
 
-import ua.training.constant.Attributes;
+import ua.training.constant.GlobalConstants;
 import ua.training.constant.NameCommands;
 import ua.training.constant.Regex;
 import ua.training.controller.command.*;
 import ua.training.controller.command.LoginCommand;
 import ua.training.controller.command.LogoutCommand;
 import ua.training.controller.command.admin.*;
+import ua.training.controller.command.driver.AppointmentCommand;
+import ua.training.controller.command.driver.ConfirmTripCommand;
 import ua.training.controller.command.driver.DriverRegistrationCommand;
 import ua.training.controller.command.redirect.AdminPageCommand;
 import ua.training.controller.command.redirect.DriverPageCommand;
 import ua.training.controller.command.redirect.LoginPageCommand;
 import ua.training.controller.command.redirect.RegistrationPageCommand;
+import ua.training.model.service.impl.BusServiceImpl;
 import ua.training.model.service.impl.EmployeeServiceImpl;
 import ua.training.model.service.impl.SecurityServiceImpl;
 import ua.training.model.service.impl.TripServiceImpl;
@@ -35,19 +38,24 @@ public class CommandExtractor {
         commands.put(NameCommands.LOGOUT, new LogoutCommand());
         commands.put(NameCommands.LANGUAGE, new LanguageCommand());
         commands.put(NameCommands.ALL_TRIPS, new TripsAndRoutesCommand(new TripServiceImpl()));
-        commands.put(NameCommands.ALL_BUSES, new AllBusesCommand(new TripServiceImpl()));
+        commands.put(NameCommands.ALL_BUSES, new AllBusesCommand(new BusServiceImpl()));
         commands.put(NameCommands.SET_BUS, new SetBusCommand(new TripServiceImpl()));
         commands.put(NameCommands.SET_DRIVER, new SetDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_BUS, new DeleteBusCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_DRIVER, new DeleteDriverCommand(new TripServiceImpl()));
-        commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new TripServiceImpl()));
+        commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new EmployeeServiceImpl()));
+        commands.put(NameCommands.APPOINTMENT, new AppointmentCommand(new TripServiceImpl()));
+        commands.put(NameCommands.CONFIRM_APPOINTMENT, new ConfirmTripCommand(new TripServiceImpl()));
+        commands.put(NameCommands.BUSES_WITH_DRIVERS, new BusesWithDriversCommand(new BusServiceImpl()));
+        commands.put(NameCommands.SET_BUS_WITH_DRIVER, new SetBusWithDriverCommand(new TripServiceImpl()));
+        commands.put(NameCommands.USER_INFO, new ProfileCommand());
 
 
     }
 
     public Command getCommand(HttpServletRequest request) {
         String path = request.getRequestURI();
-        path = path.replaceAll(Regex.URL, Attributes.EMPTY_SIGN);
+        path = path.replaceAll(Regex.URL, GlobalConstants.EMPTY_SIGN);
         return commands.getOrDefault(path, new IndexPageCommand());
     }
 

@@ -8,5 +8,6 @@ import java.sql.SQLException;
 
 public interface AbstractEmployeeHandler {
     Employee extractFromResultSet(Employee.ROLE role, ResultSet resultSet) throws SQLException;
-    void setSuccessorParameters(Employee employee, PreparedStatement statement) throws SQLException;
+
+    void setParameters(Employee employee, PreparedStatement statement) throws SQLException;
 }

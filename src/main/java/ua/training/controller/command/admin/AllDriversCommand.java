@@ -3,8 +3,7 @@ package ua.training.controller.command.admin;
 import ua.training.constant.Attributes;
 import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
-import ua.training.model.service.TripService;
-import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.model.service.EmployeeService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +12,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AllDriversCommand implements Command {
-    private TripService tripService;
+    private EmployeeService employeeService;
 
-    public AllDriversCommand(TripServiceImpl tripService) {
-        this.tripService = tripService;
+    public AllDriversCommand(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -26,7 +25,7 @@ public class AllDriversCommand implements Command {
         if (Objects.nonNull(tripId) && Integer.parseInt(tripId) != 0) {
             request.setAttribute(Attributes.TRIP_ID, tripId);
         }
-        request.setAttribute(Attributes.DRIVERS, tripService.getAllDrivers());
+        request.setAttribute(Attributes.DRIVERS, employeeService.getAllDrivers());
         request.setAttribute(Attributes.PAGE, currentPage);
         return Pages.DRIVERS_PAGE;
     }

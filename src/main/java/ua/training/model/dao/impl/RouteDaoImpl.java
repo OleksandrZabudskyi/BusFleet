@@ -25,7 +25,7 @@ public class RouteDaoImpl implements RouteDao {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                route = Optional.ofNullable(getRouteFromResultSet(resultSet));
+                route = Optional.ofNullable(new RouteMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -33,17 +33,14 @@ public class RouteDaoImpl implements RouteDao {
         return route;
     }
 
-    private Route getRouteFromResultSet(ResultSet resultSet) throws SQLException {
-        return new RouteMapper().extractFromResultSet(resultSet);
-    }
-
     @Override
     public List<Route> findAll() {
         List<Route> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_ROUTES);
              ResultSet resultSet = ps.executeQuery()) {
+            RouteMapper routeMapper = new RouteMapper();
             while (resultSet.next()) {
-                resultList.add(getRouteFromResultSet(resultSet));
+                resultList.add(routeMapper.extractFromResultSet(resultSet));
             }
             return resultList;
         } catch (SQLException e) {
@@ -54,7 +51,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public void create(Route entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_ROUTE)) {
-            setRouteParameters(entity, statement);
+            new RouteMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getName());
@@ -66,17 +63,11 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public void update(Route entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_ROUTE_BY_ID)) {
-            setRouteParameters(entity, statement);
+            new RouteMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void setRouteParameters(Route route, PreparedStatement statement) throws SQLException {
-        statement.setString(1, route.getName());
-        statement.setString(2, route.getDestinationFrom());
-        statement.setString(3, route.getDestinationTo());
     }
 
     @Override

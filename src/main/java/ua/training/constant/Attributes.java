@@ -1,11 +1,6 @@
 package ua.training.constant;
 
 public interface Attributes {
-    String EMPTY_SIGN = "";
-    String COMMA_SIGN = ",";
-    String COLLON_SIGN = ":";
-    String UTF8 = "UTF-8";
-    String MD5 = "MD5";
     String LANGUAGE = "language";
     String ERROR_MESSAGE = "errorMessage";
     String LOGGED_USERS = "loggedUsers";
@@ -54,4 +49,5 @@ public interface Attributes {
     String BUSES = "buses";
     String USED = "used";
     String DRIVERS = "drivers";
+    String CONFIRMATION = "confirmation";
 }

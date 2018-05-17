@@ -5,11 +5,12 @@
     </p>
     <div class="well sidebar-nav">
         <ul class="nav">
-            <li>Action</li>
-            <li><a href="${pageContext.request.contextPath}/bus-fleet/driver/appointments">Appointments</a></li>
-            <li><a href="${pageContext.request.contextPath}/bus-fleet/driver/confirm-appointments">Confirm</a></li>
+            <li>DRIVER PAGE</li>
+            <li><a></a></li>
+            <li>Trip Appointment</li>
+            <li><a href="${pageContext.request.contextPath}/bus-fleet/driver/get_appointment">Appointment</a></li>
             <li>Profile</li>
-            <li><a href="${pageContext.request.contextPath}/bus-fleet/admin/user_info">Info</a></li>
+            <li><a href="${pageContext.request.contextPath}/bus-fleet/driver/user_info">Info</a></li>
         </ul>
     </div>
 </div>

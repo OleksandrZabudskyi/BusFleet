@@ -21,6 +21,10 @@ public class ActiveUser implements HttpSessionBindingListener {
         this.employee = employee;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
     public boolean isAlreadyLoggedIn() {
         return alreadyLoggedIn;
     }

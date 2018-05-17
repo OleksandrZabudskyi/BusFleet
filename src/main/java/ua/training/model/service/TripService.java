@@ -1,7 +1,6 @@
 package ua.training.model.service;
 
-import ua.training.model.entity.Bus;
-import ua.training.model.entity.Driver;
+import ua.training.model.entity.Employee;
 import ua.training.model.entity.Trip;
 
 import java.util.List;
@@ -11,15 +10,15 @@ public interface TripService {
 
     int getNumberOfRecords();
 
-    List<Bus> getAllBuses();
+    void setBusOnTrip(int tripId, int busId);
 
-    void setBus(int tripId, int busId);
+    void deleteBusFromTrip(int tripId);
 
-    void deleteBus(int tripId);
+    void setDriverOnTrip(int tripId, int driverId);
 
-    List<Driver> getAllDrivers();
+    void deleteDriverFromTrip(int tripId);
 
-    void setDriver(int tripId, int driverId);
+    List<Trip> getAppointmentTripsToDrivers(Employee employee);
 
-    void deleteDriver(int tripId);
+    void setTripConfirmation(int tripId);
 }
