@@ -21,7 +21,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public Optional<Employee> findByEmail(String email) {
         Optional<Employee> employee = Optional.empty();
-        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.SELECT_BY_EMAIL_QUERY)) {
+        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.FIND_USER_BY_EMAIL)) {
             stmt.setString(1, email);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
@@ -36,7 +36,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public Optional<Employee> findById(Integer id) {
         Optional<Employee> employee = Optional.empty();
-        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.SELECT_BY_ID_QUERY)) {
+        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.FIND_USER_BY_ID)) {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
@@ -50,14 +50,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 
     @Override
-    public Optional<List<Employee>> findAll() {
+    public List<Employee> findAll() {
         List<Employee> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.SELECT_ALL_QUERY);
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_USERS);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 resultList.add(getUserFromResultSet(resultSet));
             }
-            return Optional.of(resultList);
+            return resultList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -65,8 +65,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public void create(Employee entity) throws EntityAlreadyExistException {
-        try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_DRIVER_QUERY)) {
-            setUserParameters(entity, statement);
+        try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_USER)) {
+            new EmployeeHandler().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getEmail());
@@ -78,8 +78,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public void update(Employee entity) {
-        try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_DRIVER_BY_ID)) {
-            setUserParameters(entity, statement);
+        try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_USER_BY_ID)) {
+            new EmployeeHandler().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -88,7 +88,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public void delete(Integer id) {
-        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.DELETE_BY_ID)) {
+        try (PreparedStatement stmt = connection.prepareStatement(SQLQueries.DELETE_USER_BY_ID)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -96,29 +96,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
     }
 
-    protected void setUserParameters(Employee employee, PreparedStatement statement) throws SQLException {
-        statement.setString(1, employee.getFirstName());
-        statement.setString(2, employee.getLastName());
-        statement.setString(3, employee.getEmail());
-        statement.setString(4, employee.getPhoneNumber());
-        statement.setString(5, employee.getRole().name());
-        statement.setString(6, employee.getPassword());
-
-        new EmployeeHandler().setSuccessorParameters(employee, statement);
-    }
-
     private Employee getUserFromResultSet(ResultSet resultSet) throws SQLException {
         Employee.ROLE role = Employee.ROLE.valueOf(resultSet.getString(Attributes.ROLE));
-
-        Employee employee = new EmployeeHandler().extractFromResultSet(role, resultSet);
-        employee.setId(resultSet.getInt(Attributes.USER_ID));
-        employee.setFirstName(resultSet.getString(Attributes.FIRST_NAME));
-        employee.setLastName(resultSet.getString(Attributes.LAST_NAME));
-        employee.setEmail(resultSet.getString(Attributes.EMAIL));
-        employee.setPassword(resultSet.getString(Attributes.PASSWORD));
-        employee.setPhoneNumber(resultSet.getString(Attributes.PHONE_NUMBER));
-        employee.setRole(role);
-        return employee;
+        return new EmployeeHandler().extractFromResultSet(role, resultSet);
     }
 
 

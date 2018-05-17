@@ -6,14 +6,18 @@
         <h2 class="form-signin-heading">Driver Registration</h2>
         <div class="form-group">
             <input type="text" class="form-control" name="firstName" placeholder="First Name"/>
+            <span class="text-danger">${firstNameError}</span>
             <input type="text" class="form-control" name="lastName" placeholder="Last Name"/>
+            <span class="text-danger">${lastNameError}</span>
             <input type="text" class="form-control" name="email" placeholder="Email"/>
             <span class="text-danger">${emailError}</span>
-            <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number"/>
+            <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number ex. +38044234-44-33"/>
+            <span class="text-danger">${phoneNumberError}</span>
             <input type="text" class="form-control" name="drivingLicenceNumber" placeholder="Driving Licence Number"/>
+            <span class="text-danger">${drivingLicenceNumberError}</span>
             <input type="text" class="form-control" name="drivingExperience" placeholder="Driving Experience"/>
+            <span class="text-danger">${drivingExperienceError}</span>
             <input type="password" class="form-control" name="password" placeholder="Password"/>
-            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm your password"/>
             <span class="text-danger">${passwordError}</span>
             <span class="text-danger">${errorMessage}</span>
         </div>

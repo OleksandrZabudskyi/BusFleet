@@ -1,10 +1,14 @@
 package ua.training.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Driver extends Employee {
     private String drivingLicenceNumber;
     private int drivingExperience;
     private boolean assigned;
     private boolean registered;
+    private List<Bus> buses = new ArrayList<>();
 
     public String getDrivingLicenceNumber() {
         return drivingLicenceNumber;
@@ -36,6 +40,14 @@ public class Driver extends Employee {
 
     public void setRegistered(boolean registered) {
         this.registered = registered;
+    }
+
+    public List<Bus> getBuses() {
+        return buses;
+    }
+
+    public void setBuses(List<Bus> buses) {
+        this.buses = buses;
     }
 
     @Override

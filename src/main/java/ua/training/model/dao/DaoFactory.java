@@ -9,6 +9,12 @@ public abstract class DaoFactory {
 
     public abstract EmployeeDao createUserDao(Connection connection);
 
+    public abstract RouteDao createRouteDao(Connection connection);
+
+    public abstract TripDao createTripDao(Connection connection);
+
+    public abstract BusDao createBusDao(Connection connection);
+
     public static DaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (DaoFactory.class) {

@@ -7,4 +7,7 @@ public interface LogMessage {
     String DRIVER_REGISTRATION_ERROR = "Invalid driver registration";
     String SESSION_CREATED = "Session created. Session ID: ";
     String SESSION_DESTROYED = "Session destroyed. Session ID: ";
+    String USER_ALREADY_LOGGED = "Already logged user with email:";
+    String TRANSACTION_ERROR = "Transactions was not successful";
+    String ROLLBACK_ERROR = "Rollback transactions was not successful";
 }
