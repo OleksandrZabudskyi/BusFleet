@@ -13,13 +13,13 @@ Zabudskyi Oleksandr
 ## Mentor
 Lyashenko Maxym
 
-##Installation instruction
+## Installation instruction
 1. Open MySQL Server and crete connection with parameters: url = jdbc:mysql://localhost:3306/BusFleet, user = root, password = ad12min99 
 or create your own connection just editing connection parameters in property file src/main/resources/application.properties
 2. Run SQL script "create_db.sql" from root project dir which create "BusFleet" scheme and populating with data. 
 (Note: Default encrypted password for Drivers and Admins "12345" in db schema)
 
-##Deployment instruction
+## Deployment instruction
 1. Install maven https://maven.apache.org/install.html
 2. In project directory open command line interfaces such as the Bash(Linux) or PowerShell(Windows)
 3. Enter command "mvn clean install tomcat7:run"
