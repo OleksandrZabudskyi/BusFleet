@@ -5,17 +5,17 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Bus Id</th>
-                    <th>Bus Model</th>
-                    <th>License Plate</th>
-                    <th>Manufacture Year</th>
-                    <th>Parking Spot</th>
-                    <th>Driver Id</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Driving Licence Number</th>
-                    <th>Driving Experience</th>
-                    <th>Action</th>
+                    <th><fmt:message key="bus.id"/></th>
+                    <th><fmt:message key="bus.model"/></th>
+                    <th><fmt:message key="license.plate"/></th>
+                    <th><fmt:message key="produce.year"/></th>
+                    <th><fmt:message key="parking.spot"/></th>
+                    <th><fmt:message key="driver.id"/></th>
+                    <th><fmt:message key="first.name"/></th>
+                    <th><fmt:message key="last.name"/></th>
+                    <th><fmt:message key="licence.number"/></th>
+                    <th><fmt:message key="skill.year"/></th>
+                    <th><fmt:message key="to.trip"/></th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
@@ -36,7 +36,7 @@
                                 <c:when test="${bus.used == false}">
                                     <td><a class="btn btn-primary"
                                            href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus_driver?tripId=${tripId}&busId=${bus.id}&driverId=${driver.id}&page=${page}"
-                                           role="button">Add Bus With Driver</a></td>
+                                           role="button"><fmt:message key="add"/></a></td>
                                 </c:when>
                                 <c:otherwise>
                                     <td></td>
