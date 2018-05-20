@@ -5,7 +5,7 @@ import ua.training.constant.Attributes;
 import ua.training.constant.Messages;
 import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
-import ua.training.controller.util.RequestParametersValidator;
+import ua.training.controller.util.ParametersValidator;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
@@ -19,16 +19,19 @@ public class DriverRegistrationCommand implements Command {
     private static Logger logger = Logger.getLogger(DriverRegistrationCommand.class);
     private EmployeeService employeeService;
     private SecurityService securityService;
+    private ParametersValidator parametersValidator;
 
-    public DriverRegistrationCommand(EmployeeService employeeService, SecurityService securityService) {
+    public DriverRegistrationCommand(EmployeeService employeeService, SecurityService securityService,
+                                     ParametersValidator parametersValidator) {
         this.employeeService = employeeService;
         this.securityService = securityService;
+        this.parametersValidator = parametersValidator;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestParametersValidator requestParametersValidator = new RequestParametersValidator(request);
-        if (requestParametersValidator.isInvalidDriverData()) {
+
+        if (parametersValidator.hasInvalidDriverData(request)) {
             return Pages.REGISTRATION_PAGE;
         }
 

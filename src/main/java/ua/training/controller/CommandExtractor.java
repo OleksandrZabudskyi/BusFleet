@@ -14,6 +14,7 @@ import ua.training.controller.command.redirect.AdminPageCommand;
 import ua.training.controller.command.redirect.DriverPageCommand;
 import ua.training.controller.command.redirect.LoginPageCommand;
 import ua.training.controller.command.redirect.RegistrationPageCommand;
+import ua.training.controller.util.ParametersValidator;
 import ua.training.model.service.impl.BusServiceImpl;
 import ua.training.model.service.impl.EmployeeServiceImpl;
 import ua.training.model.service.impl.SecurityServiceImpl;
@@ -33,21 +34,24 @@ public class CommandExtractor {
         commands.put(NameCommands.REGISTRATION_PAGE, new RegistrationPageCommand());
         commands.put(NameCommands.ADMIN_PAGE, new AdminPageCommand());
         commands.put(NameCommands.DRIVER_PAGE, new DriverPageCommand());
-        commands.put(NameCommands.LOGIN, new LoginCommand(new EmployeeServiceImpl(), new SecurityServiceImpl()));
-        commands.put(NameCommands.REGISTRATION, new DriverRegistrationCommand(new EmployeeServiceImpl(), new SecurityServiceImpl()));
+        commands.put(NameCommands.LOGIN, new LoginCommand(new EmployeeServiceImpl(), new SecurityServiceImpl(),
+                new ParametersValidator()));
+        commands.put(NameCommands.REGISTRATION, new DriverRegistrationCommand(new EmployeeServiceImpl(),
+                new SecurityServiceImpl(), new ParametersValidator()));
         commands.put(NameCommands.LOGOUT, new LogoutCommand());
         commands.put(NameCommands.LANGUAGE, new LanguageCommand());
         commands.put(NameCommands.ALL_TRIPS, new TripsAndRoutesCommand(new TripServiceImpl()));
         commands.put(NameCommands.ALL_BUSES, new AllBusesCommand(new BusServiceImpl()));
-        commands.put(NameCommands.SET_BUS, new SetBusCommand(new TripServiceImpl()));
-        commands.put(NameCommands.SET_DRIVER, new SetDriverCommand(new TripServiceImpl()));
+        commands.put(NameCommands.SET_BUS, new SetBusCommand(new TripServiceImpl(), new ParametersValidator()));
+        commands.put(NameCommands.SET_DRIVER, new SetDriverCommand(new TripServiceImpl(), new ParametersValidator()));
         commands.put(NameCommands.DELETE_BUS, new DeleteBusCommand(new TripServiceImpl()));
         commands.put(NameCommands.DELETE_DRIVER, new DeleteDriverCommand(new TripServiceImpl()));
         commands.put(NameCommands.ALL_DRIVERS, new AllDriversCommand(new EmployeeServiceImpl()));
         commands.put(NameCommands.APPOINTMENT, new AppointmentCommand(new TripServiceImpl()));
         commands.put(NameCommands.CONFIRM_APPOINTMENT, new ConfirmTripCommand(new TripServiceImpl()));
         commands.put(NameCommands.BUSES_WITH_DRIVERS, new BusesWithDriversCommand(new BusServiceImpl()));
-        commands.put(NameCommands.SET_BUS_WITH_DRIVER, new SetBusWithDriverCommand(new TripServiceImpl()));
+        commands.put(NameCommands.SET_BUS_WITH_DRIVER, new SetBusWithDriverCommand(new TripServiceImpl(),
+                new ParametersValidator()));
         commands.put(NameCommands.USER_INFO, new ProfileCommand());
 
 
