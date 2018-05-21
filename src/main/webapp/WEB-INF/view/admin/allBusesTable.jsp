@@ -5,15 +5,15 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>Bus Model</th>
-                    <th>License Plate</th>
-                    <th>Manufacture Year</th>
-                    <th>Parking Spot</th>
-                    <th>Route Name</th>
-                    <th>Destination From</th>
-                    <th>Destination To</th>
-                    <th>Action</th>
+                    <th><fmt:message key="bus.id"/></th>
+                    <th><fmt:message key="bus.model"/></th>
+                    <th><fmt:message key="license.plate"/></th>
+                    <th><fmt:message key="produce.year"/></th>
+                    <th><fmt:message key="parking.spot"/></th>
+                    <th><fmt:message key="route"/></th>
+                    <th><fmt:message key="from"/></th>
+                    <th><fmt:message key="to"/></th>
+                    <th><fmt:message key="to.trip"/></th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
@@ -31,7 +31,7 @@
                             <c:when test="${bus.key.used == false}">
                                 <td><a class="btn btn-primary"
                                        href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?tripId=${tripId}&busId=${bus.key.id}&page=${page}"
-                                       role="button">Add To Trip</a></td>
+                                       role="button"><fmt:message key="add"/></a></td>
                             </c:when>
                             <c:otherwise>
                                 <td></td>

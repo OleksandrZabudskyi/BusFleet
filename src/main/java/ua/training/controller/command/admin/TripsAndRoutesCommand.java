@@ -16,6 +16,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+/**
+ * Command for loading routes with trips
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see Pages
+ */
 public class TripsAndRoutesCommand implements Command {
     private TripService tripService;
 

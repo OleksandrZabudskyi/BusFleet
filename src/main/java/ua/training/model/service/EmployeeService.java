@@ -6,11 +6,34 @@ import ua.training.model.entity.Employee;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Provide service layer to manipulate with data from employee dao
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface EmployeeService {
+
+    /**
+     * Find employee by email
+     *
+     * @param email email
+     * @return Optional<Employee> or Optional.empty()
+     */
     Optional<Employee> findEmployeeByEmail(String email);
 
+    /**
+     * Register driver
+     *
+     * @param driver driver
+     * @throws Exception exception
+     */
     void registerDriver(Driver driver) throws Exception;
 
+    /**
+     *  Get all drivers
+     *
+     * @return list with Driver or empty list
+     */
     List<Driver> getAllDrivers();
 
 

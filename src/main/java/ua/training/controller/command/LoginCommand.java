@@ -3,7 +3,7 @@ package ua.training.controller.command;
 import org.apache.log4j.Logger;
 import ua.training.constant.*;
 import ua.training.controller.listener.ActiveUser;
-import ua.training.controller.util.RequestParametersValidator;
+import ua.training.controller.util.ParametersValidator;
 import ua.training.model.entity.Employee;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
@@ -15,22 +15,43 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Class for login to application
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see Pages
+ * @see LogMessage
+ */
 public class LoginCommand implements Command {
     private static Logger logger = Logger.getLogger(LoginCommand.class);
     private EmployeeService employeeService;
     private SecurityService securityService;
+    private ParametersValidator parametersValidator;
 
-    public LoginCommand(EmployeeService employeeService, SecurityService securityService) {
+    public LoginCommand(EmployeeService employeeService, SecurityService securityService, ParametersValidator parametersValidator) {
         this.employeeService = employeeService;
         this.securityService = securityService;
+        this.parametersValidator = parametersValidator;
     }
 
+    /**
+     * Check if user with such email and password exist in database, if true
+     * create new dto object for storing current user in session context
+     * otherwise return
+     *
+     * @param request httpServletRequest
+     * @param response httpServletResponse
+     * @return redirect command depending of user role
+     * @throws ServletException overriding
+     * @throws IOException overriding
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter(Attributes.EMAIL);
         String password = request.getParameter(Attributes.PASSWORD);
-        RequestParametersValidator requestParametersValidator = new RequestParametersValidator(request);
-        if (requestParametersValidator.validateIfNullOrEmpty(Attributes.EMAIL, Attributes.PASSWORD)) {
+        if (parametersValidator.validateIfNullOrEmpty(request, Attributes.EMAIL, Attributes.PASSWORD)) {
             return Pages.LOGIN_PAGE;
         }
 
@@ -52,6 +73,12 @@ public class LoginCommand implements Command {
         return getRedirectCommand(employee.getRole());
     }
 
+    /**
+     * Extract redirect command depending of user role or index page
+     *
+     * @param role {@link ua.training.model.entity.Employee.ROLE}
+     * @return redirect to command name or index page
+     */
     private String getRedirectCommand(Employee.ROLE role) {
         if (role.equals(Employee.ROLE.ADMIN)) {
             return NameCommands.REDIRECT.concat(NameCommands.ADMIN_PAGE);

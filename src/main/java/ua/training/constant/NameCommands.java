@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ * All attributes for jsp pages and data base tables
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface NameCommands {
     String INDEX_PAGE = "index_page";
     String LOGIN = "login";

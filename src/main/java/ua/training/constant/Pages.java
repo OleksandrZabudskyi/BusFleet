@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ * Path to jsp pages
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface Pages {
     String INDEX_PAGE = "/WEB-INF/view/index.jsp";
     String ADMIN_PAGE = "/WEB-INF/view/admin/adminPage.jsp";

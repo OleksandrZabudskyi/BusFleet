@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Command for loading buses and drivers
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see Pages
+ */
 public class BusesWithDriversCommand implements Command {
     private BusService busService;
 

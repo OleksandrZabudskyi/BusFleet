@@ -7,7 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface BusDao extends GenericDao<Bus, Integer> {
+    /**
+     * Find all buses with drivers through the many to many relation ship by using intermediate table
+     *
+     * @return Buses with list of drivers
+     */
     List<Bus> findAllBusesWithDrivers();
 
-    public Map<Bus, Route> findAllBusesWithRoutes();
+    /**
+     * Find all assigned buses with route though the trip table relations
+     *
+     * @return new relation bus to route
+     */
+    Map<Bus, Route> findAllBusesWithRoutes();
 }

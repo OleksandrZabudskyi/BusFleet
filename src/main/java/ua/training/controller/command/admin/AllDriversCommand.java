@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Command for loading all drivers
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see Pages
+ */
 public class AllDriversCommand implements Command {
     private EmployeeService employeeService;
 

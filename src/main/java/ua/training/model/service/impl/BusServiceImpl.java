@@ -25,7 +25,7 @@ public class BusServiceImpl implements BusService {
             return busDao.findAllBusesWithRoutes();
         } catch (Exception e) {
             logger.error(LogMessage.NO_RESULT_FROM_DB, e);
-            return new HashMap<Bus, Route>();
+            return new HashMap<>();
         }
     }
 

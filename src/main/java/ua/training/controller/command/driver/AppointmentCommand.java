@@ -16,6 +16,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Command for loading driver appointment
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see Pages
+ */
 public class AppointmentCommand implements Command {
     private TripService tripService;
 

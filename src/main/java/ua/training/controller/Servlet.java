@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ *  Class realizes the controller of the MVC pattern
+ *
+ * @author Zabudskyi Oleksandr
+ * @see HttpServlet
+ */
 @WebServlet(urlPatterns = {"/bus-fleet/*"})
 public class Servlet extends HttpServlet {
     private CommandExtractor commandExtractor;
@@ -20,6 +26,14 @@ public class Servlet extends HttpServlet {
         commandExtractor = CommandExtractor.getInstance();
     }
 
+    /**
+     * Gets command name from request uri and do some action depends on command name.
+     * Then forward or redirect
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Command command = commandExtractor.getCommand(request);
