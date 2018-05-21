@@ -4,6 +4,11 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+/**
+ * Encoding filter for all pages
+ *
+ * @author Zabudskyi Oleksandr
+ */
 @WebFilter(urlPatterns = {"/*"})
 public class EncodingFilter implements Filter {
 

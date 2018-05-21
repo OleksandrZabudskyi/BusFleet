@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ * Log messages
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface LogMessage {
     String REMOVE_USER = "Remove logged user from context: ";
     String ADD_USER = "Add user to context: ";

@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ *  Global constants
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface GlobalConstants {
     String EMPTY_SIGN = "";
     String COMMA_SIGN = ",";

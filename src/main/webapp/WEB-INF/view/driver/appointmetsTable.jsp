@@ -6,15 +6,15 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Route name</th>
-                    <th>Destination From</th>
-                    <th>Destination To</th>
-                    <th>Trip number</th>
-                    <th>Trip Start Time</th>
-                    <th>Trip End Time</th>
-                    <th>Bus Model</th>
-                    <th>Parking Spot</th>
-                    <th>Confirmation</th>
+                    <th><fmt:message key="route"/></th>
+                    <th><fmt:message key="from"/></th>
+                    <th><fmt:message key="to"/></th>
+                    <th><fmt:message key="trip"/></th>
+                    <th><fmt:message key="start.time"/></th>
+                    <th><fmt:message key="end.time"/></th>
+                    <th><fmt:message key="bus.model"/></th>
+                    <th><fmt:message key="parking.spot"/></th>
+                    <th><fmt:message key="confirmation"/></th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
@@ -32,10 +32,10 @@
                             <c:when test="${trip.confirmation == false}">
                                 <td><a class="btn btn-primary"
                                        href="${pageContext.request.contextPath}/bus-fleet/driver/confirm_appointment?tripId=${trip.id}"
-                                       role="button">Confirm</a></td>
+                                       role="button"><fmt:message key="confirm"/></a></td>
                             </c:when>
                             <c:otherwise>
-                                <td>Confirmed</td>
+                                <td><fmt:message key="confirmed"/></td>
                             </c:otherwise>
                         </c:choose>
                     </tr>

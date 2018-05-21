@@ -5,12 +5,12 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Driving Licence Number</th>
-                    <th>Driving Experience</th>
-                    <th>Action</th>
+                    <th><fmt:message key="driver.id"/></th>
+                    <th><fmt:message key="first.name"/></th>
+                    <th><fmt:message key="last.name"/></th>
+                    <th><fmt:message key="licence.number"/></th>
+                    <th><fmt:message key="skill.year"/></th>
+                    <th><fmt:message key="to.trip"/></th>
                 </tr>
                 </thead>
                 <tbody id="allBuses">
@@ -25,7 +25,7 @@
                             <c:when test="${driver.assigned == false}">
                                 <td><a class="btn btn-primary"
                                        href="${pageContext.request.contextPath}/bus-fleet/admin/set_driver?tripId=${tripId}&driverId=${driver.id}&page=${page}"
-                                       role="button">Add To Trip</a></td>
+                                       role="button"><fmt:message key="add"/></a></td>
                             </c:when>
                             <c:otherwise>
                                 <td></td>
