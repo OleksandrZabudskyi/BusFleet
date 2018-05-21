@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Command for appointment driver to route
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see NameCommands
+ */
 public class SetDriverCommand implements Command {
     private TripServiceImpl tripService;
     private ParametersValidator parametersValidator;

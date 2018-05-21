@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ * Database parameters
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface Config {
     String DB_CONFIG = "application.properties";
     String DB_URL = "datasource.url";

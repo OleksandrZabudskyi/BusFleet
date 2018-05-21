@@ -19,7 +19,6 @@ import java.util.Optional;
  * Class for login to application
  *
  * @author Zabudskyi Oleksandr
- *
  * @see Command
  * @see Attributes
  * @see Pages

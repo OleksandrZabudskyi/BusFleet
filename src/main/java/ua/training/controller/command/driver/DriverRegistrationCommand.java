@@ -15,6 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Command for driver registration
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see Pages
+ */
 public class DriverRegistrationCommand implements Command {
     private static Logger logger = Logger.getLogger(DriverRegistrationCommand.class);
     private EmployeeService employeeService;
@@ -28,6 +36,15 @@ public class DriverRegistrationCommand implements Command {
         this.parametersValidator = parametersValidator;
     }
 
+    /**
+     * Registration driver if parameters are valid otherwise redirect to registration page
+     *
+     * @param request httpServletRequest
+     * @param response httpServletResponse
+     * @return login page in case of successful registration or registration page otherwise
+     * @throws ServletException overridden
+     * @throws IOException overridden
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

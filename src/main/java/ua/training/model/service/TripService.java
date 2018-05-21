@@ -5,6 +5,11 @@ import ua.training.model.entity.Trip;
 
 import java.util.List;
 
+/**
+ * Provide service layer to manipulate with data from trip dao
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface TripService {
     List<Trip> getTripsAndRoutes(int offset, int limit);
 

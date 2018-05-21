@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ * All attributes for jsp pages and data base tables
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface Attributes {
     String LANGUAGE = "language";
     String ERROR_MESSAGE = "errorMessage";
@@ -12,7 +17,7 @@ public interface Attributes {
     String PAGE = "page";
 
     /*Table column name*/
-    //user
+    /*user*/
     String USER_ID = "userId";
     String FIRST_NAME = "firstName";
     String LAST_NAME = "lastName";
@@ -26,17 +31,17 @@ public interface Attributes {
     String PASSPORT_REGISTRATION = "passportRegistration";
     String ASSIGNED = "assigned";
     String REGISTERED = "registered";
-    //route
+    /*route*/
     String ROUTE_ID = "routeId";
     String ROTE_NAME = "routeName";
     String DESTINATION_FROM = "destinationFrom";
     String DESTINATION_TO = "destinationTo";
-    //bus
+    /*bus*/
     String BUS_MODEL = "busModel";
     String LICENCE_PLATE = "licensePlate";
     String MANUFACTURE_YEAR = "manufactureYear";
     String PARKING_SPOT = "parkingSpot";
-    //trip
+    /*trip*/
     String TRIP_NUMBER = "tripNumber";
     String TRIP_START_TIME = "tripStartTime";
     String TRIP_END_TIME = "tripEndTime";

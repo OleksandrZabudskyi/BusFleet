@@ -10,10 +10,21 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+/**
+ * Listener for adding default role to session
+ * Session should not be without role
+ *
+ * @author Zabudskyi Oleksandr
+ */
 @WebListener
 public class SessionListener implements HttpSessionListener {
     private static Logger logger = Logger.getLogger(SessionListener.class);
 
+    /**
+     * Add default user role as GUEST {@link Employee.ROLE}
+     *
+     * @param httpSessionEvent event
+     */
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
@@ -21,6 +32,11 @@ public class SessionListener implements HttpSessionListener {
         logger.debug(LogMessage.SESSION_CREATED + session.getId());
     }
 
+    /**
+     * Destroying session
+     *
+     * @param httpSessionEvent event
+     */
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();

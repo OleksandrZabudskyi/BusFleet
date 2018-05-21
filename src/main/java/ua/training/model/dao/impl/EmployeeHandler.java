@@ -12,6 +12,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for choosing appropriate mapper depending on employee role
+ *
+ * @author Zabudskyi Oleksandr
+ * @see AbstractEmployeeHandler
+ */
 public class EmployeeHandler implements AbstractEmployeeHandler {
 
     @Override

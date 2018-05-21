@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Command for confirmation appointment
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see NameCommands
+ */
 public class ConfirmTripCommand implements Command {
     private TripService tripService;
 

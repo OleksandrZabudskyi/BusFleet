@@ -24,6 +24,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  Class is used to get appropriate command {@link Command}
+ *  by the string presentation nameCommand {@link NameCommands} value.
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see NameCommands
+ */
 public class CommandExtractor {
     private static CommandExtractor instance;
     private Map<String, Command> commands = new HashMap<>();
@@ -57,6 +65,12 @@ public class CommandExtractor {
 
     }
 
+    /**
+     * Returns command {@link Command} by the specified string value
+     *
+     * @param request value that corresponds to appropriate command
+     * @return command by the specified string value
+     */
     public Command getCommand(HttpServletRequest request) {
         String path = request.getRequestURI();
         path = path.replaceAll(Regex.URL, GlobalConstants.EMPTY_SIGN);

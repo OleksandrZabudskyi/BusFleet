@@ -11,7 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SetBusWithDriverCommand implements Command{
+/**
+ * Command for appointment bus and driver to route
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Command
+ * @see Attributes
+ * @see NameCommands
+ */
+public class SetBusWithDriverCommand implements Command {
     private TripService tripService;
     private ParametersValidator parametersValidator;
 

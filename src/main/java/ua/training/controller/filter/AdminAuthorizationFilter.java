@@ -9,6 +9,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Class for authorization admin
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Filter
+ * @see Attributes
+ * @see Pages
+ */
 @WebFilter(urlPatterns = {"/bus-fleet/admin/*"})
 public class AdminAuthorizationFilter implements Filter {
     @Override

@@ -12,6 +12,12 @@ import javax.servlet.http.HttpSessionBindingListener;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Class implementing data transfer object for storing them as attribute in servlet context, and
+ * avoiding double login same user.
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public class ActiveUser implements HttpSessionBindingListener {
     private static Logger logger = Logger.getLogger(ActiveUser.class);
     private Employee employee;
@@ -34,6 +40,13 @@ public class ActiveUser implements HttpSessionBindingListener {
         addLoggedUserIfNotPresent(event);
     }
 
+    /**
+     * Add user to httpSession context
+     * If user does not exist in context just add it, otherwise invalidate old user session and add new one
+     * to avoid have same user with different session
+     *
+     * @param event dto binding event
+     */
     private void addLoggedUserIfNotPresent(HttpSessionBindingEvent event) {
         ServletContext context = event.getSession().getServletContext();
         Map<ActiveUser, HttpSession> activeUsers = (Map<ActiveUser, HttpSession>) context.getAttribute(Attributes.LOGGED_USERS);
@@ -51,6 +64,11 @@ public class ActiveUser implements HttpSessionBindingListener {
         removeLoggedUser(event);
     }
 
+    /**
+     * Removing logged user from context
+     *
+     * @param event
+     */
     private void removeLoggedUser(HttpSessionBindingEvent event) {
         ServletContext context = event.getSession().getServletContext();
         Map<ActiveUser, HttpSession> activeUsers = (Map<ActiveUser, HttpSession>) context.getAttribute(Attributes.LOGGED_USERS);

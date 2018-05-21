@@ -9,6 +9,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Class for authorization driver
+ *
+ * @author Zabudskyi Oleksandr
+ * @see Filter
+ * @see Attributes
+ * @see Pages
+ */
 @WebFilter(urlPatterns = {"/bus-fleet/driver/*"})
 public class DriverAuthorizationFilter implements Filter{
     @Override
