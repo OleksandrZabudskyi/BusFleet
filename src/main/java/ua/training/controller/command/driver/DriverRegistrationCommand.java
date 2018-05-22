@@ -9,6 +9,7 @@ import ua.training.controller.util.ParametersValidator;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
+import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +59,8 @@ public class DriverRegistrationCommand implements Command {
             employeeService.registerDriver(driver);
             return Pages.LOGIN_PAGE;
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            request.setAttribute(Attributes.INFO_MESSAGE, Messages.USER_ALREADY_EXIST);
+            logger.error(e.getMessage(), e);
+            request.setAttribute(Attributes.INFO_MESSAGE, LocaleManager.getProperty(Messages.USER_ALREADY_EXIST));
             return Pages.REGISTRATION_PAGE;
         }
     }

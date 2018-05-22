@@ -7,6 +7,8 @@ package ua.training.constant;
  */
 public interface Attributes {
     String LANGUAGE = "language";
+    String EN = "en";
+    String UA = "ua";
     String ERROR_MESSAGE = "errorMessage";
     String LOGGED_USERS = "loggedUsers";
 
@@ -55,4 +57,5 @@ public interface Attributes {
     String USED = "used";
     String DRIVERS = "drivers";
     String CONFIRMATION = "confirmation";
+    String REFERER = "Referer";
 }

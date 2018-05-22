@@ -7,6 +7,7 @@ import ua.training.model.dao.mapper.DriverMapper;
 import ua.training.model.entity.Admin;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
+import ua.training.util.LocaleManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class EmployeeHandler implements AbstractEmployeeHandler {
             case DRIVER:
                 return new DriverMapper().extractFromResultSet(resultSet);
             default:
-                throw new IllegalArgumentException(Messages.INVALID_ROLE + role);
+                throw new IllegalArgumentException(LocaleManager.getProperty(Messages.INVALID_ROLE) + role);
         }
     }
 
@@ -42,7 +43,7 @@ public class EmployeeHandler implements AbstractEmployeeHandler {
                 new DriverMapper().setParameters((Driver) employee, statement);
                 return;
             default:
-                throw new IllegalArgumentException(Messages.INVALID_ROLE + employee.getRole());
+                throw new IllegalArgumentException(LocaleManager.getProperty(Messages.INVALID_ROLE) + employee.getRole());
         }
     }
 }

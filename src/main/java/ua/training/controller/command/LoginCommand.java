@@ -7,6 +7,7 @@ import ua.training.controller.util.ParametersValidator;
 import ua.training.model.entity.Employee;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
+import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class LoginCommand implements Command {
 
         Optional<Employee> userOptional = employeeService.findEmployeeByEmail(email);
         if (!userOptional.isPresent() || !securityService.comparePasswords(password, userOptional.get().getPassword())) {
-            request.setAttribute(Attributes.ERROR_MESSAGE, Messages.WRONG_LOGIN_OR_PASSWORD);
+            request.setAttribute(Attributes.ERROR_MESSAGE, LocaleManager.getProperty(Messages.WRONG_LOGIN_OR_PASSWORD));
             return Pages.LOGIN_PAGE;
         }
 
