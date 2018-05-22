@@ -56,9 +56,10 @@ public class ParametersValidator {
             String value = entry.getValue()[0];
             if (paramsToRegex.containsKey(key) && isInvalidData(paramsToRegex.get(key), value)) {
                 String errorName = String.format(Messages.PARAMS_ERROR, key);
-                String paramMessage = String.format(Messages.WRONG_PARAMS, value);
+                String paramMessage = String.format(Messages.WRONG_PARAMS, key);
                 request.setAttribute(errorName, paramMessage);
-                logger.warn(errorName.concat(GlobalConstants.COLON_SIGN).concat(paramMessage));
+                logger.warn(errorName.concat(GlobalConstants.COLON_SIGN)
+                        .concat(String.format(Messages.WRONG_PARAMS, value)));
                 result = true;
             }
         }
@@ -90,6 +91,7 @@ public class ParametersValidator {
      * @return true if parameter value is not equal pattern otherwise false
      */
     private boolean isInvalidData(String regex, String parameterValue) {
-        return !Pattern.matches(regex, parameterValue);
+        Pattern pattern = Pattern.compile(regex, Pattern.UNICODE_CHARACTER_CLASS);
+        return !pattern.matcher(parameterValue).matches();
     }
 }
