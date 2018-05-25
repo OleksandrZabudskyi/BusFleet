@@ -1,47 +1,45 @@
 <%@ include file="../shared/tags.jsp" %>
-<div class="col-xs-12 col-sm-9">
-    <div class="row">
-        <div class="table-responsive">
+<div class="row">
+    <div class="table-responsive">
 
-            <table class="table table-hover">
-                <thead>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><fmt:message key="route"/></th>
+                <th><fmt:message key="from"/></th>
+                <th><fmt:message key="to"/></th>
+                <th><fmt:message key="trip"/></th>
+                <th><fmt:message key="start.time"/></th>
+                <th><fmt:message key="end.time"/></th>
+                <th><fmt:message key="bus.model"/></th>
+                <th><fmt:message key="parking.spot"/></th>
+                <th><fmt:message key="confirmation"/></th>
+            </tr>
+            </thead>
+            <tbody id="allBuses">
+            <c:forEach var="trip" items="${trips}">
                 <tr>
-                    <th><fmt:message key="route"/></th>
-                    <th><fmt:message key="from"/></th>
-                    <th><fmt:message key="to"/></th>
-                    <th><fmt:message key="trip"/></th>
-                    <th><fmt:message key="start.time"/></th>
-                    <th><fmt:message key="end.time"/></th>
-                    <th><fmt:message key="bus.model"/></th>
-                    <th><fmt:message key="parking.spot"/></th>
-                    <th><fmt:message key="confirmation"/></th>
+                    <td>${trip.route.name}</td>
+                    <td>${trip.route.destinationFrom}</td>
+                    <td>${trip.route.destinationTo}</td>
+                    <td>${trip.number}</td>
+                    <td>${trip.startTime}</td>
+                    <td>${trip.endTime}</td>
+                    <td>${trip.bus.model}</td>
+                    <td>${trip.bus.parkingSpot}</td>
+                    <c:choose>
+                        <c:when test="${trip.confirmation == false}">
+                            <td><a class="btn btn-primary"
+                                   href="${pageContext.request.contextPath}/bus-fleet/driver/confirm_appointment?tripId=${trip.id}"
+                                   role="button"><fmt:message key="confirm"/></a></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><fmt:message key="confirmed"/></td>
+                        </c:otherwise>
+                    </c:choose>
                 </tr>
-                </thead>
-                <tbody id="allBuses">
-                <c:forEach var="trip" items="${trips}">
-                    <tr>
-                        <td>${trip.route.name}</td>
-                        <td>${trip.route.destinationFrom}</td>
-                        <td>${trip.route.destinationTo}</td>
-                        <td>${trip.number}</td>
-                        <td>${trip.startTime}</td>
-                        <td>${trip.endTime}</td>
-                        <td>${trip.bus.model}</td>
-                        <td>${trip.bus.parkingSpot}</td>
-                        <c:choose>
-                            <c:when test="${trip.confirmation == false}">
-                                <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/driver/confirm_appointment?tripId=${trip.id}"
-                                       role="button"><fmt:message key="confirm"/></a></td>
-                            </c:when>
-                            <c:otherwise>
-                                <td><fmt:message key="confirmed"/></td>
-                            </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
 </div>
