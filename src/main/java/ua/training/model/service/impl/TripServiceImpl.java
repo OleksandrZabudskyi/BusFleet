@@ -1,7 +1,10 @@
 package ua.training.model.service.impl;
 
 import org.apache.log4j.Logger;
-import ua.training.constant.LogMessage;
+import ua.training.constant.LogMessages;
+import ua.training.constant.Messages;
+import ua.training.exeptions.EntityAlreadyHandledException;
+import ua.training.exeptions.ServiceException;
 import ua.training.model.dao.BusDao;
 import ua.training.model.dao.DaoFactory;
 import ua.training.model.dao.EmployeeDao;
@@ -12,24 +15,21 @@ import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
 import ua.training.model.entity.Trip;
 import ua.training.model.service.TripService;
+import ua.training.util.LocaleManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class TripServiceImpl implements TripService {
-    private static Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
+    private final static Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
 
     @Override
     public List<Trip> getTripsAndRoutes(int offset, int limit) {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection)) {
             return tripDao.findTripsWithRoutes(offset, limit);
-        } catch (Exception e) {
-            logger.error(LogMessage.NO_RESULT_FROM_DB, e);
-            return new ArrayList<>();
         }
     }
 
@@ -38,14 +38,11 @@ public class TripServiceImpl implements TripService {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection)) {
             return tripDao.getNumberOfRecords();
-        } catch (Exception e) {
-            logger.error(LogMessage.NO_RESULT_FROM_DB, e);
-            return 0;
         }
     }
 
     @Override
-    public void setBusOnTrip(int tripId, int busId) {
+    public void setBusOnTrip(int tripId, int busId) throws ServiceException {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
              BusDao busDao = DaoFactory.getInstance().createBusDao(connection)) {
@@ -61,20 +58,61 @@ public class TripServiceImpl implements TripService {
                 trip.setBus(bus);
                 tripDao.update(trip);
                 busDao.update(bus);
+            } else {
+                throw new EntityAlreadyHandledException(LocaleManager.getProperty(Messages.BUS_ALREADY_USED), busId);
             }
             connection.commit();
-        } catch (Exception e) {
-            logger.error(LogMessage.TRANSACTION_ERROR, e);
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                logger.error(LogMessage.ROLLBACK_ERROR, e);
-            }
+        } catch (SQLException | EntityAlreadyHandledException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
+            rollbackAndThrow(connection);
         }
     }
 
     private boolean isBusUpdateAllowed(Trip trip, Bus bus) {
         return (trip.getBus().getId() == 0) && !bus.isUsed();
+    }
+
+    @Override
+    public void setDriverOnTrip(int tripId, int driverId) throws ServiceException {
+        Connection connection = ConnectionPoolHolder.getConnection();
+        try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
+             EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
+            connection.setAutoCommit(false);
+            Optional<Employee> employeeOptional = employeeDao.findById(driverId);
+            Optional<Trip> tripOptional = tripDao.findById(tripId);
+
+            Optional<Driver> driverOptional = employeeOptional.map(employee -> (Driver) employee);
+
+            if (driverOptional.isPresent() && tripOptional.isPresent()
+                    && isDriverUpdateAllowed(tripOptional.get(), driverOptional.get())) {
+                Trip trip = tripOptional.get();
+                Driver driver = driverOptional.get();
+                driver.setAssigned(true);
+                trip.setDriver(driver);
+                tripDao.update(trip);
+                employeeDao.update(driver);
+            } else {
+                throw new EntityAlreadyHandledException(LocaleManager.getProperty(Messages.DRIVER_ALREADY_USED), driverId);
+            }
+            connection.commit();
+        } catch (SQLException | EntityAlreadyHandledException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
+            rollbackAndThrow(connection);
+        }
+    }
+
+    private boolean isDriverUpdateAllowed(Trip trip, Driver driver) {
+        return (trip.getDriver().getId() == 0) && !driver.isAssigned();
+    }
+
+    private void rollbackAndThrow(Connection connection) throws ServiceException {
+        try {
+            connection.rollback();
+            throw new ServiceException(LocaleManager.getProperty(Messages.TRANSACTION_IS_NOT_COMPLETED));
+        } catch (SQLException e1) {
+            logger.error(LogMessages.ROLLBACK_ERROR, e1);
+            throw new ServiceException(LocaleManager.getProperty(Messages.TRANSACTION_IS_NOT_COMPLETED));
+        }
     }
 
     @Override
@@ -99,51 +137,14 @@ public class TripServiceImpl implements TripService {
                 }
             }
             connection.commit();
-        } catch (Exception e) {
-            logger.error(LogMessage.TRANSACTION_ERROR, e);
+        } catch (SQLException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.error(LogMessage.ROLLBACK_ERROR, e);
+                logger.error(LogMessages.ROLLBACK_ERROR, e1);
             }
         }
-    }
-
-
-
-    @Override
-    public void setDriverOnTrip(int tripId, int driverId) {
-        Connection connection = ConnectionPoolHolder.getConnection();
-        try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection);
-             EmployeeDao employeeDao = DaoFactory.getInstance().createUserDao(connection)) {
-            connection.setAutoCommit(false);
-            Optional<Employee> employeeOptional = employeeDao.findById(driverId);
-            Optional<Trip> tripOptional = tripDao.findById(tripId);
-
-            Optional<Driver> driverOptional = employeeOptional.map(employee -> (Driver) employee);
-
-            if (driverOptional.isPresent() && tripOptional.isPresent()
-                    && isDriverUpdateAllowed(tripOptional.get(), driverOptional.get())) {
-                Trip trip = tripOptional.get();
-                Driver driver = driverOptional.get();
-                driver.setAssigned(true);
-                trip.setDriver(driver);
-                tripDao.update(trip);
-                employeeDao.update(driver);
-            }
-            connection.commit();
-        } catch (Exception e) {
-            logger.error(LogMessage.TRANSACTION_ERROR, e);
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                logger.error(LogMessage.ROLLBACK_ERROR, e);
-            }
-        }
-    }
-
-    private boolean isDriverUpdateAllowed(Trip trip, Driver driver) {
-        return (trip.getDriver().getId() == 0) && !driver.isAssigned();
     }
 
     @Override
@@ -170,12 +171,12 @@ public class TripServiceImpl implements TripService {
                 }
             }
             connection.commit();
-        } catch (Exception e) {
-            logger.error(LogMessage.TRANSACTION_ERROR, e);
+        } catch (SQLException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.error(LogMessage.ROLLBACK_ERROR, e);
+                logger.error(LogMessages.ROLLBACK_ERROR, e1);
             }
         }
     }
@@ -185,9 +186,6 @@ public class TripServiceImpl implements TripService {
         Connection connection = ConnectionPoolHolder.getConnection();
         try (TripDao tripDao = DaoFactory.getInstance().createTripDao(connection)) {
             return tripDao.findTripsWithDetailsByDriverId(employee.getId());
-        } catch (Exception e) {
-            logger.error(LogMessage.NO_RESULT_FROM_DB, e);
-            return new ArrayList<>();
         }
     }
 
@@ -203,12 +201,12 @@ public class TripServiceImpl implements TripService {
                 tripDao.update(trip);
             }
             connection.commit();
-        } catch (Exception e) {
-            logger.error(LogMessage.TRANSACTION_ERROR, e);
+        } catch (SQLException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.error(LogMessage.ROLLBACK_ERROR, e);
+                logger.error(LogMessages.ROLLBACK_ERROR, e1);
             }
         }
     }

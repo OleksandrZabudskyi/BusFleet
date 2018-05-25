@@ -2,7 +2,7 @@ package ua.training.controller.listener;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
-import ua.training.constant.LogMessage;
+import ua.training.constant.LogMessages;
 import ua.training.model.entity.Employee;
 
 import javax.servlet.annotation.WebListener;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSessionListener;
  */
 @WebListener
 public class SessionListener implements HttpSessionListener {
-    private static Logger logger = Logger.getLogger(SessionListener.class);
+    private final static Logger logger = Logger.getLogger(SessionListener.class);
 
     /**
      * Add default user role as GUEST {@link Employee.ROLE}
@@ -29,7 +29,7 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
         session.setAttribute(Attributes.ROLE, Employee.ROLE.GUEST.toString());
-        logger.debug(LogMessage.SESSION_CREATED + session.getId());
+        logger.debug(LogMessages.SESSION_CREATED + session.getId());
     }
 
     /**
@@ -40,6 +40,6 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
-        logger.debug(LogMessage.SESSION_DESTROYED + session.getId());
+        logger.debug(LogMessages.SESSION_DESTROYED + session.getId());
     }
 }

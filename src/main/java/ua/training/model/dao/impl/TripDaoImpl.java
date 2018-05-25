@@ -1,6 +1,8 @@
 package ua.training.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.TripDao;
 import ua.training.model.dao.mapper.BusMapper;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TripDaoImpl implements TripDao {
+    private final static Logger logger = Logger.getLogger(TripDaoImpl.class);
     private Connection connection;
 
     public TripDaoImpl(Connection connection) {
@@ -32,7 +35,8 @@ public class TripDaoImpl implements TripDao {
                 trip = Optional.ofNullable(new TripMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
         return trip;
     }
@@ -48,7 +52,8 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
     }
 
@@ -60,7 +65,8 @@ public class TripDaoImpl implements TripDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getNumber());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.CREATE_ENTITY_ERROR);
         }
     }
 
@@ -70,7 +76,8 @@ public class TripDaoImpl implements TripDao {
             new TripMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.UPDATE_ENTITY_ERROR);
         }
     }
 
@@ -80,7 +87,8 @@ public class TripDaoImpl implements TripDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.DELETE_ENTITY_ERROR);
         }
     }
 
@@ -101,7 +109,8 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
     }
 
@@ -113,7 +122,8 @@ public class TripDaoImpl implements TripDao {
                 return resultSet.getInt(Attributes.ROWS_NUMBER);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
         return 0;
     }
@@ -138,16 +148,18 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.CONNECTION_CLOSE_ERROR);
         }
     }
 }

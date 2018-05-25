@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Provide loader for property file
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public class PropertyLoader {
     private static Logger logger = Logger.getLogger(PropertyLoader.class);
 

@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
+ * Provide resource bundle for locales
+ *
  * @author Zabudskyi Oleksandr
  */
 public class LocaleManager {

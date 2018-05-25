@@ -1,5 +1,7 @@
 package ua.training.model.dao.impl;
 
+import org.apache.log4j.Logger;
+import ua.training.constant.LogMessages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.RouteDao;
 import ua.training.model.dao.mapper.RouteMapper;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RouteDaoImpl implements RouteDao {
+    private final static Logger logger = Logger.getLogger(RouteDaoImpl.class);
     private Connection connection;
 
     public RouteDaoImpl(Connection connection) {
@@ -28,7 +31,8 @@ public class RouteDaoImpl implements RouteDao {
                 route = Optional.ofNullable(new RouteMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
         return route;
     }
@@ -44,7 +48,8 @@ public class RouteDaoImpl implements RouteDao {
             }
             return resultList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
         }
     }
 
@@ -56,7 +61,8 @@ public class RouteDaoImpl implements RouteDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getName());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.CREATE_ENTITY_ERROR);
         }
     }
 
@@ -66,7 +72,8 @@ public class RouteDaoImpl implements RouteDao {
             new RouteMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.UPDATE_ENTITY_ERROR);
         }
     }
 
@@ -76,16 +83,18 @@ public class RouteDaoImpl implements RouteDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.DELETE_ENTITY_ERROR);
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException(LogMessages.CONNECTION_CLOSE_ERROR);
         }
     }
 }

@@ -23,7 +23,7 @@ import java.util.Optional;
  * @see Command
  * @see Attributes
  * @see Pages
- * @see LogMessage
+ * @see LogMessages
  */
 public class LoginCommand implements Command {
     private static Logger logger = Logger.getLogger(LoginCommand.class);
@@ -68,7 +68,7 @@ public class LoginCommand implements Command {
         httpSession.setAttribute(Attributes.ACTIVE_USER, activeUser);
 
         if (activeUser.isAlreadyLoggedIn()) {
-            logger.warn(LogMessage.USER_ALREADY_LOGGED + employee.getEmail());
+            logger.warn(LogMessages.USER_ALREADY_LOGGED + employee.getEmail());
         }
         httpSession.setAttribute(Attributes.ROLE, employee.getRole().toString());
         return getRedirectCommand(employee.getRole());
