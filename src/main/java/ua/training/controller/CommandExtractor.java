@@ -77,7 +77,7 @@ public class CommandExtractor {
         return commands.getOrDefault(path, new IndexPageCommand());
     }
 
-    public static CommandExtractor getInstance() {
+    public synchronized static CommandExtractor getInstance() {
         if (instance == null) {
             instance = new CommandExtractor();
         }

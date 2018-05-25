@@ -1,6 +1,8 @@
 package ua.training.controller.command.admin;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
 import ua.training.constant.Messages;
 import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
@@ -23,6 +25,7 @@ import java.io.IOException;
  * @see NameCommands
  */
 public class SetBusWithDriverCommand implements Command {
+    private final static Logger logger = Logger.getLogger(SetBusWithDriverCommand.class);
     private TripService tripService;
     private ParametersValidator parametersValidator;
 
@@ -46,6 +49,7 @@ public class SetBusWithDriverCommand implements Command {
             tripService.setBusOnTrip(Integer.parseInt(tripId), Integer.parseInt(busId));
             tripService.setDriverOnTrip(Integer.parseInt(tripId), Integer.parseInt(driverId));
         } catch (ServiceException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
             request.setAttribute(Attributes.BUS_INFO_MESSAGE, LocaleManager.getProperty(Messages.BUS_OR_DRIVER_USED));
         }
         request.setAttribute(Attributes.PAGE, currentPage);

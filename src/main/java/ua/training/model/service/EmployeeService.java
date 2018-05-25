@@ -1,5 +1,6 @@
 package ua.training.model.service;
 
+import ua.training.exeptions.ServiceException;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
 
@@ -27,7 +28,7 @@ public interface EmployeeService {
      * @param driver driver
      * @throws Exception exception
      */
-    void registerDriver(Driver driver) throws Exception;
+    void registerDriver(Driver driver) throws ServiceException;
 
     /**
      *  Get all drivers

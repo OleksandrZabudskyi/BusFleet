@@ -1,5 +1,10 @@
 package ua.training.constant;
 
+/**
+ * Error messages
+ *
+ * @author Zabudskyi Oleksandr
+ */
 public interface Messages {
     String WRONG_LOGIN_OR_PASSWORD = "wrong.login.password";
     String PARAMS_ERROR = "params.error";

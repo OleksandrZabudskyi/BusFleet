@@ -59,12 +59,11 @@ public class TripServiceImpl implements TripService {
                 tripDao.update(trip);
                 busDao.update(bus);
             } else {
-                throw new EntityAlreadyHandledException(LocaleManager.getProperty(Messages.BUS_ALREADY_USED), busId);
+                throw new EntityAlreadyHandledException(Messages.BUS_ALREADY_USED, busId);
             }
             connection.commit();
         } catch (SQLException | EntityAlreadyHandledException e) {
-            logger.error(LogMessages.TRANSACTION_ERROR, e);
-            rollbackAndThrow(connection);
+            rollbackAndThrow(connection, e);
         }
     }
 
@@ -92,12 +91,11 @@ public class TripServiceImpl implements TripService {
                 tripDao.update(trip);
                 employeeDao.update(driver);
             } else {
-                throw new EntityAlreadyHandledException(LocaleManager.getProperty(Messages.DRIVER_ALREADY_USED), driverId);
+                throw new EntityAlreadyHandledException(Messages.DRIVER_ALREADY_USED, driverId);
             }
             connection.commit();
         } catch (SQLException | EntityAlreadyHandledException e) {
-            logger.error(LogMessages.TRANSACTION_ERROR, e);
-            rollbackAndThrow(connection);
+            rollbackAndThrow(connection, e);
         }
     }
 
@@ -105,13 +103,12 @@ public class TripServiceImpl implements TripService {
         return (trip.getDriver().getId() == 0) && !driver.isAssigned();
     }
 
-    private void rollbackAndThrow(Connection connection) throws ServiceException {
+    private void rollbackAndThrow(Connection connection, Exception e) throws ServiceException {
         try {
             connection.rollback();
-            throw new ServiceException(LocaleManager.getProperty(Messages.TRANSACTION_IS_NOT_COMPLETED));
+            throw new ServiceException(Messages.TRANSACTION_IS_NOT_COMPLETED, e);
         } catch (SQLException e1) {
-            logger.error(LogMessages.ROLLBACK_ERROR, e1);
-            throw new ServiceException(LocaleManager.getProperty(Messages.TRANSACTION_IS_NOT_COMPLETED));
+            throw new ServiceException(Messages.TRANSACTION_IS_NOT_COMPLETED, e);
         }
     }
 

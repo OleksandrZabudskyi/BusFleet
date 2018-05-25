@@ -35,8 +35,8 @@ public class TripDaoImpl implements TripDao {
                 trip = Optional.ofNullable(new TripMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
         return trip;
     }
@@ -52,8 +52,8 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -65,8 +65,8 @@ public class TripDaoImpl implements TripDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getNumber());
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.CREATE_ENTITY_ERROR);
+            logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -76,8 +76,8 @@ public class TripDaoImpl implements TripDao {
             new TripMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.UPDATE_ENTITY_ERROR);
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -87,8 +87,8 @@ public class TripDaoImpl implements TripDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.DELETE_ENTITY_ERROR);
+            logger.error(LogMessages.DELETE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -109,8 +109,8 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -122,8 +122,8 @@ public class TripDaoImpl implements TripDao {
                 return resultSet.getInt(Attributes.ROWS_NUMBER);
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
         return 0;
     }
@@ -148,8 +148,8 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -158,8 +158,8 @@ public class TripDaoImpl implements TripDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.CONNECTION_CLOSE_ERROR);
+            logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 }

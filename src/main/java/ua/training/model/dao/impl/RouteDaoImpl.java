@@ -31,8 +31,8 @@ public class RouteDaoImpl implements RouteDao {
                 route = Optional.ofNullable(new RouteMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
         return route;
     }
@@ -48,8 +48,8 @@ public class RouteDaoImpl implements RouteDao {
             }
             return resultList;
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -61,8 +61,8 @@ public class RouteDaoImpl implements RouteDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getName());
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.CREATE_ENTITY_ERROR);
+            logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -72,8 +72,8 @@ public class RouteDaoImpl implements RouteDao {
             new RouteMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.UPDATE_ENTITY_ERROR);
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -83,8 +83,8 @@ public class RouteDaoImpl implements RouteDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.DELETE_ENTITY_ERROR);
+            logger.error(LogMessages.DELETE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -93,8 +93,8 @@ public class RouteDaoImpl implements RouteDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.CONNECTION_CLOSE_ERROR);
+            logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 }

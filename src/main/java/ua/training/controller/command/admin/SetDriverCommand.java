@@ -1,6 +1,8 @@
 package ua.training.controller.command.admin;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
 import ua.training.constant.Messages;
 import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
@@ -23,6 +25,7 @@ import java.io.IOException;
  * @see NameCommands
  */
 public class SetDriverCommand implements Command {
+    private final static Logger logger = Logger.getLogger(SetDriverCommand.class);
     private TripServiceImpl tripService;
     private ParametersValidator parametersValidator;
 
@@ -40,9 +43,11 @@ public class SetDriverCommand implements Command {
         if (parametersValidator.validateIfNullOrEmpty(request, Attributes.TRIP_ID, Attributes.DRIVER_ID)) {
             return NameCommands.ALL_TRIPS;
         }
+
         try {
             tripService.setDriverOnTrip(Integer.parseInt(tripId), Integer.parseInt(driverId));
         } catch (ServiceException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
             request.setAttribute(Attributes.DRIVER_INFO_MESSAGE, LocaleManager.getProperty(Messages.DRIVER_ALREADY_USED));
         }
         request.setAttribute(Attributes.PAGE, currentPage);

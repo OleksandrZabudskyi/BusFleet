@@ -19,5 +19,4 @@ public interface LogMessages {
     String CREATE_ENTITY_ERROR = "Entity was not created";
     String UPDATE_ENTITY_ERROR = "Entity was not updated";
     String DELETE_ENTITY_ERROR = "Entity was not removed";
-    String FETCHING_DATA_ERROR = "Data was not fetched";
 }

@@ -32,8 +32,8 @@ public class BusDaoImpl implements BusDao {
                 bus = Optional.ofNullable(new BusMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
         return bus;
     }
@@ -49,8 +49,8 @@ public class BusDaoImpl implements BusDao {
             }
             return resultList;
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -62,8 +62,8 @@ public class BusDaoImpl implements BusDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(String.valueOf(entity.getId()));
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.CREATE_ENTITY_ERROR);
+            logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -73,8 +73,8 @@ public class BusDaoImpl implements BusDao {
             new BusMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.UPDATE_ENTITY_ERROR);
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -84,8 +84,8 @@ public class BusDaoImpl implements BusDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.DELETE_ENTITY_ERROR);
+            logger.error(LogMessages.DELETE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -107,8 +107,8 @@ public class BusDaoImpl implements BusDao {
             }
             return new ArrayList<>(buses.values());
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -126,8 +126,8 @@ public class BusDaoImpl implements BusDao {
             }
             return resultMap;
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.NO_RESULT_FROM_DB);
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -136,8 +136,8 @@ public class BusDaoImpl implements BusDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(LogMessages.CONNECTION_CLOSE_ERROR);
+            logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
+            throw new RuntimeException(e);
         }
     }
 
