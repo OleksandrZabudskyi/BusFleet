@@ -15,10 +15,8 @@ public class LanguageCommand implements Command {
         String lang = request.getParameter(Attributes.LANGUAGE);
         if (Attributes.UA.equals(lang)) {
             request.getSession().setAttribute(Attributes.LANGUAGE, Attributes.UA);
-            LocaleManager.setLocale(LocaleManager.UKRAINIAN);
         } else {
             request.getSession().setAttribute(Attributes.LANGUAGE, Attributes.EN);
-            LocaleManager.setLocale(LocaleManager.ENGLISH);
         }
         return NameCommands.REDIRECT.concat(request.getHeader(Attributes.REFERER));
     }
