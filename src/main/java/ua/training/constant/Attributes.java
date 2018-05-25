@@ -13,6 +13,8 @@ public interface Attributes {
     String LOGGED_USERS = "loggedUsers";
 
     String INFO_MESSAGE = "infoMessage";
+    String BUS_INFO_MESSAGE = "busInfoMessage";
+    String DRIVER_INFO_MESSAGE = "driverInfoMessage";
     String ACTIVE_USER = "activeUser";
 
     String ROWS_NUMBER = "rowsNumber";

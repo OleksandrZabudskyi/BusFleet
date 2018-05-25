@@ -1,5 +1,7 @@
 <%@ include file="../shared/tags.jsp" %>
 <div class="row">
+    <span class="text-danger">${busInfoMessage}</span>
+    <span class="text-danger">${driverInfoMessage}</span>
     <div class="table-responsive">
 
         <table class="table table-hover w-auto">

@@ -11,4 +11,8 @@ public interface Messages {
     String MD5_IS_NOT_AVAILABLE = "md5.error";
     String UTF8_IS_NOT_AVAILABLE = "utf8.error";
 
+    String BUS_ALREADY_USED = "bus.used";
+    String DRIVER_ALREADY_USED = "driver.used";
+    String BUS_OR_DRIVER_USED = "bus.or.driver.used";
+    String TRANSACTION_IS_NOT_COMPLETED = "invalid.transaction";
 }

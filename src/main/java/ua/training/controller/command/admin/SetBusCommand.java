@@ -1,10 +1,13 @@
 package ua.training.controller.command.admin;
 
 import ua.training.constant.Attributes;
+import ua.training.constant.Messages;
 import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
 import ua.training.controller.util.ParametersValidator;
+import ua.training.exeptions.ServiceException;
 import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +40,11 @@ public class SetBusCommand implements Command {
         if (parametersValidator.validateIfNullOrEmpty(request, Attributes.TRIP_ID, Attributes.BUS_ID)) {
             return NameCommands.ALL_TRIPS;
         }
-        tripService.setBusOnTrip(Integer.parseInt(tripId), Integer.parseInt(busId));
+        try {
+            tripService.setBusOnTrip(Integer.parseInt(tripId), Integer.parseInt(busId));
+        } catch (ServiceException e) {
+            request.setAttribute(Attributes.BUS_INFO_MESSAGE, LocaleManager.getProperty(Messages.BUS_ALREADY_USED));
+        }
         request.setAttribute(Attributes.PAGE, currentPage);
         return NameCommands.ALL_TRIPS;
     }
