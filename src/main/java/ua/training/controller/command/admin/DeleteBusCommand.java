@@ -31,7 +31,6 @@ public class DeleteBusCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String tripId = request.getParameter(Attributes.TRIP_ID);
         String currentPage = request.getParameter(Attributes.PAGE);
-
         if(Objects.isNull(tripId) || tripId.isEmpty()) {
             return NameCommands.ALL_TRIPS;
         }

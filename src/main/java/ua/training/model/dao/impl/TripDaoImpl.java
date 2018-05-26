@@ -1,6 +1,8 @@
 package ua.training.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.TripDao;
 import ua.training.model.dao.mapper.BusMapper;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TripDaoImpl implements TripDao {
+    private final static Logger logger = Logger.getLogger(TripDaoImpl.class);
     private Connection connection;
 
     public TripDaoImpl(Connection connection) {
@@ -32,6 +35,7 @@ public class TripDaoImpl implements TripDao {
                 trip = Optional.ofNullable(new TripMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
         return trip;
@@ -48,6 +52,7 @@ public class TripDaoImpl implements TripDao {
             }
             return resultList;
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
     }
@@ -60,6 +65,7 @@ public class TripDaoImpl implements TripDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getNumber());
         } catch (SQLException e) {
+            logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -70,6 +76,7 @@ public class TripDaoImpl implements TripDao {
             new TripMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -80,6 +87,7 @@ public class TripDaoImpl implements TripDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
+            logger.error(LogMessages.DELETE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -87,21 +95,29 @@ public class TripDaoImpl implements TripDao {
     @Override
     public List<Trip> findTripsWithRoutes(int offset, int limit) {
         List<Trip> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTES)) {
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_TRIPS_WITH_LINKS)) {
             ps.setInt(1, offset);
             ps.setInt(2, limit);
             ResultSet resultSet = ps.executeQuery();
-
-            TripMapper tripMapper = new TripMapper();
-            RouteMapper routeMapper = new RouteMapper();
-            while (resultSet.next()) {
-                Trip trip = tripMapper.extractFromResultSet(resultSet);
-                trip.setRoute(routeMapper.extractFromResultSet(resultSet));
-                resultList.add(trip);
-            }
+            collectTripsWithLinks(resultList, resultSet);
             return resultList;
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
+        }
+    }
+
+    private void collectTripsWithLinks(List<Trip> resultList, ResultSet resultSet) throws SQLException {
+        TripMapper tripMapper = new TripMapper();
+        RouteMapper routeMapper = new RouteMapper();
+        BusMapper busMapper = new BusMapper();
+        DriverMapper driverMapper = new DriverMapper();
+        while (resultSet.next()) {
+            Trip trip = tripMapper.extractFromResultSet(resultSet);
+            trip.setRoute(routeMapper.extractFromResultSet(resultSet));
+            trip.setBus(busMapper.extractFromResultSet(resultSet));
+            trip.setDriver(driverMapper.extractFromResultSet(resultSet));
+            resultList.add(trip);
         }
     }
 
@@ -113,6 +129,7 @@ public class TripDaoImpl implements TripDao {
                 return resultSet.getInt(Attributes.ROWS_NUMBER);
             }
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
         return 0;
@@ -121,32 +138,23 @@ public class TripDaoImpl implements TripDao {
     @Override
     public List<Trip> findTripsWithDetailsByDriverId(int driverId) {
         List<Trip> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTE_BUS_DRIVER)) {
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_LINKS_BY_ID)) {
             ps.setInt(1, driverId);
             ResultSet resultSet = ps.executeQuery();
-
-            TripMapper tripMapper = new TripMapper();
-            RouteMapper routeMapper = new RouteMapper();
-            BusMapper busMapper = new BusMapper();
-            DriverMapper driverMapper = new DriverMapper();
-            while (resultSet.next()) {
-                Trip trip = tripMapper.extractFromResultSet(resultSet);
-                trip.setRoute(routeMapper.extractFromResultSet(resultSet));
-                trip.setBus(busMapper.extractFromResultSet(resultSet));
-                trip.setDriver(driverMapper.extractFromResultSet(resultSet));
-                resultList.add(trip);
-            }
+            collectTripsWithLinks(resultList, resultSet);
             return resultList;
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
             throw new RuntimeException(e);
         }
     }

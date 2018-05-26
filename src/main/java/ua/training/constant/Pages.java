@@ -16,4 +16,6 @@ public interface Pages {
     String DRIVERS_PAGE = "/WEB-INF/view/admin/driversPage.jsp";
     String APPOINTMENT_PAGE = "/WEB-INF/view/driver/appointmentPage.jsp";
     String BUSES_WITH_ROUTES = "/WEB-INF/view/admin/busesAndDriversPage.jsp";
+    String ERROR_PAGE = "/WEB-INF/error.jsp";
+    String CONTACTS_PAGE = "/WEB-INF/view/contacts.jsp";
 }

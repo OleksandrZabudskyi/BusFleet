@@ -61,6 +61,7 @@ public class CommandExtractor {
         commands.put(NameCommands.SET_BUS_WITH_DRIVER, new SetBusWithDriverCommand(new TripServiceImpl(),
                 new ParametersValidator()));
         commands.put(NameCommands.USER_INFO, new ProfileCommand());
+        commands.put(NameCommands.CONTACTS_PAGE, new ContactsPageCommand());
 
 
     }
@@ -77,7 +78,7 @@ public class CommandExtractor {
         return commands.getOrDefault(path, new IndexPageCommand());
     }
 
-    public static CommandExtractor getInstance() {
+    public synchronized static CommandExtractor getInstance() {
         if (instance == null) {
             instance = new CommandExtractor();
         }

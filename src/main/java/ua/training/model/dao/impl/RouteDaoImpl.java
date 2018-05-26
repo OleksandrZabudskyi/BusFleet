@@ -1,5 +1,7 @@
 package ua.training.model.dao.impl;
 
+import org.apache.log4j.Logger;
+import ua.training.constant.LogMessages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.RouteDao;
 import ua.training.model.dao.mapper.RouteMapper;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class RouteDaoImpl implements RouteDao {
+    private final static Logger logger = Logger.getLogger(RouteDaoImpl.class);
     private Connection connection;
 
     public RouteDaoImpl(Connection connection) {
@@ -28,6 +31,7 @@ public class RouteDaoImpl implements RouteDao {
                 route = Optional.ofNullable(new RouteMapper().extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
         return route;
@@ -44,6 +48,7 @@ public class RouteDaoImpl implements RouteDao {
             }
             return resultList;
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
     }
@@ -56,6 +61,7 @@ public class RouteDaoImpl implements RouteDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getName());
         } catch (SQLException e) {
+            logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -66,6 +72,7 @@ public class RouteDaoImpl implements RouteDao {
             new RouteMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -76,15 +83,17 @@ public class RouteDaoImpl implements RouteDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
+            logger.error(LogMessages.DELETE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
             throw new RuntimeException(e);
         }
     }

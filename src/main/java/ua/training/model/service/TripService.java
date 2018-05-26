@@ -1,5 +1,7 @@
 package ua.training.model.service;
 
+import ua.training.exeptions.EntityAlreadyHandledException;
+import ua.training.exeptions.ServiceException;
 import ua.training.model.entity.Employee;
 import ua.training.model.entity.Trip;
 
@@ -15,11 +17,11 @@ public interface TripService {
 
     int getNumberOfRecords();
 
-    void setBusOnTrip(int tripId, int busId);
+    void setBusOnTrip(int tripId, int busId) throws ServiceException;
 
     void deleteBusFromTrip(int tripId);
 
-    void setDriverOnTrip(int tripId, int driverId);
+    void setDriverOnTrip(int tripId, int driverId) throws ServiceException;
 
     void deleteDriverFromTrip(int tripId);
 

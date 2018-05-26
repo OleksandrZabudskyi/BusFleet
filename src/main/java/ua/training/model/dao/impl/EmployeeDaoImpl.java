@@ -1,6 +1,8 @@
 package ua.training.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.entity.Employee;
 import ua.training.model.dao.EmployeeDao;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeDaoImpl implements EmployeeDao {
+    private final static Logger logger = Logger.getLogger(EmployeeDaoImpl.class);
     private Connection connection;
 
     public EmployeeDaoImpl(Connection connection) {
@@ -28,6 +31,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 employee = Optional.ofNullable(getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
         return employee;
@@ -43,6 +47,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 employee = Optional.ofNullable(getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
         return employee;
@@ -59,6 +64,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             }
             return resultList;
         } catch (SQLException e) {
+            logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
         }
     }
@@ -71,6 +77,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(entity.getEmail());
         } catch (SQLException e) {
+            logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -82,6 +89,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             new EmployeeHandler().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -92,6 +100,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
+            logger.error(LogMessages.DELETE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
         }
     }
@@ -103,10 +112,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
             throw new RuntimeException(e);
         }
     }

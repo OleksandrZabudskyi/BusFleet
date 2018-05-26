@@ -1,7 +1,7 @@
 package ua.training.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import ua.training.constant.Config;
+import org.apache.log4j.Logger;
 import ua.training.util.PropertyLoader;
 
 import javax.sql.DataSource;
@@ -12,6 +12,7 @@ import java.util.Properties;
 import static ua.training.constant.Config.*;
 
 public class ConnectionPoolHolder {
+    private final static Logger logger = Logger.getLogger(ConnectionPoolHolder.class);
     private static volatile DataSource dataSource;
 
     private static DataSource getDataSource() {
@@ -39,7 +40,8 @@ public class ConnectionPoolHolder {
         try {
             return getDataSource().getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException();
         }
     }
 
