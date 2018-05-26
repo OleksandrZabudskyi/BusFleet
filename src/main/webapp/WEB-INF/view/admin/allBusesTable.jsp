@@ -4,9 +4,8 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><fmt:message key="bus.id"/></th>
-                <th><fmt:message key="bus.model"/></th>
                 <th><fmt:message key="license.plate"/></th>
+                <th><fmt:message key="bus.model"/></th>
                 <th><fmt:message key="produce.year"/></th>
                 <th><fmt:message key="parking.spot"/></th>
                 <th><fmt:message key="route"/></th>
@@ -18,9 +17,8 @@
             <tbody id="allBuses">
             <c:forEach var="bus" items="${buses}">
                 <tr>
-                    <td>${bus.key.id}</td>
-                    <td>${bus.key.model}</td>
                     <td>${bus.key.licensePlate}</td>
+                    <td>${bus.key.model}</td>
                     <td>${bus.key.manufactureYear}</td>
                     <td>${bus.key.parkingSpot}</td>
                     <td>${bus.value.name}</td>

@@ -14,9 +14,9 @@
                 <th><fmt:message key="start.time"/></th>
                 <th><fmt:message key="end.time"/></th>
                 <th><fmt:message key="confirmed"/></th>
-                <th><fmt:message key="bus.id"/></th>
+                <th><fmt:message key="license.plate"/></th>
                 <th><fmt:message key="bus"/></th>
-                <th><fmt:message key="driver.id"/></th>
+                <th><fmt:message key="licence.number"/></th>
                 <th><fmt:message key="driver"/></th>
                 <th><fmt:message key="bus.driver"/></th>
             </tr>
@@ -31,7 +31,7 @@
                     <td>${trip.startTime}</td>
                     <td>${trip.endTime}</td>
                     <td>${trip.confirmation}</td>
-                    <td>${trip.bus.id}</td>
+                    <td>${trip.bus.licensePlate}</td>
                     <c:choose>
                         <c:when test="${trip.bus.id  == 0}">
                             <td><a class="btn btn-primary btn-sm"
@@ -44,7 +44,7 @@
                                    role="button"><fmt:message key="delete"/></a></td>
                         </c:otherwise>
                     </c:choose>
-                    <td>${trip.driver.id}</td>
+                    <td>${trip.driver.drivingLicenceNumber}</td>
                     <c:choose>
                         <c:when test="${trip.driver.id  == 0}">
                             <td><a class="btn btn-primary btn-sm"

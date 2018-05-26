@@ -95,22 +95,29 @@ public class TripDaoImpl implements TripDao {
     @Override
     public List<Trip> findTripsWithRoutes(int offset, int limit) {
         List<Trip> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTES)) {
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_TRIPS_WITH_LINKS)) {
             ps.setInt(1, offset);
             ps.setInt(2, limit);
             ResultSet resultSet = ps.executeQuery();
-
-            TripMapper tripMapper = new TripMapper();
-            RouteMapper routeMapper = new RouteMapper();
-            while (resultSet.next()) {
-                Trip trip = tripMapper.extractFromResultSet(resultSet);
-                trip.setRoute(routeMapper.extractFromResultSet(resultSet));
-                resultList.add(trip);
-            }
+            collectTripsWithLinks(resultList, resultSet);
             return resultList;
         } catch (SQLException e) {
             logger.error(LogMessages.NO_RESULT_FROM_DB, e);
             throw new RuntimeException(e);
+        }
+    }
+
+    private void collectTripsWithLinks(List<Trip> resultList, ResultSet resultSet) throws SQLException {
+        TripMapper tripMapper = new TripMapper();
+        RouteMapper routeMapper = new RouteMapper();
+        BusMapper busMapper = new BusMapper();
+        DriverMapper driverMapper = new DriverMapper();
+        while (resultSet.next()) {
+            Trip trip = tripMapper.extractFromResultSet(resultSet);
+            trip.setRoute(routeMapper.extractFromResultSet(resultSet));
+            trip.setBus(busMapper.extractFromResultSet(resultSet));
+            trip.setDriver(driverMapper.extractFromResultSet(resultSet));
+            resultList.add(trip);
         }
     }
 
@@ -131,21 +138,10 @@ public class TripDaoImpl implements TripDao {
     @Override
     public List<Trip> findTripsWithDetailsByDriverId(int driverId) {
         List<Trip> resultList = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_ROUTE_BUS_DRIVER)) {
+        try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_TRIPS_WITH_LINKS_BY_ID)) {
             ps.setInt(1, driverId);
             ResultSet resultSet = ps.executeQuery();
-
-            TripMapper tripMapper = new TripMapper();
-            RouteMapper routeMapper = new RouteMapper();
-            BusMapper busMapper = new BusMapper();
-            DriverMapper driverMapper = new DriverMapper();
-            while (resultSet.next()) {
-                Trip trip = tripMapper.extractFromResultSet(resultSet);
-                trip.setRoute(routeMapper.extractFromResultSet(resultSet));
-                trip.setBus(busMapper.extractFromResultSet(resultSet));
-                trip.setDriver(driverMapper.extractFromResultSet(resultSet));
-                resultList.add(trip);
-            }
+            collectTripsWithLinks(resultList, resultSet);
             return resultList;
         } catch (SQLException e) {
             logger.error(LogMessages.NO_RESULT_FROM_DB, e);

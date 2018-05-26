@@ -4,12 +4,10 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><fmt:message key="bus.id"/></th>
                 <th><fmt:message key="bus.model"/></th>
                 <th><fmt:message key="license.plate"/></th>
                 <th><fmt:message key="produce.year"/></th>
                 <th><fmt:message key="parking.spot"/></th>
-                <th><fmt:message key="driver.id"/></th>
                 <th><fmt:message key="first.name"/></th>
                 <th><fmt:message key="last.name"/></th>
                 <th><fmt:message key="licence.number"/></th>
@@ -21,12 +19,10 @@
             <c:forEach var="bus" items="${buses}">
                 <c:forEach var="driver" items="${bus.drivers}">
                     <tr>
-                        <td>${bus.id}</td>
                         <td>${bus.model}</td>
                         <td>${bus.licensePlate}</td>
                         <td>${bus.manufactureYear}</td>
                         <td>${bus.parkingSpot}</td>
-                        <td>${driver.id}</td>
                         <td>${driver.firstName}</td>
                         <td>${driver.lastName}</td>
                         <td>${driver.drivingLicenceNumber}</td>

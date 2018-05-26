@@ -4,10 +4,9 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th><fmt:message key="driver.id"/></th>
+                <th><fmt:message key="licence.number"/></th>
                 <th><fmt:message key="first.name"/></th>
                 <th><fmt:message key="last.name"/></th>
-                <th><fmt:message key="licence.number"/></th>
                 <th><fmt:message key="skill.year"/></th>
                 <th><fmt:message key="to.trip"/></th>
             </tr>
@@ -15,10 +14,9 @@
             <tbody id="allBuses">
             <c:forEach var="driver" items="${drivers}">
                 <tr>
-                    <td>${driver.id}</td>
+                    <td>${driver.drivingLicenceNumber}</td>
                     <td>${driver.firstName}</td>
                     <td>${driver.lastName}</td>
-                    <td>${driver.drivingLicenceNumber}</td>
                     <td>${driver.drivingExperience}</td>
                     <c:choose>
                         <c:when test="${driver.assigned == false}">
