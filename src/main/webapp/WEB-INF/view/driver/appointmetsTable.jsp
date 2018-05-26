@@ -29,9 +29,14 @@
                     <td>${trip.bus.parkingSpot}</td>
                     <c:choose>
                         <c:when test="${trip.confirmation == false}">
-                            <td><a class="btn btn-primary"
-                                   href="${pageContext.request.contextPath}/bus-fleet/driver/confirm_appointment?tripId=${trip.id}"
-                                   role="button"><fmt:message key="confirm"/></a></td>
+                            <form method="POST" name="confirm"
+                                  action="${pageContext.request.contextPath}/bus-fleet/driver/confirm_appointment">
+                                <input type="hidden" name="tripId" value="${trip.id}"/>
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                                            key="confirm"/></button>
+                                </td>
+                            </form>
                         </c:when>
                         <c:otherwise>
                             <td><fmt:message key="confirmed"/></td>

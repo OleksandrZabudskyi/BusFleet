@@ -39,9 +39,14 @@
                                    role="button"><fmt:message key="add"/></a></td>
                         </c:when>
                         <c:otherwise>
-                            <td><a class="btn btn-primary btn-sm"
-                                   href="${pageContext.request.contextPath}/bus-fleet/admin/delete_bus?tripId=${trip.id}&page=${currentPage}"
-                                   role="button"><fmt:message key="delete"/></a></td>
+                            <form method="POST" name="delete"
+                                  action="${pageContext.request.contextPath}/bus-fleet/admin/delete_bus?page=${currentPage}">
+                                <input type="hidden" name="tripId" value="${trip.id}"/>
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                                            key="delete"/></button>
+                                </td>
+                            </form>
                         </c:otherwise>
                     </c:choose>
                     <td>${trip.driver.drivingLicenceNumber}</td>
@@ -52,9 +57,14 @@
                                    role="button"><fmt:message key="add"/></a></td>
                         </c:when>
                         <c:otherwise>
-                            <td><a class="btn btn-primary btn-sm"
-                                   href="${pageContext.request.contextPath}/bus-fleet/admin/delete_driver?tripId=${trip.id}&page=${currentPage}"
-                                   role="button"><fmt:message key="delete"/></a></td>
+                            <form method="POST" name="delete"
+                                  action="${pageContext.request.contextPath}/bus-fleet/admin/delete_driver?page=${currentPage}">
+                                <input type="hidden" name="tripId" value="${trip.id}"/>
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                                            key="delete"/></button>
+                                </td>
+                            </form>
                         </c:otherwise>
                     </c:choose>
                     <c:choose>

@@ -26,9 +26,15 @@
                     <td>${bus.value.destinationTo}</td>
                     <c:choose>
                         <c:when test="${bus.key.used == false}">
-                            <td><a class="btn btn-primary"
-                                   href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?tripId=${tripId}&busId=${bus.key.id}&page=${page}"
-                                   role="button"><fmt:message key="add"/></a></td>
+                            <form method="POST" name="add"
+                                  action="${pageContext.request.contextPath}/bus-fleet/admin/set_bus?page=${page}">
+                                <input type="hidden" name="tripId" value="${tripId}"/>
+                                <input type="hidden" name="busId" value="${bus.key.id}"/>
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                                            key="add"/></button>
+                                </td>
+                            </form>
                         </c:when>
                         <c:otherwise>
                             <td></td>

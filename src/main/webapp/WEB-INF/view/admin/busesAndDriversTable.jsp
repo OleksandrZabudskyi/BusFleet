@@ -29,9 +29,16 @@
                         <td>${driver.drivingExperience}</td>
                         <c:choose>
                             <c:when test="${bus.used == false and driver.assigned == false}">
-                                <td><a class="btn btn-primary"
-                                       href="${pageContext.request.contextPath}/bus-fleet/admin/set_bus_driver?tripId=${tripId}&busId=${bus.id}&driverId=${driver.id}&page=${page}"
-                                       role="button"><fmt:message key="add"/></a></td>
+                                <form method="POST" name="add"
+                                      action="${pageContext.request.contextPath}/bus-fleet/admin/set_bus_driver?page=${page}">
+                                    <input type="hidden" name="tripId" value="${tripId}"/>
+                                    <input type="hidden" name="busId" value="${bus.id}"/>
+                                    <input type="hidden" name="driverId" value="${driver.id}"/>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                                                key="add"/></button>
+                                    </td>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <td></td>
