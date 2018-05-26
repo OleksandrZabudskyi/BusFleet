@@ -3,6 +3,7 @@ package ua.training.model.dao.impl;
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
 import ua.training.constant.LogMessages;
+import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.TripDao;
 import ua.training.model.dao.mapper.BusMapper;
@@ -63,7 +64,7 @@ public class TripDaoImpl implements TripDao {
             new TripMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(entity.getNumber());
+            throw new EntityAlreadyExistException(Messages.ENTITY_ALREADY_EXIST, e, entity.getNumber());
         } catch (SQLException e) {
             logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);

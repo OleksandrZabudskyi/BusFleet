@@ -2,6 +2,7 @@ package ua.training.model.dao.impl;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.LogMessages;
+import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.RouteDao;
 import ua.training.model.dao.mapper.RouteMapper;
@@ -59,7 +60,7 @@ public class RouteDaoImpl implements RouteDao {
             new RouteMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(entity.getName());
+            throw new EntityAlreadyExistException(Messages.ENTITY_ALREADY_EXIST, e, entity.getName());
         } catch (SQLException e) {
             logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);
