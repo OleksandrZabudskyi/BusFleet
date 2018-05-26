@@ -2,6 +2,7 @@ package ua.training.model.dao.impl;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.LogMessages;
+import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.BusDao;
 import ua.training.model.dao.mapper.BusMapper;
@@ -60,7 +61,7 @@ public class BusDaoImpl implements BusDao {
             new BusMapper().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(String.valueOf(entity.getId()));
+            throw new EntityAlreadyExistException(Messages.ENTITY_ALREADY_EXIST, e, String.valueOf(entity.getId()));
         } catch (SQLException e) {
             logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);

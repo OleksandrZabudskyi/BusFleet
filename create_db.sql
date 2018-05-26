@@ -45,7 +45,9 @@ CREATE TABLE IF NOT EXISTS `BusFleet`.`user` (
   `passportRegistration` VARCHAR(128) NULL,
   PRIMARY KEY (`userId`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC))
+  UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC),
+  UNIQUE INDEX `drivingLicenceNumber_UNIQUE` (`drivingLicenceNumber` ASC),
+  UNIQUE INDEX `passportNumber_UNIQUE` (`passportNumber` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -155,7 +157,7 @@ INSERT INTO `BusFleet`.`user` (`userId`, `firstName`, `lastName`, `email`, `pass
 INSERT INTO `BusFleet`.`user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `role`, `drivingLicenceNumber`, `drivingExperience`, `assigned`, `registered`, `passportNumber`, `passportRegistration`) VALUES (4, 'Alex', 'Gronov', 'gronov@gmail.com', 'Ee+/ve+/ve+/vRQz77+9xYrvv73vv71TbmYk,-412925094', '+38(099)111-11-15', 'ADMIN', 'NULL', NULL, NULL, TRUE, 'CK045678', 'KIev Popudrenka 120 appartment 120');
 INSERT INTO `BusFleet`.`user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `role`, `drivingLicenceNumber`, `drivingExperience`, `assigned`, `registered`, `passportNumber`, `passportRegistration`) VALUES (5, 'Viktor', 'Novak', 'novak@gmail.com', '77+9yYLvv70ceu+/ve+/ve+/vTR2Eu+/ve+/ve+/ve+/vQ==,1128203477', '+38(063)456-24-56', 'DRIVER', 'KBH001920', 20, FALSE, TRUE, NULL, NULL);
 INSERT INTO `BusFleet`.`user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `role`, `drivingLicenceNumber`, `drivingExperience`, `assigned`, `registered`, `passportNumber`, `passportRegistration`) VALUES (6, 'Vlad', 'Zaev', 'zaev@gmail.com', '77+977+9a++/ve+/vRw/77+9VO+/ve+/ve+/ve+/ve+/ve+/vWg=,2032224966', '+38(044)456-24-57', 'DRIVER', 'DFG56789', 20, FALSE, TRUE, NULL, NULL);
-INSERT INTO `BusFleet`.`user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `role`, `drivingLicenceNumber`, `drivingExperience`, `assigned`, `registered`, `passportNumber`, `passportRegistration`) VALUES (7, 'Nikolay', 'Fedin', 'fedin@gmail.com', 'QEYfZzgc77+9EEvvv73vv71m77+9Gu+/vXo=,-553349130', '+38(099)111-77-15', 'ADMIN', 'NULL', NULL, NULL, TRUE, 'CM045678', 'KIev Lepse 16 appartment 56');
+INSERT INTO `BusFleet`.`user` (`userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `role`, `drivingLicenceNumber`, `drivingExperience`, `assigned`, `registered`, `passportNumber`, `passportRegistration`) VALUES (7, 'Nikolay', 'Fedin', 'fedin@gmail.com', 'QEYfZzgc77+9EEvvv73vv71m77+9Gu+/vXo=,-553349130', '+38(099)111-77-15', 'ADMIN', NULL, NULL, NULL, TRUE, 'CM045689', 'KIev Lepse 16 appartment 56');
 
 COMMIT;
 

@@ -5,8 +5,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.training.constant.Attributes;
+import ua.training.constant.Messages;
 import ua.training.constant.Pages;
 import ua.training.controller.util.ParametersValidator;
+import ua.training.exeptions.EntityAlreadyExistException;
+import ua.training.exeptions.ServiceException;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
@@ -33,18 +36,18 @@ public class DriverRegistrationCommandTest {
     private HttpServletResponse response;
     @Mock
     private ParametersValidator parametersValidator;
-    private DriverRegistrationCommand driverregistrationCommand;
+    private DriverRegistrationCommand driverRegistrationCommand;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        driverregistrationCommand = new DriverRegistrationCommand(employeeService, securityService, parametersValidator);
+        driverRegistrationCommand = new DriverRegistrationCommand(employeeService, securityService, parametersValidator);
     }
 
     @Test
     public void testReturnRegistrationPageIfParametersIsNotValid() throws ServletException, IOException {
         when(parametersValidator.hasInvalidDriverData(request)).thenReturn(true);
-        String page = driverregistrationCommand.execute(request, response);
+        String page = driverRegistrationCommand.execute(request, response);
 
         assertEquals(page, Pages.REGISTRATION_PAGE);
 
@@ -63,7 +66,7 @@ public class DriverRegistrationCommandTest {
         when(parametersValidator.hasInvalidDriverData(request)).thenReturn(false);
         doNothing().when(employeeService).registerDriver(any(Driver.class));
 
-        String page = driverregistrationCommand.execute(request, response);
+        String page = driverRegistrationCommand.execute(request, response);
 
         assertEquals(page, Pages.LOGIN_PAGE);
 
@@ -83,8 +86,9 @@ public class DriverRegistrationCommandTest {
         when(request.getParameter(Attributes.EMAIL)).thenReturn("parin@gmail.com");
         when(request.getParameter(Attributes.PASSWORD)).thenReturn("12345");
         when(parametersValidator.hasInvalidDriverData(request)).thenReturn(false);
-        doThrow(new Exception()).when(employeeService).registerDriver(any(Driver.class));
-        String page = driverregistrationCommand.execute(request, response);
+        doThrow(new ServiceException(new EntityAlreadyExistException(Messages.USER_ALREADY_EXIST))).
+                when(employeeService).registerDriver(any(Driver.class));
+        String page = driverRegistrationCommand.execute(request, response);
 
         assertEquals(page, Pages.REGISTRATION_PAGE);
 

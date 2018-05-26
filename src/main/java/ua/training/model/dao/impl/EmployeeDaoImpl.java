@@ -3,6 +3,7 @@ package ua.training.model.dao.impl;
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
 import ua.training.constant.LogMessages;
+import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.entity.Employee;
 import ua.training.model.dao.EmployeeDao;
@@ -75,7 +76,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             new EmployeeHandler().setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new EntityAlreadyExistException(entity.getEmail());
+            throw new EntityAlreadyExistException(Messages.USER_ALREADY_EXIST, e, entity.getEmail());
         } catch (SQLException e) {
             logger.error(LogMessages.CREATE_ENTITY_ERROR, e);
             throw new RuntimeException(e);

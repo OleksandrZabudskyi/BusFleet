@@ -12,6 +12,7 @@ public interface Messages {
     String WRONG_PARAMS = "wrong.parameters";
     String WRONG_PARAMS_DATA = "wrong.parameters.data";
     String USER_ALREADY_EXIST = "user.already.exist";
+    String ENTITY_ALREADY_EXIST = "entity.already.exist";
     String INVALID_ROLE = "invalid.role";
     String MD5_IS_NOT_AVAILABLE = "md5.error";
     String UTF8_IS_NOT_AVAILABLE = "utf8.error";
