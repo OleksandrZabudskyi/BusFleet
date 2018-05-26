@@ -4,13 +4,15 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * @author Alexandr Zabudskyi
+ * Provide resource bundle for locales
+ *
+ * @author Zabudskyi Oleksandr
  */
 public class LocaleManager {
     public static final Locale ENGLISH = new Locale("en", "US");
-    public static final Locale UKRAINIAN = new Locale("uk", "UA");
+    public static final Locale UKRAINIAN = new Locale("ua", "UA");
 
-    private static final String BUNDLE_NAME = "/messages";
+    private static final String BUNDLE_NAME = "messages";
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, ENGLISH);
 
     public static void setLocale(Locale locale) {

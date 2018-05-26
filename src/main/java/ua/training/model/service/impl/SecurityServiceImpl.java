@@ -3,6 +3,7 @@ package ua.training.model.service.impl;
 import ua.training.constant.GlobalConstants;
 import ua.training.constant.Messages;
 import ua.training.model.service.SecurityService;
+import ua.training.util.LocaleManager;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -33,9 +34,9 @@ public class SecurityServiceImpl implements SecurityService {
             String encode = Base64.getEncoder().encodeToString(hashedBytes);
             return encode.concat(GlobalConstants.COMMA_SIGN).concat(salt);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(Messages.MD5_IS_NOT_AVAILABLE, e);
+            throw new RuntimeException(LocaleManager.getProperty(Messages.MD5_IS_NOT_AVAILABLE), e);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(Messages.UTF8_IS_NOT_AVAILABLE, e);
+            throw new RuntimeException(LocaleManager.getProperty(Messages.UTF8_IS_NOT_AVAILABLE), e);
         }
     }
 

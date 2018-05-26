@@ -2,6 +2,7 @@ package ua.training.controller.command.driver;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
 import ua.training.constant.Messages;
 import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
@@ -9,6 +10,7 @@ import ua.training.controller.util.ParametersValidator;
 import ua.training.model.entity.Driver;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
+import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +26,7 @@ import java.io.IOException;
  * @see Pages
  */
 public class DriverRegistrationCommand implements Command {
-    private static Logger logger = Logger.getLogger(DriverRegistrationCommand.class);
+    private final static Logger logger = Logger.getLogger(DriverRegistrationCommand.class);
     private EmployeeService employeeService;
     private SecurityService securityService;
     private ParametersValidator parametersValidator;
@@ -47,7 +49,6 @@ public class DriverRegistrationCommand implements Command {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         if (parametersValidator.hasInvalidDriverData(request)) {
             return Pages.REGISTRATION_PAGE;
         }
@@ -58,8 +59,8 @@ public class DriverRegistrationCommand implements Command {
             employeeService.registerDriver(driver);
             return Pages.LOGIN_PAGE;
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            request.setAttribute(Attributes.INFO_MESSAGE, Messages.USER_ALREADY_EXIST);
+            logger.error(LogMessages.DRIVER_REGISTRATION_ERROR, e);
+            request.setAttribute(Attributes.INFO_MESSAGE, LocaleManager.getProperty(Messages.USER_ALREADY_EXIST));
             return Pages.REGISTRATION_PAGE;
         }
     }

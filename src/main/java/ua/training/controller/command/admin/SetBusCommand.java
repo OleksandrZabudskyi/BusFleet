@@ -1,10 +1,15 @@
 package ua.training.controller.command.admin;
 
+import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
+import ua.training.constant.LogMessages;
+import ua.training.constant.Messages;
 import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
 import ua.training.controller.util.ParametersValidator;
+import ua.training.exeptions.ServiceException;
 import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +25,7 @@ import java.io.IOException;
  * @see NameCommands
  */
 public class SetBusCommand implements Command {
+    private final static Logger logger = Logger.getLogger(SetBusCommand.class);
     private TripServiceImpl tripService;
     private ParametersValidator parametersValidator;
 
@@ -37,7 +43,13 @@ public class SetBusCommand implements Command {
         if (parametersValidator.validateIfNullOrEmpty(request, Attributes.TRIP_ID, Attributes.BUS_ID)) {
             return NameCommands.ALL_TRIPS;
         }
-        tripService.setBusOnTrip(Integer.parseInt(tripId), Integer.parseInt(busId));
+
+        try {
+            tripService.setBusOnTrip(Integer.parseInt(tripId), Integer.parseInt(busId));
+        } catch (ServiceException e) {
+            logger.error(LogMessages.TRANSACTION_ERROR, e);
+            request.setAttribute(Attributes.BUS_INFO_MESSAGE, LocaleManager.getProperty(Messages.BUS_ALREADY_USED));
+        }
         request.setAttribute(Attributes.PAGE, currentPage);
         return NameCommands.ALL_TRIPS;
     }

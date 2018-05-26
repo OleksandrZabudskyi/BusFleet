@@ -24,10 +24,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item">
-                    <form>
+                    <form action="bus-fleet/language">
                         <select class="nav-select" id="language" name="language" onchange="submit()" title="Language">
-                            <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-                            <option value="ua" ${language == 'ua' ? 'selected' : ''}>Ukrainian</option>
+                            <option value="en" ${language == 'en' ? 'selected' : ''}><fmt:message key="language.en"/></option>
+                            <option value="ua" ${language == 'ua' ? 'selected' : ''}><fmt:message key="language.ua"/></option>
                         </select>
                     </form>
                 </li>

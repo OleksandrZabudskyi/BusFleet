@@ -2,7 +2,7 @@ package ua.training.controller.listener;
 
 import org.apache.log4j.Logger;
 import ua.training.constant.Attributes;
-import ua.training.constant.LogMessage;
+import ua.training.constant.LogMessages;
 import ua.training.model.entity.Employee;
 
 import javax.servlet.ServletContext;
@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Zabudskyi Oleksandr
  */
 public class ActiveUser implements HttpSessionBindingListener {
-    private static Logger logger = Logger.getLogger(ActiveUser.class);
+    private final static Logger logger = Logger.getLogger(ActiveUser.class);
     private Employee employee;
     private boolean alreadyLoggedIn;
 
@@ -56,7 +56,7 @@ public class ActiveUser implements HttpSessionBindingListener {
             alreadyLoggedIn = true;
         }
         activeUsers.put(this, event.getSession());
-        logger.debug(LogMessage.ADD_USER + employee.getEmail());
+        logger.debug(LogMessages.ADD_USER + employee.getEmail());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ActiveUser implements HttpSessionBindingListener {
         ServletContext context = event.getSession().getServletContext();
         Map<ActiveUser, HttpSession> activeUsers = (Map<ActiveUser, HttpSession>) context.getAttribute(Attributes.LOGGED_USERS);
         activeUsers.remove(this);
-        logger.debug(LogMessage.REMOVE_USER + employee.getEmail());
+        logger.debug(LogMessages.REMOVE_USER + employee.getEmail());
     }
 
     @Override

@@ -7,6 +7,7 @@ import ua.training.controller.util.ParametersValidator;
 import ua.training.model.entity.Employee;
 import ua.training.model.service.EmployeeService;
 import ua.training.model.service.SecurityService;
+import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ import java.util.Optional;
  * @see Command
  * @see Attributes
  * @see Pages
- * @see LogMessage
+ * @see LogMessages
  */
 public class LoginCommand implements Command {
     private static Logger logger = Logger.getLogger(LoginCommand.class);
@@ -57,7 +58,7 @@ public class LoginCommand implements Command {
 
         Optional<Employee> userOptional = employeeService.findEmployeeByEmail(email);
         if (!userOptional.isPresent() || !securityService.comparePasswords(password, userOptional.get().getPassword())) {
-            request.setAttribute(Attributes.ERROR_MESSAGE, Messages.WRONG_LOGIN_OR_PASSWORD);
+            request.setAttribute(Attributes.ERROR_MESSAGE, LocaleManager.getProperty(Messages.WRONG_LOGIN_OR_PASSWORD));
             return Pages.LOGIN_PAGE;
         }
 
@@ -67,7 +68,7 @@ public class LoginCommand implements Command {
         httpSession.setAttribute(Attributes.ACTIVE_USER, activeUser);
 
         if (activeUser.isAlreadyLoggedIn()) {
-            logger.warn(LogMessage.USER_ALREADY_LOGGED + employee.getEmail());
+            logger.warn(LogMessages.USER_ALREADY_LOGGED + employee.getEmail());
         }
         httpSession.setAttribute(Attributes.ROLE, employee.getRole().toString());
         return getRedirectCommand(employee.getRole());
