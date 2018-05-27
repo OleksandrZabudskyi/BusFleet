@@ -20,4 +20,12 @@ public interface BusDao extends GenericDao<Bus, Integer> {
      * @return new relation bus to route
      */
     Map<Bus, Route> findAllBusesWithRoutes();
+
+    /**
+     * Update many to many table bus_has_driver by joining all bus to driver
+     *
+     * @param buses all buses
+     * @param driverId driverId
+     */
+    void addBusesHasDriverRelation(List<Bus> buses, int driverId);
 }

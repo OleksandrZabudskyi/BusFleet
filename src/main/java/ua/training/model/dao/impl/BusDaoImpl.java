@@ -133,6 +133,21 @@ public class BusDaoImpl implements BusDao {
     }
 
     @Override
+    public void addBusesHasDriverRelation(List<Bus> buses, int driverId) {
+        try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_BUS_HAS_DRIVER)) {
+            for (Bus bus : buses) {
+                statement.setInt(1, bus.getId());
+                statement.setInt(2, driverId);
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        } catch (SQLException e) {
+            logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void close() {
         try {
             connection.close();

@@ -19,4 +19,6 @@ public interface LogMessages {
     String CREATE_ENTITY_ERROR = "Entity was not created";
     String UPDATE_ENTITY_ERROR = "Entity was not updated";
     String DELETE_ENTITY_ERROR = "Entity was not removed";
+    String USER_SUCCESSFUL_LOGIN = "User logged successfully: ";
+    String USER_LOGOUT = "User logged out";
 }
