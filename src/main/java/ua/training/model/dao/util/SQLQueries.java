@@ -51,5 +51,5 @@ public interface SQLQueries {
             "FROM bus LEFT JOIN trip USING(busId) LEFT JOIN route USING(routeId);";
 
     String FIND_ALL_TRIPS_COUNT = "SELECT COUNT(*) as rowsNumber FROM trip;";
-
+    String INSERT_BUS_HAS_DRIVER = "INSERT INTO bus_has_driver (bus_busId, user_userId) VALUES(?, ?)";
 }

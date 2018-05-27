@@ -23,10 +23,10 @@ public interface EmployeeService {
     Optional<Employee> findEmployeeByEmail(String email);
 
     /**
-     * Register driver
+     * Register driver and update relations to buses
      *
      * @param driver driver
-     * @throws Exception exception
+     * @throws ServiceException exception
      */
     void registerDriver(Driver driver) throws ServiceException;
 
