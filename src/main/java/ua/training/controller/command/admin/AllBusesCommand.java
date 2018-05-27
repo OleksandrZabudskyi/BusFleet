@@ -24,7 +24,7 @@ import java.util.Objects;
 public class AllBusesCommand implements Command {
     private BusService busService;
 
-    public AllBusesCommand(BusServiceImpl busService) {
+    public AllBusesCommand(BusService busService) {
         this.busService = busService;
     }
 

@@ -26,7 +26,7 @@ import java.util.Optional;
  * @see LogMessages
  */
 public class LoginCommand implements Command {
-    private static Logger logger = Logger.getLogger(LoginCommand.class);
+    private final static Logger logger = Logger.getLogger(LoginCommand.class);
     private EmployeeService employeeService;
     private SecurityService securityService;
     private ParametersValidator parametersValidator;
@@ -71,6 +71,7 @@ public class LoginCommand implements Command {
             logger.warn(LogMessages.USER_ALREADY_LOGGED + employee.getEmail());
         }
         httpSession.setAttribute(Attributes.ROLE, employee.getRole().toString());
+        logger.info(LogMessages.USER_SUCCESSFUL_LOGIN + employee.getEmail());
         return getRedirectCommand(employee.getRole());
     }
 
