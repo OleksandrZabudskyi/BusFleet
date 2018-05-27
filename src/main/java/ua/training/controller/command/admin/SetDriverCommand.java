@@ -8,7 +8,7 @@ import ua.training.constant.NameCommands;
 import ua.training.controller.command.Command;
 import ua.training.controller.util.ParametersValidator;
 import ua.training.exeptions.ServiceException;
-import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.model.service.TripService;
 import ua.training.util.LocaleManager;
 
 import javax.servlet.ServletException;
@@ -26,10 +26,10 @@ import java.io.IOException;
  */
 public class SetDriverCommand implements Command {
     private final static Logger logger = Logger.getLogger(SetDriverCommand.class);
-    private TripServiceImpl tripService;
+    private TripService tripService;
     private ParametersValidator parametersValidator;
 
-    public SetDriverCommand(TripServiceImpl tripService, ParametersValidator parametersValidator) {
+    public SetDriverCommand(TripService tripService, ParametersValidator parametersValidator) {
         this.tripService = tripService;
         this.parametersValidator = parametersValidator;
     }

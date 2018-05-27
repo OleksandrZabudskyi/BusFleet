@@ -2,9 +2,8 @@ package ua.training.controller.command.admin;
 
 import ua.training.constant.Attributes;
 import ua.training.constant.NameCommands;
-import ua.training.constant.Pages;
 import ua.training.controller.command.Command;
-import ua.training.model.service.impl.TripServiceImpl;
+import ua.training.model.service.TripService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +20,9 @@ import java.util.Objects;
  * @see NameCommands
  */
 public class DeleteBusCommand implements Command {
-    private TripServiceImpl tripService;
+    private TripService tripService;
 
-    public DeleteBusCommand(TripServiceImpl tripService) {
+    public DeleteBusCommand(TripService tripService) {
         this.tripService = tripService;
     }
 

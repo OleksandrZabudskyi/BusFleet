@@ -15,7 +15,6 @@ import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
 import ua.training.model.entity.Trip;
 import ua.training.model.service.TripService;
-import ua.training.util.LocaleManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
