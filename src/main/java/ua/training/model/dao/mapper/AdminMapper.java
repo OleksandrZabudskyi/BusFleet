@@ -7,6 +7,7 @@ import ua.training.model.entity.Employee;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class AdminMapper implements EntityMapper<Admin>{
     @Override
@@ -39,5 +40,11 @@ public class AdminMapper implements EntityMapper<Admin>{
         statement.setNull(11, java.sql.Types.NULL);
         statement.setNull(12, java.sql.Types.NULL);
         statement.setInt(13, entity.getId());
+    }
+
+    @Override
+    public Admin makeUnique(Map<Integer, Admin> cache, Admin admin) {
+        cache.putIfAbsent(admin.getId(), admin);
+        return cache.get(admin.getId());
     }
 }

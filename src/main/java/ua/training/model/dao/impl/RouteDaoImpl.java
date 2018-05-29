@@ -5,6 +5,7 @@ import ua.training.constant.LogMessages;
 import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.RouteDao;
+import ua.training.model.dao.mapper.EntityMapper;
 import ua.training.model.dao.mapper.RouteMapper;
 import ua.training.model.dao.util.SQLQueries;
 import ua.training.model.entity.Route;
@@ -16,10 +17,12 @@ import java.util.Optional;
 
 public class RouteDaoImpl implements RouteDao {
     private final static Logger logger = Logger.getLogger(RouteDaoImpl.class);
-    private Connection connection;
+    private final Connection connection;
+    private final EntityMapper<Route> routeMapper;
 
-    public RouteDaoImpl(Connection connection) {
+    public RouteDaoImpl(Connection connection, EntityMapper<Route> routeMapper) {
         this.connection = connection;
+        this.routeMapper = routeMapper;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class RouteDaoImpl implements RouteDao {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                route = Optional.ofNullable(new RouteMapper().extractFromResultSet(resultSet));
+                route = Optional.ofNullable(routeMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             logger.error(LogMessages.NO_RESULT_FROM_DB, e);
@@ -43,7 +46,6 @@ public class RouteDaoImpl implements RouteDao {
         List<Route> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_ROUTES);
              ResultSet resultSet = ps.executeQuery()) {
-            RouteMapper routeMapper = new RouteMapper();
             while (resultSet.next()) {
                 resultList.add(routeMapper.extractFromResultSet(resultSet));
             }
@@ -57,7 +59,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public void create(Route entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_ROUTE)) {
-            new RouteMapper().setParameters(entity, statement);
+            routeMapper.setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(Messages.ENTITY_ALREADY_EXIST, e, entity.getName());
@@ -70,7 +72,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public void update(Route entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_ROUTE_BY_ID)) {
-            new RouteMapper().setParameters(entity, statement);
+            routeMapper.setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);

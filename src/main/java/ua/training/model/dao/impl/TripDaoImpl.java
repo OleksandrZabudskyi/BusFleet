@@ -6,11 +6,11 @@ import ua.training.constant.LogMessages;
 import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
 import ua.training.model.dao.TripDao;
-import ua.training.model.dao.mapper.BusMapper;
-import ua.training.model.dao.mapper.DriverMapper;
-import ua.training.model.dao.mapper.RouteMapper;
-import ua.training.model.dao.mapper.TripMapper;
+import ua.training.model.dao.mapper.*;
 import ua.training.model.dao.util.SQLQueries;
+import ua.training.model.entity.Bus;
+import ua.training.model.entity.Driver;
+import ua.training.model.entity.Route;
 import ua.training.model.entity.Trip;
 
 import java.sql.*;
@@ -20,10 +20,18 @@ import java.util.Optional;
 
 public class TripDaoImpl implements TripDao {
     private final static Logger logger = Logger.getLogger(TripDaoImpl.class);
-    private Connection connection;
+    private final Connection connection;
+    private final EntityMapper<Trip> tripMapper;
+    private final EntityMapper<Route> routeMapper;
+    private final EntityMapper<Bus> busMapper;
+    private final EntityMapper<ua.training.model.entity.Driver> driverMapper;
 
-    public TripDaoImpl(Connection connection) {
-        this.connection = connection;
+    private TripDaoImpl(TripDaoImplBuilder tripDaoImplBuilder) {
+        this.connection = tripDaoImplBuilder.connection;
+        this.tripMapper = tripDaoImplBuilder.tripMapper;
+        this.routeMapper = tripDaoImplBuilder.routeMapper;
+        this.busMapper = tripDaoImplBuilder.busMapper;
+        this.driverMapper = tripDaoImplBuilder.driverMapper;
     }
 
     @Override
@@ -33,7 +41,7 @@ public class TripDaoImpl implements TripDao {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                trip = Optional.ofNullable(new TripMapper().extractFromResultSet(resultSet));
+                trip = Optional.ofNullable(tripMapper.extractFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             logger.error(LogMessages.NO_RESULT_FROM_DB, e);
@@ -47,7 +55,6 @@ public class TripDaoImpl implements TripDao {
         List<Trip> resultList = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(SQLQueries.FIND_ALL_TRIPS);
              ResultSet resultSet = ps.executeQuery()) {
-            TripMapper tripMapper = new TripMapper();
             while (resultSet.next()) {
                 resultList.add(tripMapper.extractFromResultSet(resultSet));
             }
@@ -61,7 +68,7 @@ public class TripDaoImpl implements TripDao {
     @Override
     public void create(Trip entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_TRIP)) {
-            new TripMapper().setParameters(entity, statement);
+            tripMapper.setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(Messages.ENTITY_ALREADY_EXIST, e, entity.getNumber());
@@ -74,7 +81,7 @@ public class TripDaoImpl implements TripDao {
     @Override
     public void update(Trip entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_TRIP_BY_ID)) {
-            new TripMapper().setParameters(entity, statement);
+            tripMapper.setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
@@ -109,10 +116,6 @@ public class TripDaoImpl implements TripDao {
     }
 
     private void collectTripsWithLinks(List<Trip> resultList, ResultSet resultSet) throws SQLException {
-        TripMapper tripMapper = new TripMapper();
-        RouteMapper routeMapper = new RouteMapper();
-        BusMapper busMapper = new BusMapper();
-        DriverMapper driverMapper = new DriverMapper();
         while (resultSet.next()) {
             Trip trip = tripMapper.extractFromResultSet(resultSet);
             trip.setRoute(routeMapper.extractFromResultSet(resultSet));
@@ -157,6 +160,43 @@ public class TripDaoImpl implements TripDao {
         } catch (SQLException e) {
             logger.error(LogMessages.CONNECTION_CLOSE_ERROR, e);
             throw new RuntimeException(e);
+        }
+    }
+
+    public static final class TripDaoImplBuilder {
+
+        private Connection connection;
+        private EntityMapper<Trip> tripMapper;
+        private EntityMapper<Route> routeMapper;
+        private EntityMapper<Bus> busMapper;
+        private EntityMapper<Driver> driverMapper;
+
+        public TripDaoImplBuilder setConnection(Connection connection) {
+            this.connection = connection;
+            return this;
+        }
+
+        public TripDaoImplBuilder setTripMapper(EntityMapper<Trip> tripMapper) {
+            this.tripMapper = tripMapper;
+            return this;
+        }
+
+        public TripDaoImplBuilder setRouteMapper(EntityMapper<Route> routeMapper) {
+            this.routeMapper = routeMapper;
+            return this;
+        }
+
+        public TripDaoImplBuilder setBusMapper(EntityMapper<Bus> busMapper) {
+            this.busMapper = busMapper;
+            return this;
+        }
+
+        public TripDaoImplBuilder setDriverMapper(EntityMapper<Driver> driverMapper) {
+            this.driverMapper = driverMapper;
+            return this;
+        }
+        public TripDaoImpl createTripDaoImpl() {
+            return new TripDaoImpl(this);
         }
     }
 }

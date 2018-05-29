@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.training.exeptions.EntityAlreadyExistException;
+import ua.training.model.dao.AbstractEmployeeHandler;
 import ua.training.model.entity.Driver;
 import ua.training.model.entity.Employee;
 
@@ -22,6 +23,8 @@ import static org.mockito.Mockito.when;
 public class EmployeeDaoImplTest {
     @Mock
     private Connection connection;
+    @Mock
+    private AbstractEmployeeHandler abstractEmployeeHandler;
     @Mock
     private PreparedStatement statement;
     @Mock
@@ -59,7 +62,7 @@ public class EmployeeDaoImplTest {
         when(statement.executeQuery()).thenReturn(resultSet);
         assertNotNull(connection);
         when(connection.prepareStatement(any(String.class))).thenReturn(statement);
-        new EmployeeDaoImpl(connection).create(driver);
+        new EmployeeDaoImpl(connection, abstractEmployeeHandler).create(driver);
         verify(connection).prepareStatement(any(String.class));
     }
 }

@@ -6,6 +6,7 @@ import ua.training.model.entity.Route;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class RouteMapper implements EntityMapper<Route> {
     @Override
@@ -24,5 +25,11 @@ public class RouteMapper implements EntityMapper<Route> {
         statement.setString(2, entity.getDestinationFrom());
         statement.setString(3, entity.getDestinationTo());
         statement.setInt(4, entity.getId());
+    }
+
+    @Override
+    public Route makeUnique(Map<Integer, Route> cache, Route route) {
+        cache.putIfAbsent(route.getId(), route);
+        return cache.get(route.getId());
     }
 }

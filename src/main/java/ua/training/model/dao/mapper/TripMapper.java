@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.Map;
 
 public class TripMapper implements EntityMapper<Trip>{
     @Override
@@ -52,5 +53,11 @@ public class TripMapper implements EntityMapper<Trip>{
         }
         statement.setBoolean(7, entity.isConfirmation());
         statement.setInt(8, entity.getId());
+    }
+
+    @Override
+    public Trip makeUnique(Map<Integer, Trip> cache, Trip trip) {
+        cache.putIfAbsent(trip.getId(), trip);
+        return cache.get(trip.getId());
     }
 }

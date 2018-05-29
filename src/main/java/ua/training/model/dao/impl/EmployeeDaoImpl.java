@@ -5,6 +5,7 @@ import ua.training.constant.Attributes;
 import ua.training.constant.LogMessages;
 import ua.training.constant.Messages;
 import ua.training.exeptions.EntityAlreadyExistException;
+import ua.training.model.dao.AbstractEmployeeHandler;
 import ua.training.model.entity.Employee;
 import ua.training.model.dao.EmployeeDao;
 import ua.training.model.dao.util.SQLQueries;
@@ -16,10 +17,12 @@ import java.util.Optional;
 
 public class EmployeeDaoImpl implements EmployeeDao {
     private final static Logger logger = Logger.getLogger(EmployeeDaoImpl.class);
-    private Connection connection;
+    private final Connection connection;
+    private final AbstractEmployeeHandler employeeHandler;
 
-    public EmployeeDaoImpl(Connection connection) {
+    public EmployeeDaoImpl(Connection connection, AbstractEmployeeHandler employeeHandler) {
         this.connection = connection;
+        this.employeeHandler = employeeHandler;
     }
 
     @Override
@@ -73,7 +76,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void create(Employee entity) throws EntityAlreadyExistException {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.INSERT_USER)) {
-            new EmployeeHandler().setParameters(entity, statement);
+            employeeHandler.setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new EntityAlreadyExistException(Messages.USER_ALREADY_EXIST, e, entity.getEmail());
@@ -87,7 +90,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void update(Employee entity) {
         try (PreparedStatement statement = connection.prepareStatement(SQLQueries.UPDATE_USER_BY_ID)) {
-            new EmployeeHandler().setParameters(entity, statement);
+            employeeHandler.setParameters(entity, statement);
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error(LogMessages.UPDATE_ENTITY_ERROR, e);
@@ -108,7 +111,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     private Employee getUserFromResultSet(ResultSet resultSet) throws SQLException {
         Employee.ROLE role = Employee.ROLE.valueOf(resultSet.getString(Attributes.ROLE));
-        return new EmployeeHandler().extractFromResultSet(role, resultSet);
+        return employeeHandler.extractFromResultSet(role, resultSet);
     }
 
 
